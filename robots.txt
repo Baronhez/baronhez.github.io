@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://baronhez.github.io/sitemap.xml
