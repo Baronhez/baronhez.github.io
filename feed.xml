@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-25T01:30:01+02:00</updated>
+    <updated>2022-08-25T01:38:00+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -18,7 +18,7 @@
         <id>https://baronhez.github.io/how-to-install-and-activate-windows-10-and-windows-11-completely-for-free-the-easiest-way.html</id>
             <category term="Windows"/>
 
-        <updated>2022-08-25T01:30:01+02:00</updated>
+        <updated>2022-08-25T01:38:00+02:00</updated>
             <summary>
                 <![CDATA[
                     
@@ -43,24 +43,22 @@
   <p>
     <b>W11 ISO
 </b><br><u>Microsoft official:
-</u><br>https://www.microsoft.com/en-us/software-download/windows11
-<br><u>Mirror:
-</u><br>https://linuxct.space/Windows/
+</u><br><a href="https://www.microsoft.com/en-us/software-download/windows11" class="" target="_blank">https://www.microsoft.com/en-us/software-download/windows11
+<br></a><u>Mirror:
+</u><br><a href="https://linuxct.space/Windows/" class="" target="_blank">https://linuxct.space/Windows/</a>
   </p>
 
   <p>
     <b>W10 ISO:
 </b><br><u>Microsoft official</u>:
-<br>https://www.microsoft.com/en-us/software-download/windows10
-<br><u>Pirated Windows</u>, in case you want to choose a specific version:
-<br>https://tb.rg-adguard.net/public.php
+<br><a href="https://www.microsoft.com/en-us/software-download/windows10" class="" target="_blank">https://www.microsoft.com/en-us/software-download/windows10
+<br></a><u>Pirated Windows</u>, in case you want to choose a specific version:
+<br><a href="https://tb.rg-adguard.net/public.php" target="_blank">https://tb.rg-adguard.net/public.php</a>
   </p>
 
   <p class="msg msg--highlight">
     <em><b>Attention:</b></em>
-<br>As such, if you feel like it, you can download an ISO previously debloated by others and then you can go straight to the heart of the matter.
-<br>https://notthebe.ee/Windows10.html
-<br>https://ameliorated.info/documentation.html
+<br>As such, if you feel like it, you can download an ISO previously debloated by others and then you can go straight to the heart of the matter.<br><a href="https://ameliorated.info/documentation.html" target="_blank">https://ameliorated.info/documentation.html</a>
   </p>
 
   <p>
@@ -73,27 +71,31 @@
   </p>
 
   <p>
-    Here is a quick tutorial: https://www.youtube.com/watch?v=Wt0Q-DBejIw
+    Here is a quick tutorial: <a href="https://www.youtube.com/watch?v=Wt0Q-DBejIw" target="_blank">https://www.youtube.com/watch?v=Wt0Q-DBejIw</a>
   </p>
 
   <p>
-    Here you can download the program: https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe
+    Here you can download the program: <a href="https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe" target="_blank">https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe</a>
   </p>
 
   <p>
-    If you have a Linux PC, I recommend you Ventoy:&nbsp;https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/
+    If you have a Linux PC, I recommend you Ventoy:
   </p>
 
   <p>
-    Or&nbsp;SUSE imagewriter:&nbsp;https://software.opensuse.org/package/imagewriter
+    <a href="https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/" target="_blank">https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/</a>
+  </p>
+
+  <p>
+    Or&nbsp;SUSE imagewriter:&nbsp;<a href="https://software.opensuse.org/package/imagewriter" target="_blank">https://software.opensuse.org/package/imagewriter</a>
   </p>
 
   <p>
     <b>Step 3:</b> Insert the flashed usb into the machine where you want to install windows and once the installation environment starts, we can freely hit next until we&nbsp;get to the part that asks for an activation code.
 <br>We have two options:
 <br>We put one of these:
-<br>https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093
-<br>Or we click the "I do not have an activation code" to continue with the installation.
+<br><a href="https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093" target="_blank">https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093
+<br></a>Or we click the "I do not have an activation code" to continue with the installation.
   </p>
 
   <p>
@@ -105,11 +107,11 @@
   </p>
 
   <p class="msg msg--highlight">
-    If you want documentation for this step, go to https://massgrave.dev/
+    If you want documentation for this step, go to <a href="https://massgrave.dev/" target="_blank">https://massgrave.dev/</a>
   </p>
 
   <p>
-    Let's enter this webpage:<br>https://github.com/massgravel/Microsoft-Activation-Scripts/releases
+    Let's enter this webpage:<br><a href="https://github.com/massgravel/Microsoft-Activation-Scripts/releases" target="_blank">https://github.com/massgravel/Microsoft-Activation-Scripts/releases</a>
   </p>
 
     <figure class="post__image post__image--center">
@@ -187,24 +189,22 @@
   <p>
     <b>W11 ISO
 </b><br><u>Microsoft official:
-</u><br>https://www.microsoft.com/en-us/software-download/windows11
-<br><u>Mirror:
-</u><br>https://linuxct.space/Windows/
+</u><br><a href="https://www.microsoft.com/en-us/software-download/windows11" class="" target="_blank">https://www.microsoft.com/en-us/software-download/windows11
+<br></a><u>Mirror:
+</u><br><a href="https://linuxct.space/Windows/" class="" target="_blank">https://linuxct.space/Windows/</a>
   </p>
 
   <p>
     <b>W10 ISO:
 </b><br><u>Microsoft official</u>:
-<br>https://www.microsoft.com/en-us/software-download/windows10
-<br><u>Pirated Windows</u>, in case you want to choose a specific version:
-<br>https://tb.rg-adguard.net/public.php
+<br><a href="https://www.microsoft.com/en-us/software-download/windows10" class="" target="_blank">https://www.microsoft.com/en-us/software-download/windows10
+<br></a><u>Pirated Windows</u>, in case you want to choose a specific version:
+<br><a href="https://tb.rg-adguard.net/public.php" target="_blank">https://tb.rg-adguard.net/public.php</a>
   </p>
 
   <p class="msg msg--highlight">
     <em><b>Attention:</b></em>
-<br>As such, if you feel like it, you can download an ISO previously debloated by others and then you can go straight to the heart of the matter.
-<br>https://notthebe.ee/Windows10.html
-<br>https://ameliorated.info/documentation.html
+<br>As such, if you feel like it, you can download an ISO previously debloated by others and then you can go straight to the heart of the matter.<br><a href="https://ameliorated.info/documentation.html" target="_blank">https://ameliorated.info/documentation.html</a>
   </p>
 
   <p>
@@ -217,27 +217,31 @@
   </p>
 
   <p>
-    Here is a quick tutorial: https://www.youtube.com/watch?v=Wt0Q-DBejIw
+    Here is a quick tutorial: <a href="https://www.youtube.com/watch?v=Wt0Q-DBejIw" target="_blank">https://www.youtube.com/watch?v=Wt0Q-DBejIw</a>
   </p>
 
   <p>
-    Here you can download the program: https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe
+    Here you can download the program: <a href="https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe" target="_blank">https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe</a>
   </p>
 
   <p>
-    If you have a Linux PC, I recommend you Ventoy:&nbsp;https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/
+    If you have a Linux PC, I recommend you Ventoy:
   </p>
 
   <p>
-    Or&nbsp;SUSE imagewriter:&nbsp;https://software.opensuse.org/package/imagewriter
+    <a href="https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/" target="_blank">https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/</a>
+  </p>
+
+  <p>
+    Or&nbsp;SUSE imagewriter:&nbsp;<a href="https://software.opensuse.org/package/imagewriter" target="_blank">https://software.opensuse.org/package/imagewriter</a>
   </p>
 
   <p>
     <b>Step 3:</b> Insert the flashed usb into the machine where you want to install windows and once the installation environment starts, we can freely hit next until we&nbsp;get to the part that asks for an activation code.
 <br>We have two options:
 <br>We put one of these:
-<br>https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093
-<br>Or we click the "I do not have an activation code" to continue with the installation.
+<br><a href="https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093" target="_blank">https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093
+<br></a>Or we click the "I do not have an activation code" to continue with the installation.
   </p>
 
   <p>
@@ -249,11 +253,11 @@
   </p>
 
   <p class="msg msg--highlight">
-    If you want documentation for this step, go to https://massgrave.dev/
+    If you want documentation for this step, go to <a href="https://massgrave.dev/" target="_blank">https://massgrave.dev/</a>
   </p>
 
   <p>
-    Let's enter this webpage:<br>https://github.com/massgravel/Microsoft-Activation-Scripts/releases
+    Let's enter this webpage:<br><a href="https://github.com/massgravel/Microsoft-Activation-Scripts/releases" target="_blank">https://github.com/massgravel/Microsoft-Activation-Scripts/releases</a>
   </p>
 
     <figure class="post__image post__image--center">
@@ -311,8 +315,8 @@
   </p>
 
   <ol>
-    <li>You should <u>update Windows</u> right now, even if the install is fresh.</li><li>Debloat Windows deleting telemetry and other stuff: Run this on Powershell&nbsp;<b style="font-style: italic;">iwr -useb https://git.io/debloat|iex </b>or this <b>iex ((New-Object
-</b><br><b>System.Net.WebClient).DownloadString('https://git.io/JJ8R4'))</b>&nbsp;</li><li>Disable startup programs. Enter <b>Windows Key+R</b>, write&nbsp;<b style="font-style: italic;">shell:startup</b>, hit enter<i>&nbsp;</i>and delete all the programs which start on startup.</li><li>Enter <b>Windows Key+R</b>, write&nbsp;<b>appwiz.cpl</b>, and uninstall all the&nbsp;unnecessary programs in your machine.<br></li>
+    <li>You should <u>update Windows</u> right now, even if the install is fresh.</li><li>Debloat Windows deleting telemetry and other stuff: Run this on Powershell:&nbsp;<b style="font-style: italic;">iwr -useb https://git.io/debloat|iex</b>.<b style="font-style: italic;">&nbsp;</b>Or this:&nbsp;<b>iex ((New-Object
+</b><br><b>System.Net.WebClient).DownloadString('https://git.io/JJ8R4'))</b>.</li><li>Disable startup programs. Enter <b>Windows Key+R</b>, write&nbsp;<b style="font-style: italic;">shell:startup</b>, hit enter<i>&nbsp;</i>and delete all the programs which start on startup.</li><li>Enter <b>Windows Key+R</b>, write&nbsp;<b>appwiz.cpl</b>, hit enter and uninstall all the&nbsp;unnecessary programs in your machine.<br></li>
   </ol>
             ]]>
         </content>
