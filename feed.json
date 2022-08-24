@@ -10,6 +10,20 @@
     },
     "items": [
         {
+            "id": "https://baronhez.github.io/hello-2.html",
+            "url": "https://baronhez.github.io/hello-2.html",
+            "title": "Hello",
+            "summary": "*This is a test",
+            "content_html": "<p>*This is a test</p>\n",
+            "author": {
+                "name": "Jonathan Ródenas López"
+            },
+            "tags": [
+            ],
+            "date_published": "2022-08-24T18:14:01+02:00",
+            "date_modified": "2022-08-24T18:14:01+02:00"
+        },
+        {
             "id": "https://baronhez.github.io/hello.html",
             "url": "https://baronhez.github.io/hello.html",
             "title": "Hello",

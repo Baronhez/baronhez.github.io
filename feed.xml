@@ -3,12 +3,33 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-24T18:09:46+02:00</updated>
+    <updated>2022-08-24T18:14:01+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
     <id>https://baronhez.github.io</id>
 
+    <entry>
+        <title>Hello</title>
+        <author>
+            <name>Jonathan Ródenas López</name>
+        </author>
+        <link href="https://baronhez.github.io/hello-2.html"/>
+        <id>https://baronhez.github.io/hello-2.html</id>
+
+        <updated>2022-08-24T18:14:01+02:00</updated>
+            <summary>
+                <![CDATA[
+                    *This is a test
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                <p>*This is a test</p>
+
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Hello</title>
         <author>
