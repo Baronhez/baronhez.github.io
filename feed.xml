@@ -3,12 +3,157 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-25T03:12:05+02:00</updated>
+    <updated>2022-08-27T14:10:54+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
     <id>https://baronhez.github.io</id>
 
+    <entry>
+        <title>Markdown Beginner Guide</title>
+        <author>
+            <name>Jonathan Ródenas López</name>
+        </author>
+        <link href="https://baronhez.github.io/markdown-beginner-guide/"/>
+        <id>https://baronhez.github.io/markdown-beginner-guide/</id>
+
+        <updated>2022-08-27T14:10:54+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/8/markdown-2.jpg" alt="" />
+                    I am&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://baronhez.github.io/media/posts/8/markdown-2.jpg" alt="" />
+                
+    <h2 id="i-am-not-an-expert-but-this-is-more-than-enough-for-me">
+      I am not an expert, but this is more than enough for me
+    </h2>
+
+  <p>
+    There is a moment in the life of any developer that goes like "MMM I should learn markdown to make better documentation". Well, that moment for me was when I first started with my first webpage.&nbsp;
+  </p>
+
+  <p>
+    Markdown is more complex than you think, is not only about headings and tables, you can also make complex graphs and even network representations (I'm not joking with this). Today I will share with you, fellow developer, my own beginner guide for Markdown.
+  </p>
+<pre class="line-numbers  language-html"><code># Heading H1
+
+## Heading H2
+
+### Heading H3
+
+#### Heading H4 
+
+##### Heading H5
+
+###### Heading H6
+
+This is normal text
+
+**This is bold text**
+
+_This is italic text_
+
+*This is also italic text*
+
+- This
+- is
+- an 
+- unordened
+- list    
+
+1. This
+2. is
+3. a
+4. list
+1. Ordered 
+   1. If you use
+   2. Tab
+      1. It is possible
+      2. to use
+      3. subsections
+         1. really cool
+         
+[This text has a link to www.google.com](www.google.com)
+
+[This text displays an image if you click on it](./path/to/image/example.jpg)
+
+![This alternative text displays an image if you click on it](./foto%20cv.jpg)
+
+&gt;"This text is a quote"
+&gt;
+&gt;-Jonathan  
+
+~~Text through~~
+
+Table:
+
+| Name | Content | Price |
+|------|---------|-------|
+| Name | Content | Price |
+| Name | Content | Price |
+|------|---------|-------|
+|------|---------|-------|
+|------|---------|-------|
+| Name | Content | Price |
+| Name | Content | Price |
+| Name | Content | Price |
+| Name | Content | Price |
+| Name | Content | Price |
+|------|---------|-------|
+|------|---------|-------|
+
+To put some code, use inline code, like `print("Hello, you beaty thing")`
+
+But the best practices is to use code snippets, indicating the lenguage:
+
+````java
+int b = a + c;
+systemprintoutln(b);  
+````
+</code></pre>
+
+  <p>
+    Let's end this with some tricky stuff.
+  </p>
+
+  <p>
+    Take a look into <a href="https://mermaid-js.github.io/mermaid/#/" target="_blank">Mermaid</a>. It allows us to make diagrams and visualizations.
+  </p>
+<pre class="line-numbers  language-html"><code>```mermaid
+graph LR
+    subgraph Name 1
+    A(internet) --&gt; B[your server]
+    end
+    subgraph Name 2
+    B --&gt; D[whoami1]
+    E[ubuntu test] --&gt; D
+    end
+    subgraph Name 3
+    B --&gt; G[whoami 2]
+    end
+    E-..-&gt; G
+```  
+</code></pre>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/8/markdown.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/8/responsive/markdown-xs.PNG 300w ,https://baronhez.github.io/media/posts/8/responsive/markdown-sm.PNG 480w ,https://baronhez.github.io/media/posts/8/responsive/markdown-md.PNG 768w ,https://baronhez.github.io/media/posts/8/responsive/markdown-lg.PNG 1024w ,https://baronhez.github.io/media/posts/8/responsive/markdown-xl.PNG 1360w ,https://baronhez.github.io/media/posts/8/responsive/markdown-2xl.PNG 1600w"  height="392" width="871" alt="" />
+      <figcaption>This is the final graph. Compare the code snippet with the graph to know how to create this diagram.</figcaption>
+    </figure>
+
+  <p>
+    I recommend you to check mermaid and make more complex diagrams if you work with networks in a daily basis, because it is truly useful for this purpose.&nbsp;
+  </p>
+
+  <p>
+    Thanks for reading my quick guide of Markdown. It is short, but the best things in life are short, and I hate to spend 20 minutes reading the filling of some random article from a guide in the internet about how markdown help some developer to cope with the dead of his lost cousin. Guides should get straight to the point :)
+  </p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>How to install and activate Windows 10 and Windows 11 completely for free (the easiest way)</title>
         <author>
