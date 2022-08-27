@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-27T14:10:54+02:00</updated>
+    <updated>2022-08-27T14:15:04+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -17,7 +17,7 @@
         <link href="https://baronhez.github.io/markdown-beginner-guide/"/>
         <id>https://baronhez.github.io/markdown-beginner-guide/</id>
 
-        <updated>2022-08-27T14:10:54+02:00</updated>
+        <updated>2022-08-27T14:15:04+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/8/markdown-2.jpg" alt="" />
@@ -81,7 +81,7 @@ _This is italic text_
 
 [This text displays an image if you click on it](./path/to/image/example.jpg)
 
-![This alternative text displays an image if you click on it](./foto%20cv.jpg)
+![This alternative text displays an image if you click on it](./path/to/image/example.jpg)
 
 &gt;"This text is a quote"
 &gt;
