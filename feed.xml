@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-27T16:58:09+02:00</updated>
+    <updated>2022-08-27T17:17:33+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -17,22 +17,17 @@
         <link href="https://baronhez.github.io/how-to-configure-ssh-to-be-secure/"/>
         <id>https://baronhez.github.io/how-to-configure-ssh-to-be-secure/</id>
 
-        <updated>2022-08-27T16:58:09+02:00</updated>
+        <updated>2022-08-27T17:17:33+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/10/ssh-transformed11.jpeg" alt="" />
+                        <img src="https://baronhez.github.io/media/posts/10/ssh-transformed11.jpeg" alt="Eh" />
                     It should&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <img src="https://baronhez.github.io/media/posts/10/ssh-transformed11.jpeg" alt="" />
+                    <img src="https://baronhez.github.io/media/posts/10/ssh-transformed11.jpeg" alt="Eh" />
                 
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="file:///C:/Users/Baronhez/Documents/Publii/sites/bloghez/input/media/posts/temp/ssh-transformed-transformed-transformed1.jpeg" sizes="100vw" srcset="file:///C:/Users/Baronhez/Documents/Publii/sites/bloghez/input/media/posts/temp/responsive/ssh-transformed-transformed-transformed1-xs.jpeg 300w ,file:///C:/Users/Baronhez/Documents/Publii/sites/bloghez/input/media/posts/temp/responsive/ssh-transformed-transformed-transformed1-sm.jpeg 480w ,file:///C:/Users/Baronhez/Documents/Publii/sites/bloghez/input/media/posts/temp/responsive/ssh-transformed-transformed-transformed1-md.jpeg 768w ,file:///C:/Users/Baronhez/Documents/Publii/sites/bloghez/input/media/posts/temp/responsive/ssh-transformed-transformed-transformed1-lg.jpeg 1024w ,file:///C:/Users/Baronhez/Documents/Publii/sites/bloghez/input/media/posts/temp/responsive/ssh-transformed-transformed-transformed1-xl.jpeg 1360w ,file:///C:/Users/Baronhez/Documents/Publii/sites/bloghez/input/media/posts/temp/responsive/ssh-transformed-transformed-transformed1-2xl.jpeg 1600w"  height="1500" width="1500" alt="" />
-      
-    </figure>
-
     <h2 id="it-should-be-ready-in-just-two-minutes-as-simple-as-that">
       It should be ready in just two minutes, as simple as that.
     </h2>
