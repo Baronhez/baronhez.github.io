@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-27T14:15:04+02:00</updated>
+    <updated>2022-08-27T14:20:02+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -17,7 +17,7 @@
         <link href="https://baronhez.github.io/markdown-beginner-guide/"/>
         <id>https://baronhez.github.io/markdown-beginner-guide/</id>
 
-        <updated>2022-08-27T14:15:04+02:00</updated>
+        <updated>2022-08-27T14:20:02+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/8/markdown-2.jpg" alt="" />
@@ -31,10 +31,6 @@
     <h2 id="i-am-not-an-expert-but-this-is-more-than-enough-for-me">
       I am not an expert, but this is more than enough for me
     </h2>
-
-  <p>
-    There is a moment in the life of any developer that goes like "MMM I should learn markdown to make better documentation". Well, that moment for me was when I first started with my first webpage.&nbsp;
-  </p>
 
   <p>
     Markdown is more complex than you think, is not only about headings and tables, you can also make complex graphs and even network representations (I'm not joking with this). Today I will share with you, fellow developer, my own beginner guide for Markdown.
