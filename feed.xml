@@ -3,12 +3,443 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-27T22:43:18+02:00</updated>
+    <updated>2022-08-28T02:48:46+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
     <id>https://baronhez.github.io</id>
 
+    <entry>
+        <title>Self-Hosting Guide</title>
+        <author>
+            <name>Jonathan Ródenas López</name>
+        </author>
+        <link href="https://baronhez.github.io/b/"/>
+        <id>https://baronhez.github.io/b/</id>
+
+        <updated>2022-08-28T02:48:46+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/11/young-man-engineer-making-program-analyses.jpg" alt="" />
+                    I know,&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://baronhez.github.io/media/posts/11/young-man-engineer-making-program-analyses.jpg" alt="" />
+                
+  <p>
+    I know, you want to self host, for instance, your own webpage, but every time you search for info, people only recommend you to use sh*t like NO-IP and third party providers such as Heroku. But that's not what you want, right? You have a Rashberry Pi or somo old PC and you intent to host your own services, like your webpage, a torrent server or even some filebrowser to manage storage.
+  </p>
+
+  <p>
+    Ok, then I will save you a lot of hours or researching how to mount everything, how to deal with nginx, how to get https certificates... and I will show you the best way of setting up everything.
+  </p>
+
+    <h2 id="prepare-your-server-machine">
+      Prepare your server machine
+    </h2>
+
+  <p>
+    Firtsly, I will start by getting an ISO of Ubuntu Server (you can use another ISOs, like arch linux or Nix, if you are brave enough).&nbsp;
+  </p>
+
+  <p>
+    <a href="https://releases.ubuntu.com/22.04.1/ubuntu-22.04.1-live-server-amd64.iso" target="_blank" class="" rel="nofollow noopener">https://releases.ubuntu.com/22.04.1/ubuntu-22.04.1-live-server-amd64.iso</a>
+  </p>
+
+  <p>
+    Then, use some program, like <a href="https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe" target="_blank" class="" rel="nofollow noopener">Rufus</a> or <a href="https://www.balena.io/etcher/" target="_blank" class="" rel="nofollow noopener">Balena Etcher</a> to flash that ISO into an USB or SD Card (in case you're using a Rashberry Pi).
+  </p>
+
+  <p>
+    If you are not familiar with this, take a look into <a href="https://www.youtube.com/watch?v=Wt0Q-DBejIw" target="_blank" class="" rel="nofollow noopener">this tutorial</a>.
+  </p>
+
+  <p>
+    Ok, now we have an USB or SD Card flashed with our favourite OS for our server. Now it is time to insert that into the server we will be using. If it's possible I recommend you to connect that device to a monitor, in order to see what is happening and make some SSH configurations.
+  </p>
+
+  <p>
+    Once the operating system is installed, we will create a new user and get rid of the default user. (Using the root user for everything is a bad idea).
+  </p>
+<pre class="line-numbers  language-bash"><code>sudo adduser Username
+sudo usermod -aG sudo Username</code></pre>
+
+    <h2 id="how-to-connect-to-our-machine">
+      How to connect to our machine
+    </h2>
+
+  <p>
+    Next, we will configure SSH to be able to connect to our device from another pc. This way it is easier to manage the server (and we will be able to disconnect the monitor from the server).
+  </p>
+
+  <p>
+    I have another guide about how configure SSH to be secure and ready to use, go ahead a <a href="https://baronhez.github.io/how-to-configure-ssh-to-be-secure/" target="_blank" class="">check it</a>.
+  </p>
+
+    <h2 id="unattended-upgrades">
+      Unattended upgrades
+    </h2>
+
+  <p class="msg msg--highlight">
+    If you don't want automated updates, skip this section.
+  </p>
+
+  <p>
+    Ok, now that we are able to connect to the server using SSH, and SSH is configure to be secure, it is time to install our first packages.
+  </p>
+<pre class="line-numbers  language-bash"><code>sudo apt install unattended-upgrades
+dpkg-reconfigure --priority=low unattended-upgrades
+# Now, select yes to enable unattended-upgrades.
+# Once you finish with that, you can change some lines in the configuration of unattended-upgrades.
+nano /etc/apt/apt.conf.d/10periodic
+</code></pre>
+
+  <p>
+    For instance, you can configure something like this:
+  </p>
+<pre class="line-numbers  language-bash"><code>APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";
+APT::Periodic::Unattended-Upgrade "1";</code></pre>
+
+    <h2 id="email-your-logs-to-yourself">
+      Email your logs to yourself
+    </h2>
+
+  <p class="msg msg--highlight">
+    If you don't want to email your logs, skip this section.
+  </p>
+
+  <p>
+    If you want to keep track of your logs and email them to you, then you can use <a href="https://linux.die.net/man/8/logwatch" target="_blank" class="" rel="nofollow noopener">Logwatch</a>.
+  </p>
+
+  <p>
+    To install and configure logwatch, run these commands:
+  </p>
+<pre class="line-numbers  language-bash"><code>sudo apt-get install logwatch
+nano /etc/cron.daily/00logwatch</code></pre>
+
+  <p>
+    Then, add this line:
+  </p>
+<div>/usr/sbin/logwatch --output mail --mailto yourmail@gmail.com --detail high</div>
+
+    <h2 id="installation-of-docker-and-dockercompose">
+      Installation of Docker and Docker-Compose
+    </h2>
+
+  <p class="msg msg--info">
+    The rest of the guide focuses on using docker and docker-compose to deploy services. If you want to deploy your services manually by configuring nginx and cert-manager, go ahead and try it yourself. If you want to do it using kubernetes, I will publish a guide as soon as possible.
+  </p>
+
+  <p>
+    It's time to install docker and docker compose:
+  </p>
+<pre class="line-numbers  language-bash"><code>sudo apt update && sudo apt upgrade
+sudo apt install apt-transport-https ca-certificates curl software-properties-common  
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"  
+apt-cache policy docker-ce
+sudo apt install docker-ce
+sudo systemctl status docker
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose  
+sudo chmod +x /usr/local/bin/docker-compose
+</code></pre>
+
+  <p>
+    Now,&nbsp;assuming that everything went well, we should have docker and docker-compose installed in our server.&nbsp; It's time to test docker-compose by deploying a small web in our local network.
+  </p>
+<pre class="line-numbers  language-bash"><code>mkdir app
+nano app/index.html
+</code></pre>
+
+  <p>
+    Insert this content into the <b>index.html</b> file:
+  </p>
+<pre class="line-numbers  language-html"><code>&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Docker Compose Demo&lt;/title&gt;
+    &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.min.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+	&lt;h1&gt;This is a Docker Compose Demo Page.&lt;/h1&gt;
+	&lt;p&gt;This content is being served by an Nginx container.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+  <p>
+    Save the file, and run the following command:
+  </p>
+<pre class="line-numbers  language-bash"><code>nano docker-compose.yml</code></pre>
+
+  <p>
+    Insert this content into the <b>docker-compose.yml</b> file:
+  </p>
+<pre class="line-numbers  language-yaml"><code>version: '3.7'
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8000:80"
+    volumes:
+      - ./app:/usr/share/nginx/html</code></pre>
+
+  <p>
+    Now, to start our aplication&nbsp;containerized, we must run the following commands:
+  </p>
+<pre class="line-numbers  language-bash"><code>docker-compose up -d
+docker-compose ps
+</code></pre>
+
+  <p>
+    The last command should return an output like this one:
+  </p>
+<pre class="line-numbers  language-html"><code>Creating network "compose-demo_default" with the default driver
+Pulling web (nginx:alpine)...
+alpine: Pulling from library/nginx
+cbdbe7a5bc2a: Pull complete
+10c113fb0c77: Pull complete
+9ba64393807b: Pull complete
+c829a9c40ab2: Pull complete
+61d685417b2f: Pull complete
+Digest: sha256:57254039c6313fe8c53f1acbf15657ec9616a813397b74b063e32443427c5502
+Status: Downloaded newer image for nginx:alpine
+Creating compose-demo_web_1 ... done</code></pre>
+
+  <p>
+    Now, your webpage should be accesible through your browser by typing "your_server_domain_or_IP:8000".
+  </p>
+
+  <p>
+    Ok, now that we have a webpage deployed in our local network, I should share a few useful commands:
+  </p>
+<pre class="line-numbers  language-bash"><code># We can see the logs of our containers
+docker-compose logs
+# Pause our containers
+docker-compose pause
+# Unpause our containers
+docker-compose unpause
+# Stop our containers
+docker-compose stop
+# Delete all the resources and volumes assigned to our containers
+docker-compose down
+# List our images
+docker images
+# Delete our images
+docker image rm nginx:alpine
+# Or
+docker rmi nginx:alpine
+# We can delete all stoped container, every network not use by al least one container, every unused image and all build cache.
+docker system prune -a
+# Do the same but filtering specific images
+docker system prune --filter nginx:alpine
+# Or just the volumes
+docker system prune --volumes
+# Or we can do the same but without asking for confirmation
+docker system prune -a -f      
+</code></pre>
+
+  <p>
+    Now, if you want to deploy you web to the world outside your local network, you must change a few things in your router (supposing you have access to the router). It is completely necessary to set port-forwarding, because if you are mounting your server at home, your devices are connected inside your home using a private network. It is possible for us to connect to the internet thanks to <a href="https://en.wikipedia.org/wiki/Network_address_translation" rel="nofollow noopener">NAT</a>.&nbsp;
+  </p>
+
+  <p>
+    Each router is a different world, so you must search information about how to port-forward in your home router.&nbsp;
+  </p>
+
+  <p>
+    On the other hand, if you're using some provider for your server, such as a VM in Oracle Cloud, then it should be easier. Search for your specific provider how to port-forward and that's the end of the problem.
+  </p>
+
+    <h2 id="using-a-domain-name-and-ddns">
+      Using a domain name and DDNS
+    </h2>
+
+  <p>
+    Ok, if you want to access your webpage easily without having to memorize a bunch of number, you have to buy a domain name. I recommend&nbsp;<a href="https://www.namecheap.com/" target="_blank" class="" data-link-popup-id="1661636146747">https://www.namecheap.com/</a>. It provides cheap domain names and it is a DNS provider, but you can pick whichever you want.
+  </p>
+
+  <p>
+    If you want to point your domain name to your server, there is one problem if your server is in your home. Most ISP (or all of them, to be honest) nowadays change your public IP from time to time. If you don't want to lose access to your webpage when that happens, we must use Dynamic DNS. It is necessary to set DDNS with your DNS provider and use a DDNS client in our server to comunicate with our DNS provider. The DDNS client will inform the DNS provider of your new IP.
+  </p>
+
+  <p>
+    I use <a href="https://ddclient.net/" target="_blank" rel="nofollow noopener">ddclient</a> for that, because Namecheap has a <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/583/11/how-do-i-configure-ddclient/" target="_blank" rel="nofollow noopener">guide</a> to use it with them.
+  </p>
+
+    <h2 id="using-https-certificates-from-lets-encrypt">
+      Using HTTPS certificates from Let's Encrypt
+    </h2>
+
+  <p>
+    Next step is to create HTTPS certificates for our webpage. The docker way of doing this is by configurating let's encrypt. We can do it with different methods, but the best for me is using one of the best&nbsp;Edge Router nowadays. I'm talking of <a href="https://doc.traefik.io/traefik/" target="_blank" rel="nofollow noopener"><u>Traefik</u></a>.
+  </p>
+
+  <p>
+    I will save you tons of documentation, because this guide is already too long. If you want to set a reverse proxy with traefik which also can generate certificates with Let's Encrypt, just use this files:
+  </p>
+
+  <p>
+    First, create an acme.json file and change its privilegies (take into account the path of the acme.json file, because you have to add that path to the <b>docker-compose.yaml</b> file:
+  </p>
+<pre class="line-numbers  language-bash"><code>touch acme.json
+chmod 600 acme.json</code></pre>
+
+  <p>
+    Second, a <b>docker-compose.yaml</b>(put your domain name where it says YOUR-DOMAIN-NAME and put the path to your acme.json file and your webpage folder):
+  </p>
+<pre class="line-numbers  language-bash"><code>nano docker-compose.yaml</code></pre>
+<pre class="line-numbers  language-yaml"><code>version: '3.7'
+services:
+  traefik:
+    image: traefik:2.5.5
+    container_name: traefik
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ./config/:/etc/traefik/
+      - /path/to/acme.json:/etc/traefik/acme/acme.json
+      - /var/run/docker.sock:/var/run/docker.sock
+  web:
+    image: nginx:1.21.4-alpine
+    container_name: web
+    restart: always
+    expose:
+      - "80"
+    volumes:
+      - /path/to/your/webpage/folder:/usr/share/nginx/html:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.webpage.entryPoints=web-secure
+      - traefik.http.routers.webpage.rule=Host(`YOUR-DOMAIN-NAME`)
+      - "traefik.http.routers.webpage.middlewares=secHeader@file"
+</code></pre>
+
+  <p>
+    Now, create a folder and two different files for traefik configuration (put your domain name where it says YOUR-DOMAIN-NAME and your preferred email where it says youremail@example.com):
+  </p>
+<pre class="line-numbers  language-bash"><code>mkdir ./config
+nano ./config/traefik.yml</code></pre>
+<pre class="line-numbers  language-yaml"><code># traefik.yml
+api:
+  dashboard: true # Enable the dashboard
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: web-secure
+  web-secure:
+    address: ":443"
+    http:
+      tls:
+        certResolver: default
+providers:
+        # In order to get this working on docker, refer to https://doc.traefik.io/traefik/providers/docker/ for more info.
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false # As seen in the documentation, "Expose containers by default through Traefik. If set to false, containers that do not have a traefik.enable=true label are ignored from the resulting routing configuration".
+  file:
+    filename: /etc/traefik/config.yml # In order to get all my configuration info in a separate file (dinamic.yaml), I use https://doc.traefik.io/traefik/providers/file/.
+    watch: true # Watch for changes
+    
+certificatesResolvers: # Refer to https://doc.traefik.io/traefik/https/acme/#certificate-resolvers to more info. 
+  default:
+    acme:
+      email: youremail@example.com 
+      storage: /etc/traefik/acme/acme.json # Previously you have to create the file, change the permissions using chmod and then use a docker volume.
+      keyType: 'EC384' # 
+      tlsChallenge: true # https://doc.traefik.io/traefik/https/acme/#tlschallenge
+</code></pre>
+
+  <p>
+    Now, we have to configure one last yaml file&nbsp;(put your domain name where it says YOUR-DOMAIN-NAME):
+  </p>
+<pre class="line-numbers  language-bash"><code>nano ./config/config.yml</code></pre>
+<pre class="line-numbers  language-yaml"><code>  http:
+  routers:
+    traefik:
+      rule: Host(`subdomainForTheDashboard.YOUR-DOMAIN-NAME`)
+      entryPoints: 
+        - "web-secure"
+      service: api@internal
+      middlewares:
+        - secHeader
+      tls:
+        certResolver: default
+  middlewares:
+          # In order to modify the request, I use middlewares. In this case to force https.
+    secHeader:
+        # HSTS / Secure Headers, Useful to have a more secure experience with HTTPS
+      headers:
+        accessControlMaxAge: 
+          - 100
+        hostsProxyHeaders:
+          - "X-Forwarded-Host"
+        forceSTSHeader: true
+        frameDeny: true
+        sslRedirect: true
+        browserXssFilter: true      
+        contentTypeNosniff: true
+        customFrameOptionsValue: "allow-from https:YOUR-DOMAIN-NAME"
+        referrerPolicy: "same-origin"
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000
+        featurePolicy: "camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';"
+        customResponseHeaders:
+          X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex,"
+          server: "YOUR-DOMAIN-NAME"
+tls:
+        # Now, I refer to https://doc.traefik.io/traefik/https/tls/ for information. 
+        # Options allow me to to configure some parameters of the TLS connection.
+  options:
+    default:
+            # Now, here a use the min Version tls version 1.2 just as shown in the traefik documentation (This config will get an A+ grade in https://www.ssllabs.com/ssltest/) 
+      minVersion: VersionTLS12 # Refering to the Traefik Documentation, I use sniStrict because "Traefik won't allow connections from clients that do not specify a server_name extension or don't match any certificate configured on the tlsOption".
+      sniStrict: true
+      cipherSuites:
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+        - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384   # TLS 1.2
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305    # TLS 1.2
+        - TLS_AES_256_GCM_SHA384                  # TLS 1.3
+        - TLS_CHACHA20_POLY1305_SHA256            # TLS 1.3
+        # Now I define the eliptic curves preferences for ECC cryptography
+        # Refer to https://pkg.go.dev/crypto/tls#CurveID for more info
+      curvePreferences:
+        - CurveP521
+        - CurveP384
+    mintls13:
+      minVersion: VersionTLS13
+      sniStrict: true
+</code></pre>
+
+  <p>
+    Ok, this configuration should work flawlessly. You can add more middlewares, such as rate limit or plugins like fail2ban. I'm not covering that here right now.
+  </p>
+
+  <p>
+    To deploy this configuration, go to the folder where the <b>docker-compose.yaml</b> file is, and run the following command:
+  </p>
+<pre class="line-numbers  language-bash"><code>sudo docker-compose up -d</code></pre>
+
+  <p>
+    If you go to your domain, assuming that you previouly pointed the domain to your server IP (or the public IP of your router, in case of a home server), the webpage should be displayed in the browser as intended.
+  </p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>How to get notifications each time someone enters your server</title>
         <author>
@@ -17,7 +448,7 @@
         <link href="https://baronhez.github.io/how-to-get-notifications-each-time-someone-enters-your-server/"/>
         <id>https://baronhez.github.io/how-to-get-notifications-each-time-someone-enters-your-server/</id>
 
-        <updated>2022-08-27T22:43:18+02:00</updated>
+        <updated>2022-08-27T23:16:40+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/12/51-Messages-2.jpg" alt="" />
@@ -155,7 +586,7 @@ assert response.body == "ok"</code></pre>
         <link href="https://baronhez.github.io/how-to-configure-ssh-to-be-secure/"/>
         <id>https://baronhez.github.io/how-to-configure-ssh-to-be-secure/</id>
 
-        <updated>2022-08-27T17:17:33+02:00</updated>
+        <updated>2022-08-27T23:16:33+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/10/ssh-transformed11.jpeg" alt="Eh" />
@@ -469,7 +900,7 @@ sudo systemctl status fail2ban</code></pre>
     </h2>
 
   <p>
-    I found all this tweaks and tricks in random sources from internet, but to sum it all, all of them can be found in two webpages, so the credit goes to the authors of <a href="https://disknotifier.com/blog/simple-ssh-security/" target="_blank">https://disknotifier.com/blog/simple-ssh-security/</a> and <a href="https://blog.zsec.uk/locking-down-ssh-the-right-way/" target="_blank">https://blog.zsec.uk/locking-down-ssh-the-right-way</a>/.
+    I found all this tweaks and tricks in random sources from internet, but to sum it all, all of them can be found in two webpages, so the credit goes to the authors of <a href="https://disknotifier.com/blog/simple-ssh-security/" target="_blank" class="">https://disknotifier.com/blog/simple-ssh-security/</a> and <a href="https://blog.zsec.uk/locking-down-ssh-the-right-way/" target="_blank">https://blog.zsec.uk/locking-down-ssh-the-right-way</a>/.
   </p>
             ]]>
         </content>
@@ -624,7 +1055,7 @@ graph LR
         <id>https://baronhez.github.io/how-to-install-and-activate-windows-10-and-windows-11-completely-for-free-the-easiest-way/</id>
             <category term="Windows"/>
 
-        <updated>2022-08-25T03:12:05+02:00</updated>
+        <updated>2022-08-27T23:16:21+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/5/wallhaven-x8ye3z.jpg" alt="" />
@@ -644,15 +1075,23 @@ graph LR
 
   <p>
     <b>Step 1:</b> You must get an ISO of w10 or w11 from anywhere.
-<br>You can get it from <a href="https://www.microsoft.com/en-us/software-download" target="_blank">official sites</a> or from <a href="https://linuxct.space/Windows/" target="_blank">mirrors</a>:
+<br>You can get it from <a href="https://www.microsoft.com/en-us/software-download" target="_blank" class="" rel="nofollow noopener">official sites</a> or from <a href="https://linuxct.space/Windows/" target="_blank" class="" rel="nofollow noopener">mirrors</a>:
+  </p>
+
+  <p>
+    
+  </p>
+
+  <p>
+    
   </p>
 
   <p>
     <b>W11 ISO
 </b><br><u>Microsoft official:
-</u><br><a href="https://www.microsoft.com/en-us/software-download/windows11" class="" target="_blank">https://www.microsoft.com/en-us/software-download/windows11
+</u><br><a href="https://www.microsoft.com/en-us/software-download/windows11" class="" target="_blank" rel="nofollow noopener">https://www.microsoft.com/en-us/software-download/windows11
 <br></a><u>Mirror:
-</u><br><a href="https://linuxct.space/Windows/" class="" target="_blank">https://linuxct.space/Windows/</a>
+</u><br><a href="https://linuxct.space/Windows/" class="" target="_blank" rel="nofollow noopener">https://linuxct.space/Windows/</a>
   </p>
 
   <p>
@@ -660,12 +1099,12 @@ graph LR
 </b><br><u>Microsoft official</u>:
 <br><a href="https://www.microsoft.com/en-us/software-download/windows10" class="" target="_blank">https://www.microsoft.com/en-us/software-download/windows10
 <br></a><u>Pirated Windows</u>, in case you want to choose a specific version:
-<br><a href="https://tb.rg-adguard.net/public.php" target="_blank">https://tb.rg-adguard.net/public.php</a>
+<br><a href="https://tb.rg-adguard.net/public.php" target="_blank" class="" rel="nofollow noopener">https://tb.rg-adguard.net/public.php</a>
   </p>
 
   <p class="msg msg--highlight">
     <em><b>Attention:</b></em>
-<br>As such, if you feel like it, you can download an ISO previously debloated by others and then you can go straight to the heart of the matter.<br><a href="https://ameliorated.info/documentation.html" target="_blank">https://ameliorated.info/documentation.html</a>
+<br>As such, if you feel like it, you can download an ISO previously debloated by others and then you can go straight to the heart of the matter.<br><a href="https://ameliorated.info/documentation.html" target="_blank" class="" rel="nofollow noopener">https://ameliorated.info/documentation.html</a>
   </p>
 
   <p>
@@ -682,7 +1121,7 @@ graph LR
   </p>
 
   <p>
-    <a href="https://www.youtube.com/watch?v=Wt0Q-DBejIw" target="_blank">https://www.youtube.com/watch?v=Wt0Q-DBejIw</a>
+    <a href="https://www.youtube.com/watch?v=Wt0Q-DBejIw" target="_blank" class="" data-link-popup-id="1661386907157">https://www.youtube.com/watch?v=Wt0Q-DBejIw</a>
   </p>
 
   <p>
@@ -690,7 +1129,7 @@ graph LR
   </p>
 
   <p>
-    <a href="https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe" target="_blank">https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe</a>
+    <a href="https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe" target="_blank" class="" rel="nofollow noopener">https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe</a>
   </p>
 
   <p>
@@ -698,18 +1137,18 @@ graph LR
   </p>
 
   <p>
-    <a href="https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/" target="_blank">https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/</a>
+    <a href="https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/" target="_blank" class="" rel="nofollow noopener">https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/</a>
   </p>
 
   <p>
-    Or&nbsp;SUSE imagewriter:&nbsp;<a href="https://software.opensuse.org/package/imagewriter" target="_blank">https://software.opensuse.org/package/imagewriter</a>
+    Or&nbsp;SUSE imagewriter:&nbsp;<a href="https://software.opensuse.org/package/imagewriter" target="_blank" class="" rel="nofollow noopener">https://software.opensuse.org/package/imagewriter</a>
   </p>
 
   <p>
     <b>Step 3:</b> Insert the flashed usb into the machine where you want to install windows and once the installation environment starts, we can freely hit next until we&nbsp;get to the part that asks for an activation code.
 <br>We have two options:
 <br>We put one of these:
-<br><a href="https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093" target="_blank">https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093
+<br><a href="https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093" target="_blank" class="" rel="nofollow noopener">https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093
 <br></a>Or we click the "I do not have an activation code" to continue with the installation.
   </p>
 
@@ -722,11 +1161,11 @@ graph LR
   </p>
 
   <p class="msg msg--highlight">
-    If you want documentation for this step, go to <a href="https://massgrave.dev/" target="_blank">https://massgrave.dev/</a>
+    If you want documentation for this step, go to <a href="https://massgrave.dev/" target="_blank" class="" rel="nofollow noopener">https://massgrave.dev/</a>
   </p>
 
   <p>
-    Let's enter this webpage:<br><a href="https://github.com/massgravel/Microsoft-Activation-Scripts/releases" target="_blank">https://github.com/massgravel/Microsoft-Activation-Scripts/releases</a>
+    Let's enter this webpage:<br><a href="https://github.com/massgravel/Microsoft-Activation-Scripts/releases" target="_blank" class="" rel="nofollow noopener">https://github.com/massgravel/Microsoft-Activation-Scripts/releases</a>
   </p>
 
     <figure class="post__image post__image--center">
@@ -735,7 +1174,7 @@ graph LR
     </figure>
 
   <p>
-    Now, we have to unzip this file. But we do not have any zip program yet. Let's jump there to another webpage in order to download useful programs. This webpage is <a href="https://ninite.com/" target="_blank">Ninite</a>. This webpage allows us to install multiple program just by executing one single exe file. Once you have marked the programs that you want to install, click the button "Get your ninite". Then, run the exe file you just downloaded.
+    Now, we have to unzip this file. But we do not have any zip program yet. Let's jump there to another webpage in order to download useful programs. This webpage is <a href="https://ninite.com/" target="_blank" class="" rel="nofollow noopener">Ninite</a>. This webpage allows us to install multiple program just by executing one single exe file. Once you have marked the programs that you want to install, click the button "Get your ninite". Then, run the exe file you just downloaded.
   </p>
 
   <p>
@@ -771,7 +1210,7 @@ graph LR
 
   <p class="msg msg--highlight">
     Attention: An alternative to all of this is to use
-<br><a href="https://github.com/kkkgo/KMS_VL_ALL">https://github.com/kkkgo/KMS_VL_ALL</a>
+<br><a href="https://github.com/kkkgo/KMS_VL_ALL" class="" target="_blank" rel="nofollow noopener">https://github.com/kkkgo/KMS_VL_ALL</a>
   </p>
 
   <p>
@@ -799,15 +1238,23 @@ graph LR
 
   <p>
     <b>Step 1:</b> You must get an ISO of w10 or w11 from anywhere.
-<br>You can get it from <a href="https://www.microsoft.com/en-us/software-download" target="_blank">official sites</a> or from <a href="https://linuxct.space/Windows/" target="_blank">mirrors</a>:
+<br>You can get it from <a href="https://www.microsoft.com/en-us/software-download" target="_blank" class="" rel="nofollow noopener">official sites</a> or from <a href="https://linuxct.space/Windows/" target="_blank" class="" rel="nofollow noopener">mirrors</a>:
+  </p>
+
+  <p>
+    
+  </p>
+
+  <p>
+    
   </p>
 
   <p>
     <b>W11 ISO
 </b><br><u>Microsoft official:
-</u><br><a href="https://www.microsoft.com/en-us/software-download/windows11" class="" target="_blank">https://www.microsoft.com/en-us/software-download/windows11
+</u><br><a href="https://www.microsoft.com/en-us/software-download/windows11" class="" target="_blank" rel="nofollow noopener">https://www.microsoft.com/en-us/software-download/windows11
 <br></a><u>Mirror:
-</u><br><a href="https://linuxct.space/Windows/" class="" target="_blank">https://linuxct.space/Windows/</a>
+</u><br><a href="https://linuxct.space/Windows/" class="" target="_blank" rel="nofollow noopener">https://linuxct.space/Windows/</a>
   </p>
 
   <p>
@@ -815,12 +1262,12 @@ graph LR
 </b><br><u>Microsoft official</u>:
 <br><a href="https://www.microsoft.com/en-us/software-download/windows10" class="" target="_blank">https://www.microsoft.com/en-us/software-download/windows10
 <br></a><u>Pirated Windows</u>, in case you want to choose a specific version:
-<br><a href="https://tb.rg-adguard.net/public.php" target="_blank">https://tb.rg-adguard.net/public.php</a>
+<br><a href="https://tb.rg-adguard.net/public.php" target="_blank" class="" rel="nofollow noopener">https://tb.rg-adguard.net/public.php</a>
   </p>
 
   <p class="msg msg--highlight">
     <em><b>Attention:</b></em>
-<br>As such, if you feel like it, you can download an ISO previously debloated by others and then you can go straight to the heart of the matter.<br><a href="https://ameliorated.info/documentation.html" target="_blank">https://ameliorated.info/documentation.html</a>
+<br>As such, if you feel like it, you can download an ISO previously debloated by others and then you can go straight to the heart of the matter.<br><a href="https://ameliorated.info/documentation.html" target="_blank" class="" rel="nofollow noopener">https://ameliorated.info/documentation.html</a>
   </p>
 
   <p>
@@ -837,7 +1284,7 @@ graph LR
   </p>
 
   <p>
-    <a href="https://www.youtube.com/watch?v=Wt0Q-DBejIw" target="_blank">https://www.youtube.com/watch?v=Wt0Q-DBejIw</a>
+    <a href="https://www.youtube.com/watch?v=Wt0Q-DBejIw" target="_blank" class="" data-link-popup-id="1661386907157">https://www.youtube.com/watch?v=Wt0Q-DBejIw</a>
   </p>
 
   <p>
@@ -845,7 +1292,7 @@ graph LR
   </p>
 
   <p>
-    <a href="https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe" target="_blank">https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe</a>
+    <a href="https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe" target="_blank" class="" rel="nofollow noopener">https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe</a>
   </p>
 
   <p>
@@ -853,18 +1300,18 @@ graph LR
   </p>
 
   <p>
-    <a href="https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/" target="_blank">https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/</a>
+    <a href="https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/" target="_blank" class="" rel="nofollow noopener">https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/</a>
   </p>
 
   <p>
-    Or&nbsp;SUSE imagewriter:&nbsp;<a href="https://software.opensuse.org/package/imagewriter" target="_blank">https://software.opensuse.org/package/imagewriter</a>
+    Or&nbsp;SUSE imagewriter:&nbsp;<a href="https://software.opensuse.org/package/imagewriter" target="_blank" class="" rel="nofollow noopener">https://software.opensuse.org/package/imagewriter</a>
   </p>
 
   <p>
     <b>Step 3:</b> Insert the flashed usb into the machine where you want to install windows and once the installation environment starts, we can freely hit next until we&nbsp;get to the part that asks for an activation code.
 <br>We have two options:
 <br>We put one of these:
-<br><a href="https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093" target="_blank">https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093
+<br><a href="https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093" target="_blank" class="" rel="nofollow noopener">https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093
 <br></a>Or we click the "I do not have an activation code" to continue with the installation.
   </p>
 
@@ -877,11 +1324,11 @@ graph LR
   </p>
 
   <p class="msg msg--highlight">
-    If you want documentation for this step, go to <a href="https://massgrave.dev/" target="_blank">https://massgrave.dev/</a>
+    If you want documentation for this step, go to <a href="https://massgrave.dev/" target="_blank" class="" rel="nofollow noopener">https://massgrave.dev/</a>
   </p>
 
   <p>
-    Let's enter this webpage:<br><a href="https://github.com/massgravel/Microsoft-Activation-Scripts/releases" target="_blank">https://github.com/massgravel/Microsoft-Activation-Scripts/releases</a>
+    Let's enter this webpage:<br><a href="https://github.com/massgravel/Microsoft-Activation-Scripts/releases" target="_blank" class="" rel="nofollow noopener">https://github.com/massgravel/Microsoft-Activation-Scripts/releases</a>
   </p>
 
     <figure class="post__image post__image--center">
@@ -890,7 +1337,7 @@ graph LR
     </figure>
 
   <p>
-    Now, we have to unzip this file. But we do not have any zip program yet. Let's jump there to another webpage in order to download useful programs. This webpage is <a href="https://ninite.com/" target="_blank">Ninite</a>. This webpage allows us to install multiple program just by executing one single exe file. Once you have marked the programs that you want to install, click the button "Get your ninite". Then, run the exe file you just downloaded.
+    Now, we have to unzip this file. But we do not have any zip program yet. Let's jump there to another webpage in order to download useful programs. This webpage is <a href="https://ninite.com/" target="_blank" class="" rel="nofollow noopener">Ninite</a>. This webpage allows us to install multiple program just by executing one single exe file. Once you have marked the programs that you want to install, click the button "Get your ninite". Then, run the exe file you just downloaded.
   </p>
 
   <p>
@@ -926,7 +1373,7 @@ graph LR
 
   <p class="msg msg--highlight">
     Attention: An alternative to all of this is to use
-<br><a href="https://github.com/kkkgo/KMS_VL_ALL">https://github.com/kkkgo/KMS_VL_ALL</a>
+<br><a href="https://github.com/kkkgo/KMS_VL_ALL" class="" target="_blank" rel="nofollow noopener">https://github.com/kkkgo/KMS_VL_ALL</a>
   </p>
 
   <p>
