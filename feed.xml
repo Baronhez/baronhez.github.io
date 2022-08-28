@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-28T03:12:16+02:00</updated>
+    <updated>2022-08-28T03:14:25+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -17,7 +17,7 @@
         <link href="https://baronhez.github.io/b/"/>
         <id>https://baronhez.github.io/b/</id>
 
-        <updated>2022-08-28T03:12:16+02:00</updated>
+        <updated>2022-08-28T03:14:25+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/11/young-man-engineer-making-program-analyses.jpg" alt="" />
@@ -63,8 +63,10 @@
   <p>
     Once the operating system is installed, we will create a new user and get rid of the default user. (Using the root user for everything is a bad idea).
   </p>
-<pre class="line-numbers  language-bash"><code>sudo adduser Username
-sudo usermod -aG sudo Username</code></pre>
+<pre class="line-numbers  language-markdown"><code>```bash
+sudo adduser Username
+sudo usermod -aG sudo Username
+```</code></pre>
 
     <h2 id="how-to-connect-to-our-machine">
       How to connect to our machine
