@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-28T02:50:50+02:00</updated>
+    <updated>2022-08-28T03:12:16+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -17,7 +17,7 @@
         <link href="https://baronhez.github.io/b/"/>
         <id>https://baronhez.github.io/b/</id>
 
-        <updated>2022-08-28T02:50:50+02:00</updated>
+        <updated>2022-08-28T03:12:16+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/11/young-man-engineer-making-program-analyses.jpg" alt="" />
@@ -78,8 +78,8 @@ sudo usermod -aG sudo Username</code></pre>
     I have another guide about how configure SSH to be secure and ready to use, go ahead a <a href="https://baronhez.github.io/how-to-configure-ssh-to-be-secure/" target="_blank" class="">check it</a>.
   </p>
 
-    <h2 id="unattended-upgrades">
-      Unattended upgrades
+    <h2 id="unattended-upgrades-optional">
+      Unattended upgrades (optional)
     </h2>
 
   <p class="msg msg--highlight">
@@ -104,8 +104,8 @@ APT::Periodic::Download-Upgradeable-Packages "1";
 APT::Periodic::AutocleanInterval "7";
 APT::Periodic::Unattended-Upgrade "1";</code></pre>
 
-    <h2 id="email-your-logs-to-yourself">
-      Email your logs to yourself
+    <h2 id="email-your-logs-to-yourself-optional">
+      Email your logs to yourself (optional)
     </h2>
 
   <p class="msg msg--highlight">
@@ -192,14 +192,13 @@ services:
       - ./app:/usr/share/nginx/html</code></pre>
 
   <p>
-    Now, to start our aplication&nbsp;containerized, we must run the following commands:
+    Now, to start our aplication&nbsp;containerized, we must run the following command:
   </p>
 <pre class="line-numbers  language-bash"><code>docker-compose up -d
-docker-compose ps
 </code></pre>
 
   <p>
-    The last command should return an output like this one:
+    That command should return an output like this one:
   </p>
 <pre class="line-numbers  language-html"><code>Creating network "compose-demo_default" with the default driver
 Pulling web (nginx:alpine)...
@@ -214,11 +213,11 @@ Status: Downloaded newer image for nginx:alpine
 Creating compose-demo_web_1 ... done</code></pre>
 
   <p>
-    Now, your webpage should be accesible through your browser by typing "your_server_domain_or_IP:8000".
+    Now, your webpage should be accesible through your browser by typing "local-IP-of-your-server:8000".
   </p>
 
   <p>
-    Ok, now that we have a webpage deployed in our local network, I should share a few useful commands:
+    Ok, now that we have a webpage deployed in our local network, I should share a few useful commands to manage Docker:
   </p>
 <pre class="line-numbers  language-bash"><code># We can see the logs of our containers
 docker-compose logs
@@ -263,11 +262,11 @@ docker system prune -a -f
     </h2>
 
   <p>
-    Ok, if you want to access your webpage easily without having to memorize a bunch of number, you have to buy a domain name. I recommend&nbsp;<a href="https://www.namecheap.com/" target="_blank" class="" data-link-popup-id="1661636146747">https://www.namecheap.com/</a>. It provides cheap domain names and it is a DNS provider, but you can pick whichever you want.
+    Ok, if you want to access your webpage easily without having to memorize a bunch of numbers, you have to buy a domain name. I recommend&nbsp;<a href="https://www.namecheap.com/" target="_blank" class="" data-link-popup-id="1661636146747">https://www.namecheap.com/</a>. It provides cheap domain names and it is also a DNS provider, but you can pick whichever you want.
   </p>
 
   <p>
-    If you want to point your domain name to your server, there is one problem if your server is in your home. Most ISP (or all of them, to be honest) nowadays change your public IP from time to time. If you don't want to lose access to your webpage when that happens, we must use Dynamic DNS. It is necessary to set DDNS with your DNS provider and use a DDNS client in our server to comunicate with our DNS provider. The DDNS client will inform the DNS provider of your new IP.
+    If you want to point your domain name to your server, there is one problem if your server is in your home. Most ISPs (or all of them, to be honest) nowadays change your public IP from time to time. If you don't want to lose access to your webpage when that happens, we must use Dynamic DNS. It is necessary to set DDNS with your DNS provider and use a DDNS client in our server to comunicate with our DNS provider. The DDNS client will inform the DNS provider of your new IP.
   </p>
 
   <p>
@@ -279,7 +278,7 @@ docker system prune -a -f
     </h2>
 
   <p>
-    Next step is to create HTTPS certificates for our webpage. The docker way of doing this is by configurating let's encrypt. We can do it with different methods, but the best for me is using one of the best&nbsp;Edge Router nowadays. I'm talking of <a href="https://doc.traefik.io/traefik/" target="_blank" rel="nofollow noopener"><u>Traefik</u></a>.
+    Next step is to create HTTPS certificates for our webpage. The docker way of doing this is by configurating let's encrypt. We can do it using different methods, but the best for me is using one of the best&nbsp;Edge Router nowadays. I'm talking of <a href="https://doc.traefik.io/traefik/" target="_blank" rel="nofollow noopener"><u>Traefik</u></a>.
   </p>
 
   <p>
@@ -291,36 +290,6 @@ docker system prune -a -f
   </p>
 <pre class="line-numbers  language-bash"><code>touch acme.json
 chmod 600 acme.json</code></pre>
-
-  <p>
-    Second, a <b>docker-compose.yaml</b>(put your domain name where it says YOUR-DOMAIN-NAME and put the path to your acme.json file and your webpage folder):
-  </p>
-<pre class="line-numbers  language-bash"><code>nano docker-compose.yaml</code></pre>
-<pre class="line-numbers  language-yaml"><code>version: '3.7'
-services:
-  traefik:
-    image: traefik:2.5.5
-    container_name: traefik
-    network_mode: host
-    restart: unless-stopped
-    volumes:
-      - ./config/:/etc/traefik/
-      - /path/to/acme.json:/etc/traefik/acme/acme.json
-      - /var/run/docker.sock:/var/run/docker.sock
-  web:
-    image: nginx:1.21.4-alpine
-    container_name: web
-    restart: always
-    expose:
-      - "80"
-    volumes:
-      - /path/to/your/webpage/folder:/usr/share/nginx/html:ro
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.webpage.entryPoints=web-secure
-      - traefik.http.routers.webpage.rule=Host(`YOUR-DOMAIN-NAME`)
-      - "traefik.http.routers.webpage.middlewares=secHeader@file"
-</code></pre>
 
   <p>
     Now, create a folder and two different files for traefik configuration (put your domain name where it says YOUR-DOMAIN-NAME and your preferred email where it says youremail@example.com):
@@ -430,12 +399,63 @@ tls:
   </p>
 
   <p>
+    Lastly, a <b>docker-compose.yaml</b>(put your domain name where it says YOUR-DOMAIN-NAME and put the path to your acme.json file and your webpage folder):
+  </p>
+<pre class="line-numbers  language-bash"><code>nano docker-compose.yaml</code></pre>
+<pre class="line-numbers  language-yaml"><code>version: '3.7'
+services:
+  traefik:
+    image: traefik:2.5.5
+    container_name: traefik
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ./config/:/etc/traefik/
+      - /path/to/acme.json:/etc/traefik/acme/acme.json
+      - /var/run/docker.sock:/var/run/docker.sock
+  web:
+    image: nginx:1.21.4-alpine
+    container_name: web
+    restart: always
+    expose:
+      - "80"
+    volumes:
+      - /path/to/your/webpage/folder:/usr/share/nginx/html:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.webpage.entryPoints=web-secure
+      - traefik.http.routers.webpage.rule=Host(`YOUR-DOMAIN-NAME`)
+      - "traefik.http.routers.webpage.middlewares=secHeader@file"
+</code></pre>
+
+  <p>
+    If you want to deploy more services, just add this to every new service in a docker-compose file:
+  </p>
+<pre class="line-numbers  language-yaml"><code> labels:
+      - traefik.enable=true
+      - traefik.http.routers.NAME-ROUTER.entryPoints=web-secure
+      - traefik.http.routers.NAME-ROUTER.rule=Host(`YOUR-DOMAIN-NAME`)
+      - "traefik.http.routers.NAME-ROUTER.middlewares=secHeader@file"</code></pre>
+
+  <p>
+    Just remember to change NAME-ROUTER to another name each time (it is the name of the <a href="https://doc.traefik.io/traefik/routing/routers/" rel="nofollow noopener" class="" target="_blank">traefik router</a>) and YOUR-DOMAIN-NAME should be a subdomain, such as <b>nextcloud.example.com</b>&nbsp;for a hipothetical nextcloud service.
+  </p>
+
+  <p>
     To deploy this configuration, go to the folder where the <b>docker-compose.yaml</b> file is, and run the following command:
   </p>
 <pre class="line-numbers  language-bash"><code>sudo docker-compose up -d</code></pre>
 
   <p>
     If you go to your domain, assuming that you previouly pointed the domain to your server IP (or the public IP of your router, in case of a home server), the webpage should be displayed in the browser as intended.
+  </p>
+
+  <p>
+    That's it, you have started in the selfhosting hobby. I recommend you this <a href="https://www.reddit.com/r/selfhosted/" rel="nofollow noopener">subreddit</a>.
+  </p>
+
+  <p>
+    Good luck, lads.
   </p>
             ]]>
         </content>
