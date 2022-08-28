@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-28T03:58:43+02:00</updated>
+    <updated>2022-08-28T04:26:18+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -17,7 +17,7 @@
         <link href="https://baronhez.github.io/b/"/>
         <id>https://baronhez.github.io/b/</id>
 
-        <updated>2022-08-28T03:58:43+02:00</updated>
+        <updated>2022-08-28T04:26:18+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/11/young-man-engineer-making-program-analyses.jpg" alt="" />
@@ -126,7 +126,7 @@ nano /etc/cron.daily/00logwatch</code></pre>
   <p>
     Then, add this line:
   </p>
-<div>/usr/sbin/logwatch --output mail --mailto yourmail@gmail.com --detail high</div>
+<pre class="line-numbers  language-html"><code>/usr/sbin/logwatch --output mail --mailto yourmail@gmail.com --detail high  </code></pre>
 
     <h2 id="installation-of-docker-and-dockercompose">
       Installation of Docker and Docker-Compose
@@ -243,7 +243,7 @@ docker system prune --filter nginx:alpine
 # Or just the volumes
 docker system prune --volumes
 # Or we can do the same but without asking for confirmation
-docker system prune -a -f      
+docker system prune -a -f  
 </code></pre>
 
   <p>
@@ -334,7 +334,8 @@ certificatesResolvers: # Refer to https://doc.traefik.io/traefik/https/acme/#cer
     Now, we have to configure one last yaml file&nbsp;(put your domain name where it says YOUR-DOMAIN-NAME):
   </p>
 <pre class="line-numbers  language-bash"><code>nano ./config/config.yml</code></pre>
-<pre class="line-numbers  language-yaml"><code>  http:
+<pre class="line-numbers  language-yaml"><code># config.yml
+http:
   routers:
     traefik:
       rule: Host(`subdomainForTheDashboard.YOUR-DOMAIN-NAME`)
