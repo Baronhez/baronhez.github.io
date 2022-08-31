@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en-gb"><head><link rel="stylesheet" href="https://baronhez.github.io/assets/css/prism.css?v=baefed5316aa00c461525f409523c728"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Docker-Compose Best Practices - blogHez</title><meta name="description" content="Or 'The&hellip;"><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://baronhez.github.io/docker-compose-best-practices/"><link rel="alternate" type="application/atom+xml" href="https://baronhez.github.io/feed.xml"><link rel="alternate" type="application/json" href="https://baronhez.github.io/feed.json"><meta property="og:title" content="Docker-Compose Best Practices"><meta property="og:image" content="https://baronhez.github.io/media/posts/14/Docker-Logo-2.png"><meta property="og:site_name" content="blogHez"><meta property="og:description" content="Or 'The&hellip;"><meta property="og:url" content="https://baronhez.github.io/docker-compose-best-practices/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://baronhez.github.io/assets/css/style.css?v=e593e396d418be8ac87b451f827877c0"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://baronhez.github.io/docker-compose-best-practices/"},"headline":"Docker-Compose Best Practices","datePublished":"2022-08-31T03:23","dateModified":"2022-08-31T03:24","image":{"@type":"ImageObject","url":"https://baronhez.github.io/media/posts/14/Docker-Logo-2.png","height":889,"width":1851},"description":"Or 'The&hellip;","author":{"@type":"Person","name":"Jonathan Ródenas López","url":"https://baronhez.github.io/jonathan/jonathan-rodenas-lopez/"},"publisher":{"@type":"Organization","name":"Jonathan Ródenas López"}}</script></head><body><div class="site-container"><header class="top" id="js-header"><a class="logo" href="https://baronhez.github.io/">blogHez</a></header><main><article class="post"><div class="hero"><figure class="hero__image hero__image--overlay"><img src="https://baronhez.github.io/media/posts/14/Docker-Logo-2.png" srcset="https://baronhez.github.io/media/posts/14/responsive/Docker-Logo-2-xs.png 300w, https://baronhez.github.io/media/posts/14/responsive/Docker-Logo-2-sm.png 480w, https://baronhez.github.io/media/posts/14/responsive/Docker-Logo-2-md.png 768w, https://baronhez.github.io/media/posts/14/responsive/Docker-Logo-2-lg.png 1024w, https://baronhez.github.io/media/posts/14/responsive/Docker-Logo-2-xl.png 1360w, https://baronhez.github.io/media/posts/14/responsive/Docker-Logo-2-2xl.png 1600w" sizes="(max-width: 1600px) 100vw, 1600px" loading="eager" height="889" width="1851" alt=""></figure><header class="hero__content"><div class="wrapper"><div class="post__meta"><time datetime="2022-08-31T03:23">August 31, 2022</time></div><h1>Docker-Compose Best Practices</h1><div class="post__meta post__meta--author"><a href="https://baronhez.github.io/jonathan/jonathan-rodenas-lopez/" class="feed__author">Jonathan Ródenas López</a></div></div></header></div><div class="wrapper post__entry"><h2 id="or-the-best-way-to-use-dockercompose-pick-your-poison-">Or "The best way to use Docker-Compose", pick your poison.</h2><p>Ok, I get it. You want to use Docker-Compose in your working environment, but you don't want to destroy everything in the process, and at the same time, get the most out of it.</p><p>Here you go, 6 easy-to-follow tips for you, fellow DevOps!</p><h2 id="tip-1-do-not-rebuild-your-image-each-time-you-make-a-change-in-code-use-volumes-instead">Tip #1: Do NOT rebuild your image each time you make a change in code, use volumes instead.</h2><p>One of my best friends was having a hard time a few months ago, because every time he had to change a line in his python program, he had to rebuild the docker image, and then deploy that new image to the server (what 0 CI/CD pipelines do to a man, hehe).</p><p>The answer to that problem was to use volumes from the beginning. If you, wise reader, save the code in a directory and then, when building the image, use that directory as the volume, the only thing you will have to do to apply the changes made to the code is to restart the container.</p><p>The most easy-to-see example is a nginx image. Save your .html page in a directory, mount that directory as a volume, like:</p><pre class="line-numbers language-yaml"><code> volumes:
+      - /home/example/index.html:/usr/share/nginx/html:ro</code></pre><p>And then, build and deploy that image as a container.</p><p>If you want to make a change to your web page, change the index.html file and then restart the container. You will see the changes immediately.&nbsp;</p><h2 id="tip-2-be-smart-do-not-write-the-same-file-two-times-for-dev-and-prod">Tip #2: Be smart, do NOT write the same file two times for dev and prod.</h2><p>Ok, assuming that you are developing and application, and you need to use some kind of <a href="https://webpack.js.org/" target="_blank" rel="nofollow noopener">Webpack</a> or a PostgresDB ONLY in the dev environment... well, you can use the same docker-compose.yml file and the same .env file, but making a lot of changes each time you have to deploy to prod... On the other hand, that's annoying and awful, so, let's use an override file!</p><p>But what is an override file and why is it so useful in this case?</p><p>Well, imagine that you have a file like this one:</p><pre class="line-numbers language-yaml"><code># docker-compose.yml
+web:
+  image: example/my_web_app:latest
+  depends_on:
+    - db
+    - cache
+
+db:
+  image: postgres:latest
+
+cache:
+  image: redis:latest
+</code></pre><p>If you, for testing purposes, want to deploy this application while exposing some ports, mount your code as a volume, and build the web image, then you should use this override file:</p><pre class="line-numbers language-yaml"><code># docker-compose.override.yml
+web:
+  build: .
+  volumes:
+    - '.:/code'
+  ports:
+    - 8883:80
+  environment:
+    DEBUG: 'true'
+
+db:
+  command: '-d'
+  ports:
+    - 5432:5432
+
+cache:
+  ports:
+    - 6379:6379
+</code></pre><p>Then, while having both files in the same directory, run:</p><pre class="line-numbers language-bash"><code>docker-compose up</code></pre><p>Now, watch in amazement as the services of both archives are deployed at the same time. The reason is that docker-compose search in the current directory for a file named <b>docker-compose.yml</b> or <b>docker-compose.yaml</b>. Then, search for a file name <b>docker-compose.override.yml</b>. Finally, deploys the services contained in both files.</p><p>This is really useful, because if you want to not expose those ports in prod, it is as simple as renaming the override file with any other name. By doing this, we will be deploying only the services in the <b>docker-compose.yml </b>file.&nbsp;</p><p>You can use this in many ways. For instance, you can have a docker-compose.override.example.yml which you can change and rename as <b>docker-compose.override.yml</b>&nbsp;everytime you need to test something in dev. It is similar to when we use a <b>.env-example</b> file. In the <b>.env-example</b> file we have some default or null values which we can change when creating a <b>.env </b>file.</p><p>Another use for the override file is when we are deploying an application in some cloud provider, such as AWS or GCP, which provides some service, as postgres management. If we want to use our own postgres in dev environment, we can use an <b>docker-compose-override.yml </b>file with the postgres service, while in prod, we only use the <b>docker-compose.yml</b>.</p><p>Another way to get modularity is to use the command line:</p><pre class="line-numbers language-yaml"><code># service.yml
+services:
+  service:
+    image: my-image:latest</code></pre><pre class="line-numbers language-yaml"><code># service-dev.yml
+services:
+  service:
+    environment:
+      - DEV_MODE=true</code></pre><pre class="line-numbers language-bash"><code>docker-compose -f service.yml -f service-dev.yml up -d</code></pre><h5 id="credits-for-this-part">Credits for this part:</h5><p><a href="https://www.youtube.com/watch?v=jGePPQFArwo" target="_blank" rel="nofollow noopener">https://www.youtube.com/watch?v=jGePPQFArwo</a></p><p><a href="https://docs.docker.com/compose/extends/" target="_blank" rel="nofollow noopener">https://docs.docker.com/compose/extends/</a></p><p><a href="https://www.howtogeek.com/devops/how-to-simplify-docker-compose-files-with-yaml-anchors-and-extensions/" target="_blank" rel="nofollow noopener">https://www.howtogeek.com/devops/how-to-simplify-docker-compose-files-with-yaml-anchors-and-extensions/</a></p><h2 id="tip-3-be-lazy-do-not-rewrite-the-same-yaml-parts-over-and-over">Tip #3: Be lazy, do NOT rewrite the same yaml parts over and over.</h2><p>Use YAML Archors&nbsp;for your yaml files if you are using over and over again the same yaml names or steps.</p><p>There are 2 parts to this:</p><ul><li>The anchor '&amp;' which defines a chunk of configuration.<br></li><li>The alias '*' used to refer to that chunk elsewhere.<br></li></ul><pre class="line-numbers language-yaml"><code>services:
+  httpd:
+    image: httpd:latest
+    restart: &restartpolicy unless-stopped
+  mysql:
+    image: mysql:latest
+    restart: *restartpolicy</code></pre><p>You can reuse multiple lines:</p><pre class="line-numbers language-yaml"><code>services:
+  first:
+    image: my-image:latest
+    environment: &env
+      - CONFIG_KEY
+      - EXAMPLE_KEY
+      - DEMO_VAR
+  second:
+    image: another-image:latest
+    environment: *env</code></pre><p>Or even extend those chunks of configuration:</p><pre class="line-numbers language-yaml"><code>services:
+  image: my-image:latest
+    environment: &env
+      - CONFIG_KEY
+      - EXAMPLE_KEY
+      - DEMO_VAR      
+  second:
+    image: another-image:latest
+    environment:
+      &lt;&lt;: *env
+      - AN_EXTRA_KEY
+      - SECOND_SPECIFIC_KEY  </code></pre><p>You can use Yaml Archors with Extension fields, because yaml&nbsp;parser will ignore extension fields prefixed with x-. This way, you can reuse, as I mentioned before, chunks of configuration to share configuration:</p><pre class="line-numbers language-yaml"><code>x-env: &env
+  environment:
+    - CONFIG_KEY
+    - EXAMPLE_KEY
+ 
+services:
+  first:
+    &lt;&lt;: *env
+    image: my-image:latest
+  second:
+    &lt;&lt;: *env
+    image: another-image:latest  </code></pre><p class="msg msg--warning">YAML anchors and aliases cannot contain the ' [ ', ' ] ', ' { ', ' } ', and ' , ' characters.</p><p>Here is a <a href="https://www.howtogeek.com/devops/how-to-simplify-docker-compose-files-with-yaml-anchors-and-extensions/" target="_blank" rel="nofollow noopener" data-link-popup-id="1661906797091">guide</a>, which is the one I used to write this tip.</p><h2 id="tip-4-do-not-forget-to-refresh-environment-variables">Tip #4: Do NOT forget to refresh environment variables.</h2><p>Set the restart behavior to <u>restart: always</u>&nbsp;and configure your services with update_config: true. This way, your environment variables will be refreshed each run.</p><h2 id="tip-5-do-not-use-docker-rm-f-when-cleaning-up-docker-images">Tip #5: Do NOT use "docker rm -f" when cleaning up docker images.</h2><p>Use this instead:</p><pre class="line-numbers language-bash"><code>docker rm -f --remove-orphans</code></pre><p>Regardless of whether we or a running container utilizes them, the "--remove-ophans" flag guarantees that Docker Compose only removes containers and images that are no longer in use.</p><h2 id="tip-6-do-not-let-your-containers-consume-as-much-memory-and-cpu-as-they-want">Tip #6: Do NOT let your containers consume as much memory and CPU as they want.</h2><p>Although it may seem unusual and silly, you shouldn't allow any container use all the resources it needs.</p><p>You can do this by setting limits:</p><pre class="line-numbers language-yaml"><code># docker-compose.yml
+web:
+  deploy:
+    resources:
+      limits:
+        cpus: "1"
+</code></pre><p class="msg msg--highlight">Before setting these limits, you should know how many resources your services may need to function properly.</p><p>And those were the best practices I wanted to share with you, fellow DevOps folks. I hope you find them useful.</p><h2 id="credits">Credits</h2><p><a href="https://prod.releasehub.com/blog/6-docker-compose-best-practices-for-dev-and-prod" target="_blank" rel="nofollow noopener">https://prod.releasehub.com/blog/6-docker-compose-best-practices-for-dev-and-prod</a></p></div><footer class="wrapper post__footer"><p class="post__last-updated">This article was updated on August 31, 2022</p><ul class="post__tag"><li><a href="https://baronhez.github.io/blog/docker/">Docker</a></li><li><a href="https://baronhez.github.io/blog/docker-compose/">docker-compose</a></li></ul><div class="post__share"></div><div class="post__bio bio"><div class="bio__info"><h3 class="bio__name"><a href="https://baronhez.github.io/jonathan/jonathan-rodenas-lopez/" rel="author">Jonathan Ródenas López</a></h3></div></div></footer></article><nav class="post__nav"><div class="post__nav-inner"><div class="post__nav-prev"><svg width="1.041em" height="0.416em" aria-hidden="true"><use xlink:href="https://baronhez.github.io/assets/svg/svg-map.svg#arrow-prev"/></svg> <a href="https://baronhez.github.io/how-to-get-a-free-vps-in-oracle-cloud/" class="post__nav-link" rel="prev"><span>Previous</span> How to get a free VPS in Oracle Cloud</a></div></div></nav></main><footer class="footer"><script defer="defer" src="https://baronhez.github.io/assets/js/prism.js?v=75e5a6efb72da7e398c737b82bfa1a29"></script><div class="footer__social"><a href="https://twitter.com/Baronhez1" aria-label="Twitter"><svg><use xlink:href="https://baronhez.github.io/assets/svg/svg-map.svg#twitter"/></svg> </a><a href="https://www.linkedin.com/in/jonathanrodenaslopez/" aria-label="LinkedIn"><svg><use xlink:href="https://baronhez.github.io/assets/svg/svg-map.svg#linkedin"/></svg></a></div><div class="footer__copyright"><p>This is the personal blog of Jonathan Ródenas López.</p></div><button onclick="backToTopFunction()" id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg><use xlink:href="https://baronhez.github.io/assets/svg/svg-map.svg#toparrow"/></svg></button></footer></div><script defer="defer" src="https://baronhez.github.io/assets/js/scripts.min.js?v=f47c11534595205f20935f0db2a62a85"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script></body></html>
