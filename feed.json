@@ -10,6 +10,21 @@
     },
     "items": [
         {
+            "id": "https://baronhez.github.io/different-uses-for-docker/",
+            "url": "https://baronhez.github.io/different-uses-for-docker/",
+            "title": "Different uses for Docker",
+            "summary": "A month&hellip;",
+            "content_html": "\n  <p>\n    A month ago, I read a post in <a href=\"https://matt-rickard.com/non-obvious-docker-uses\" target=\"_blank\" rel=\"nofollow noopener\">Matt Rickard blog</a>&nbsp;about Docker uses barely known among Docker users. So here I am, sharing that knowledge with you, wise reader.\n  </p>\n\n    <h2 id=\"you-can-use-docker-as-a-compiler\">\n      You can use Docker as a compiler.\n    </h2>\n\n  <p>\n    <a href=\"https://docs.docker.com/engine/reference/commandline/build/#custom-build-outputs\" target=\"_blank\" rel=\"nofollow noopener\">Here</a> is the official documentation about this use case.&nbsp;\n  </p>\n\n  <p>\n    Instead of exporting the build artifacts as a Docker image, you can do it as files on the local filesystem, which can be helpful for producing local binaries, code generation, etc.\n  </p>\n\n  <p>\n    For example, we can use docker to export the artifact to a tar file:\n  </p>\n\n  <p>\n    \n  </p>\n<pre class=\"line-numbers  language-bash\"><code>docker build --output type=local,dest=out .</code></pre>\n\n  <p>\n    Feel free to visit the documentation for further information.\n  </p>\n\n    <h2 id=\"you-can-use-docker-build-a-taskrunner-alternative-tonbspimakei\">\n      You can use Docker build a task-runner alternative to&nbsp;<i>make.</i>\n    </h2>\n\n  <p>\n    Matt points in his post that, thanks to Docker Buildkit,&nbsp;you can write alternative frontends to build images, not only Dockerfiles. This functionality is described <a href=\"https://matt-rickard.com/building-a-new-dockerfile-frontend\" target=\"_blank\" rel=\"nofollow noopener\">here</a>.\n  </p>\n\n    <h2 id=\"you-can-use-docker-registry-to-store-tarballs\">\n      You can use Docker registry to store tarballs.\n    </h2>\n\n  <p>\n    Because docker registries only store tarballs and metadata, it is easy to set up a place to store configuration.\n  </p>\n\n    <h2 id=\"you-can-use-git-repositories-as-docker-images\">\n      You can use git repositories as Docker images\n    </h2>\n\n  <p>\n    Matt points this possibility in this <a href=\"https://matt-rickard.com/docker-merge/\" target=\"_blank\" rel=\"nofollow noopener\">post</a>. To sum it up, \"Docker merge is a CLI utility that provides a proof-of-concept strategy to merge docker images\".\n  </p>\n\n  <p>\n    So, you can use that tool to&nbsp;to hijack the \"git merge\" strategies to natively \"merge\" docker layers.\n  </p>\n\n    <h2 id=\"you-can-use-docker-a-crossplatform-compatibility-layer\">\n      You can use Docker a cross-platform compatibility layer.\n    </h2>\n\n  <p>\n    The most obvious case for this is the use of Docker Desktop (if you are using this in your company, use Rancher instead).\n  </p>\n\n    <h2 id=\"you-can-use-docker-to-build-linux-kernels\">\n      You can use Docker to build Linux kernels\n    </h2>\n\n  <p>\n    You can do it by using <a href=\"https://github.com/linuxkit/linuxkit\" target=\"_blank\" rel=\"nofollow noopener\">LinuxKit</a>.\n  </p>\n\n  <p>\n    Those where the examples mentioned in the post, I hope you find them useful!\n  </p>\n\n    <h2 id=\"credits\">\n      Credits\n    </h2>\n\n  <p>\n    <a href=\"https://matt-rickard.com/\" target=\"_blank\" rel=\"nofollow noopener\">Matt Rickard</a>\n  </p>",
+            "author": {
+                "name": "Jonathan Ródenas López"
+            },
+            "tags": [
+                   "Docker"
+            ],
+            "date_published": "2022-08-31T04:10:08+02:00",
+            "date_modified": "2022-08-31T04:10:08+02:00"
+        },
+        {
             "id": "https://baronhez.github.io/docker-compose-best-practices/",
             "url": "https://baronhez.github.io/docker-compose-best-practices/",
             "title": "Docker-Compose Best Practices",
