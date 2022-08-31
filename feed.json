@@ -10,6 +10,22 @@
     },
     "items": [
         {
+            "id": "https://baronhez.github.io/how-to-clean-your-docker/",
+            "url": "https://baronhez.github.io/how-to-clean-your-docker/",
+            "title": "How to clean your Docker.",
+            "summary": "I'm not&hellip;",
+            "content_html": "\n    <h2 id=\"im-not-joking-do-it-you-will-thank-me-later\" class=\"align-center\">\n      I'm not joking, do it, you will thank me later.\n    </h2>\n\n  <p>\n    The faster way of doing this is using the CLI. I explained how to do it in my <a href=\"https://baronhez.github.io/b/\" target=\"_blank\">Self-Hosting guide</a>, but I'm going to sum it up here.\n  </p>\n<pre class=\"line-numbers  language-bash\"><code># We can delete all stoped container, every network not use by al least one container, all dangling images and all dangling build cache.\ndocker system prune\n# We can delete all stoped container, every network not use by al least one container, every unused image and all build cache.\ndocker system prune -a\n# Do the same but filtering specific images\ndocker system prune --filter nginx:alpine\n# Or just the volumes\ndocker system prune --volumes # First way\ndocker volume prune # Second way\n# Or just the networks\ndocker volume prune\n# Or we can do the same but without asking for confirmation\ndocker system prune -a -f  </code></pre>\n\n  <p>\n    That's it, nice and fast.\n  </p>\n\n    <h2 id=\"credits\">\n      Credits\n    </h2>\n\n  <p>\n    <a href=\"https://wise.wtf/posts/docker-cleaning/\" target=\"_blank\">https://wise.wtf/posts/docker-cleaning/</a>\n  </p>",
+            "image": "https://baronhez.github.io/media/posts/16/woman-collects-leaves-cleans-park.jpg",
+            "author": {
+                "name": "Jonathan Ródenas López"
+            },
+            "tags": [
+                   "Docker"
+            ],
+            "date_published": "2022-08-31T04:20:22+02:00",
+            "date_modified": "2022-08-31T04:20:22+02:00"
+        },
+        {
             "id": "https://baronhez.github.io/different-uses-for-docker/",
             "url": "https://baronhez.github.io/different-uses-for-docker/",
             "title": "Different uses for Docker",
@@ -22,7 +38,7 @@
                    "Docker"
             ],
             "date_published": "2022-08-31T04:10:08+02:00",
-            "date_modified": "2022-08-31T04:10:08+02:00"
+            "date_modified": "2022-08-31T04:20:30+02:00"
         },
         {
             "id": "https://baronhez.github.io/docker-compose-best-practices/",
@@ -35,7 +51,7 @@
                 "name": "Jonathan Ródenas López"
             },
             "tags": [
-                   "docker-compose",
+                   "Docker-compose",
                    "Docker"
             ],
             "date_published": "2022-08-31T03:23:43+02:00",

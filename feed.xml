@@ -3,12 +3,67 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-31T04:10:08+02:00</updated>
+    <updated>2022-08-31T04:20:30+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
     <id>https://baronhez.github.io</id>
 
+    <entry>
+        <title>How to clean your Docker.</title>
+        <author>
+            <name>Jonathan Ródenas López</name>
+        </author>
+        <link href="https://baronhez.github.io/how-to-clean-your-docker/"/>
+        <id>https://baronhez.github.io/how-to-clean-your-docker/</id>
+            <category term="Docker"/>
+
+        <updated>2022-08-31T04:20:22+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/16/woman-collects-leaves-cleans-park.jpg" alt="" />
+                    I'm not&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://baronhez.github.io/media/posts/16/woman-collects-leaves-cleans-park.jpg" alt="" />
+                
+    <h2 id="im-not-joking-do-it-you-will-thank-me-later" class="align-center">
+      I'm not joking, do it, you will thank me later.
+    </h2>
+
+  <p>
+    The faster way of doing this is using the CLI. I explained how to do it in my <a href="https://baronhez.github.io/b/" target="_blank">Self-Hosting guide</a>, but I'm going to sum it up here.
+  </p>
+<pre class="line-numbers  language-bash"><code># We can delete all stoped container, every network not use by al least one container, all dangling images and all dangling build cache.
+docker system prune
+# We can delete all stoped container, every network not use by al least one container, every unused image and all build cache.
+docker system prune -a
+# Do the same but filtering specific images
+docker system prune --filter nginx:alpine
+# Or just the volumes
+docker system prune --volumes # First way
+docker volume prune # Second way
+# Or just the networks
+docker volume prune
+# Or we can do the same but without asking for confirmation
+docker system prune -a -f  </code></pre>
+
+  <p>
+    That's it, nice and fast.
+  </p>
+
+    <h2 id="credits">
+      Credits
+    </h2>
+
+  <p>
+    <a href="https://wise.wtf/posts/docker-cleaning/" target="_blank">https://wise.wtf/posts/docker-cleaning/</a>
+  </p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Different uses for Docker</title>
         <author>
@@ -18,7 +73,7 @@
         <id>https://baronhez.github.io/different-uses-for-docker/</id>
             <category term="Docker"/>
 
-        <updated>2022-08-31T04:10:08+02:00</updated>
+        <updated>2022-08-31T04:20:30+02:00</updated>
             <summary>
                 <![CDATA[
                     A month&hellip;
@@ -121,7 +176,7 @@
         </author>
         <link href="https://baronhez.github.io/docker-compose-best-practices/"/>
         <id>https://baronhez.github.io/docker-compose-best-practices/</id>
-            <category term="docker-compose"/>
+            <category term="Docker-compose"/>
             <category term="Docker"/>
 
         <updated>2022-08-31T03:24:15+02:00</updated>
