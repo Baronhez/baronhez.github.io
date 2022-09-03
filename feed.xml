@@ -3,12 +3,298 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-08-31T05:47:11+02:00</updated>
+    <updated>2022-09-03T22:28:37+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
     <id>https://baronhez.github.io</id>
 
+    <entry>
+        <title>How to secure Docker</title>
+        <author>
+            <name>Jonathan Ródenas López</name>
+        </author>
+        <link href="https://baronhez.github.io/how-to-secure-docker/"/>
+        <id>https://baronhez.github.io/how-to-secure-docker/</id>
+            <category term="Security"/>
+            <category term="Docker-compose"/>
+            <category term="Docker"/>
+
+        <updated>2022-09-03T22:28:37+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/18/dockerSec.jpeg" alt="" />
+                    Some tips&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://baronhez.github.io/media/posts/18/dockerSec.jpeg" alt="" />
+                
+    <h2 id="some-tips-to-have-a-more-secure-experience-while-using-docker">
+      Some tips to have a more secure experience while using Docker
+    </h2>
+
+  <p>
+    Ok, the other day I was browsing my bookmarks when I came across an interesting post about Docker security. Because of this, I'm going to share some tips for you to secure your Docker. This way, you will feel safer while using Docker to run some dangerous software, preventing access to your host machine.
+  </p>
+
+    <h2 id="tip-1-do-not-havenbspoutdated-containers-running-in-your-server">
+      Tip #1: Do NOT have&nbsp;outdated containers running in your server.
+    </h2>
+
+  <p>
+    This applies too to Docker itself. Using software outdated, even when we use containers, is insecure, and can lead to vulnerabilities. Containers talk directly to the kernel, so a kernel related vulnerability which can allow the user to modify the kernel, can lead us to a disaster.
+  </p>
+
+    <h2 id="tip-2nbsp-do-not-expose-the-docker-daemon-socket">
+      Tip #2:&nbsp; Do NOT expose the Docker daemon socket.
+    </h2>
+
+  <p>
+    "But, if my containers need to comunicate with other containers..." Well, do it at your own risk, buddy. I do not encourage anyone to do this. You can do it, but following good security practices, as seen in the <a href="https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option" target="_blank" rel="nofollow noopener">Docker Documentation</a>.
+  </p>
+
+    <h2 id="tip-3-do-not-run-your-containers-as-root-user">
+      Tip #3: Do NOT run your containers as root user.
+    </h2>
+
+  <p>
+    Use an unprivileged user, during runtime:
+  </p>
+<pre class="line-numbers  language-bash"><code>docker run -u 4000 alpine
+</code></pre>
+
+  <p>
+    Or during build time:
+  </p>
+<pre class="line-numbers  language-docker"><code>FROM alpine
+RUN groupadd -r myuser && useradd -r -g myuser myuser
+&lt;HERE DO WHAT YOU HAVE TO DO AS A ROOT USER LIKE INSTALLING PACKAGES ETC.&gt;
+USER myuser
+</code></pre>
+
+  <p>
+    You should also <a href="https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon" target="_blank" rel="nofollow noopener">enable namespace support</a>.
+  </p>
+
+    <h2 id="tip-4-do-not-run-containers-with-all-capabilities">
+      Tip #4: Do NOT run containers with all capabilities.
+    </h2>
+
+  <p>
+    For those who don't know what <a href="https://man7.org/linux/man-pages/man7/capabilities.7.html" target="_blank" rel="nofollow noopener">capabilities</a>&nbsp;are, they are a set of privileges.&nbsp;Docker, by default, runs with only a subset of capabilities. But, you can drop some capabilities (using <b>--cap-drop</b>) to harden your docker containers, or add some capabilities (using <b>--cap-add</b>) if needed. Remember not to run containers with the <b>--privileged flag</b>&nbsp;(this will add ALL Linux kernel capabilities to the container).
+<br>
+<br>The most secure setup is to drop all capabilities<b> --cap-drop</b> all and then add only required ones:
+  </p>
+<pre class="line-numbers  language-bash"><code>docker run --cap-drop all --cap-add CHOWN alpine</code></pre>
+
+    <h2 id="tip-5-do-not-let-any-container-to-escalate-privileges">
+      Tip #5: Do NOT let any container to escalate privileges.
+    </h2>
+
+  <p>
+    Always run your docker images with <b>--security-opt=no-new-privileges</b> in order to prevent escalate privileges using setuid or setgid binaries:
+  </p>
+<pre class="line-numbers  language-bash"><code>docker run --security-opt=no-new-privileges alpine</code></pre>
+
+    <h2 id="tip-6-do-not-allow-your-containers-to-communicate-between-them">
+      Tip #6: Do NOT allow your containers to communicate between them.
+    </h2>
+
+  <p>
+    By default inter-container communication (<b>icc</b>) is enabled - it means that all containers can talk with each other (using docker0 bridged network). This can be disabled by running docker daemon with --icc=false flag.
+  </p>
+
+  <p>
+    If icc is disabled (icc=false) it is required to tell which containers can communicate using <b>--link=CONTAINER_NAME&nbsp;</b>or <b>ID:ALIAS </b>option:
+  </p>
+<pre class="line-numbers  language-bash"><code>docker run --link=web alpine</code></pre>
+
+    <h2 id="tip-7-do-not-forget-about-using-a-good-security-module">
+      Tip #7: Do NOT forget about using a good security module.
+    </h2>
+
+  <p>
+    I have seen information about&nbsp;<a href="https://docs.docker.com/engine/security/seccomp/" target="_blank" rel="nofollow noopener">seccomp </a>or <a href="https://docs.docker.com/engine/security/apparmor/" target="_blank" rel="nofollow noopener">AppArmor</a>. This will help you to protect yourself againts vulnerability.
+  </p>
+
+    <h2 id="tip-8-do-not-allow-your-containers-to-use-as-much-cpu-and-memory-as-they-can-set-limits">
+      Tip #8: Do NOT allow your containers to use as much CPU and memory as they can. Set limits.
+    </h2>
+
+  <p>
+    You can limit memory, CPU, maximum number of restarts (--restart=on-failure:&lt;number of restarts&gt;<number_of_restarts>), maximum number of file descriptors (--ulimit nofile=&lt;number&gt;<number>) and maximum number of processes (--ulimit nproc=&lt;number&gt;<number>).</number></number></number_of_restarts>
+  </p>
+
+  <p>
+    Refer to the <a href="https://docs.docker.com/engine/reference/commandline/run/#set-ulimits-in-container---ulimit" target="_blank" rel="nofollow noopener">documentation</a> for more information about ulimits, or to this <a href="https://docs.docker.com/config/containers/resource_constraints/" target="_blank" rel="nofollow noopener">documentation </a>about memory and cpu limits during runtime.
+  </p>
+
+    <h2 id="tip-9-do-not-allow-your-containers-to-write-to-your-file-system-if-possible">
+      Tip #9: Do NOT allow your containers to write to your file system if possible.
+    </h2>
+
+  <p>
+    If you can, use read-only&nbsp;using <b>--read-only</b> flag. For instance:
+  </p>
+<pre class="line-numbers  language-bash"><code>docker run --read-only alpine sh -c 'echo "whatever" &gt; /tmp'</code></pre>
+
+  <p>
+    If an application inside a container has to save something temporarily, combine <b>--read-only</b> flag with<b> --tmpfs</b> like this:
+  </p>
+<pre class="line-numbers  language-bash"><code>docker run --read-only --tmpfs /tmp alpine sh -c 'echo "whatever" &gt; /tmp/file'
+</code></pre>
+
+  <p>
+    In Docker-Compose would be something like:
+  </p>
+<pre class="line-numbers  language-yaml"><code>version: "3"
+services:
+  alpine:
+    image: alpine
+    read_only: true
+</code></pre>
+
+  <p>
+    It is possible to do it with volumes:
+  </p>
+<pre class="line-numbers  language-yaml"><code>web:
+    container_name: web
+    image: nginx
+    volumes:
+      - /home/user/nginx/html:/usr/share/nginx/html:ro
+</code></pre>
+
+  <p>
+    This option is also available in runtime:
+  </p>
+<pre class="line-numbers  language-bash"><code>docker run -v volume-name:/path/in/container:ro alpine</code></pre>
+
+  <p>
+    You can do this using the<b> --mount</b> option:
+  </p>
+<pre class="line-numbers  language-bash"><code>docker run --mount source=volume-name,destination=/path/in/container,readonly alpine</code></pre>
+
+    <h2 id="tip-10-do-not-forget-aboutnbspstatic-analysis-tools">
+      Tip #10: Do NOT forget about&nbsp;static analysis tools.
+    </h2>
+
+  <p>
+    There are a few useful tools that can help you in various ways.&nbsp;This list is from that article I previously mentioned above:
+  </p>
+
+    <h4 id="to-scan-your-containers-in-search-of-vulnerabilitiesnbsp">
+      To scan your containers in search of vulnerabilities:&nbsp;
+    </h4>
+
+    <h5 id="free">
+      Free
+    </h5>
+
+  <ul>
+    <li><a href="https://github.com/coreos/clair" target="_blank" rel="nofollow noopener">Clair</a></li><li><a href="https://github.com/deepfence/ThreatMapper" target="_blank" rel="nofollow noopener">ThreatMapper</a><br></li><li><a href="https://github.com/knqyf263/trivy" target="_blank" rel="nofollow noopener" class="">Trivy</a></li>
+  </ul>
+
+    <h5 id="commercial">
+      Commercial
+    </h5>
+
+  <ul>
+    <li><a href="https://snyk.io/" target="_blank" rel="nofollow noopener">Snyk</a>&nbsp;<b>(open source and free option available)</b></li><li><a href="https://anchore.com/opensource/" target="_blank" rel="nofollow noopener">anchore</a>&nbsp;<b>(open source and free option available)</b><br></li><li><a href="https://jfrog.com/xray/" target="_blank" rel="nofollow noopener">JFrog XRay</a><br></li><li><a href="https://www.qualys.com/apps/container-security/" target="_blank" rel="nofollow noopener">Qualys</a><br></li>
+  </ul>
+
+    <h4 id="to-detect-secrets-in-images">
+      To detect secrets in images:
+    </h4>
+
+  <ul>
+    <li><a href="https://github.com/GitGuardian/ggshield" target="_blank" rel="nofollow noopener">ggshield</a>&nbsp;<b>(open source and free option available)</b></li><li><a href="https://github.com/deepfence/SecretScanner" target="_blank" rel="nofollow noopener">SecretScanner&nbsp;</a>&nbsp;<b>(open source)</b></li>
+  </ul>
+
+    <h4 id="to-detect-misconfigurations-in-docker">
+      To detect misconfigurations in Docker:
+    </h4>
+
+  <ul>
+    <li><a href="https://www.inspec.io/docs/reference/resources/docker/" target="_blank" rel="nofollow noopener">inspec.io</a></li><li><a href="https://dev-sec.io/baselines/docker/" target="_blank" rel="nofollow noopener">dev-sec.io</a><br></li><li><a href="https://github.com/docker/docker-bench-security" target="_blank" rel="nofollow noopener">Docker Bench for Security</a></li>
+  </ul>
+
+    <h2 id="tip-11-do-not-forget-about-logs">
+      Tip #11: Do NOT forget about logs.
+    </h2>
+
+  <p>
+    Set up an appropriate log level, you'll thank me later. Countless time I've been safe by logs. You should configure the Docker daemon to log events that you would want to review later:
+  </p>
+<pre class="line-numbers  language-bash"><code>docker-compose --log-level info up  </code></pre>
+
+    <h2 id="tip-12-do-not-forget-about-linting-your-dockerfiles-during-build-time">
+      Tip #12: Do NOT forget about linting your Dockerfiles during build time.
+    </h2>
+
+  <p>
+    It is as easy as following a few good practices:
+  </p>
+
+  <ul>
+    <li>Ensure a <b>USER </b>directive is specified.</li><li>Ensure the base image version is pinned.<br></li><li>Ensure the OS packages versions are pinned.<br></li><li>Avoid the use of <b>ADD </b>in favor of <b>COPY</b>.<br></li><li>Avoid curl bashing in <b>RUN </b>directives.</li>
+  </ul>
+
+  <p>
+    Aaaaaand that's it, folks. Following this tips, you should be safer while using Docker. Have a nice day, friend.
+  </p>
+
+    <h2 id="credits">
+      Credits
+    </h2>
+
+  <p>
+    <a href="https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html" target="_blank" rel="nofollow noopener">https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html</a>
+  </p>
+            ]]>
+        </content>
+    </entry>
+    <entry>
+        <title>How to convert different files online</title>
+        <author>
+            <name>Jonathan Ródenas López</name>
+        </author>
+        <link href="https://baronhez.github.io/how-to-convert-different-files-online/"/>
+        <id>https://baronhez.github.io/how-to-convert-different-files-online/</id>
+            <category term="Interesting Webpages"/>
+
+        <updated>2022-09-03T00:04:14+02:00</updated>
+            <summary>
+                <![CDATA[
+                    A curate&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                
+    <h2 id="a-curate-selection-of-online-converters" class="align-center">
+      A curate selection of online converters.
+    </h2>
+
+  <p>
+    Image to ascii converter: <a href="https://github.com/TheZoraiz/ascii-image-converter" target="_blank" rel="nofollow noopener">https://github.com/TheZoraiz/ascii-image-converter</a>
+  </p>
+
+  <p>
+    Video To Lottie Converter:&nbsp;<a href="https://isotropic.co/tool/video-to-lottie" target="_blank" rel="nofollow noopener">https://isotropic.co/tool/video-to-lottie</a>
+  </p>
+
+  <p>
+    Multi-file converters:
+  </p>
+
+  <ul>
+    <li><a href="https://www.aconvert.com/" target="_blank" rel="nofollow noopener">https://www.aconvert.com</a></li><li><a href="https://www.online-convert.com/es" target="_blank" rel="nofollow noopener">https://www.online-convert.com/es</a><br></li><li><a href="https://convertio.co/" target="_blank" rel="nofollow noopener">https://convertio.co/</a><br></li><li><a href="https://www.ilovepdf.com/" target="_blank" rel="nofollow noopener">https://www.ilovepdf.com/</a><br></li><li><a href="https://tinywow.com/" target="_blank" rel="nofollow noopener">https://tinywow.com/</a><br></li><li><a href="https://cloudconvert.com/" target="_blank">https://cloudconvert.com/</a><br></li><li><a href="https://www.onlineocr.net/" target="_blank" rel="nofollow noopener">https://www.onlineocr.net/</a><br></li>
+  </ul>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>How to clean your Docker.</title>
         <author>
@@ -639,7 +925,7 @@ web:
             <category term="SSH"/>
             <category term="Docker"/>
 
-        <updated>2022-08-31T01:26:50+02:00</updated>
+        <updated>2022-09-03T00:04:34+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/11/young-man-engineer-making-program-analyses.jpg" alt="" />
@@ -651,7 +937,7 @@ web:
                     <img src="https://baronhez.github.io/media/posts/11/young-man-engineer-making-program-analyses.jpg" alt="" />
                 
   <p>
-    I know, you want to self host, for instance, your own webpage, but every time you search for info, people only recommend you to use sh*t like NO-IP and third party providers such as Heroku. But that's not what you want, right? You have a Rashberry Pi or somo old PC and you intent to host your own services, like your webpage, a torrent server or even some filebrowser to manage storage.
+    I know, you want to self host, for instance, your own webpage, but every time you search for info, people only recommend you to use sh*t like NO-IP and third party providers such as Heroku. But that's not what you want, right? You have a Rashberry Pi or some old PC and you intent to host your own services, like your webpage, a torrent server or even some filebrowser to manage storage.
   </p>
 
   <p>
@@ -1690,352 +1976,6 @@ graph LR
   <p>
     Thanks for reading my quick guide of Markdown. It is short, but the best things in life are short, and I hate to spend 20 minutes reading the filling of some random article from a guide in the internet about how markdown help some developer to cope with the dead of his lost cousin. Guides should get straight to the point :)
   </p>
-            ]]>
-        </content>
-    </entry>
-    <entry>
-        <title>How to install and activate Windows 10 and Windows 11 for free</title>
-        <author>
-            <name>Jonathan Ródenas López</name>
-        </author>
-        <link href="https://baronhez.github.io/how-to-install-and-activate-windows-10-and-windows-11-completely-for-free-the-easiest-way/"/>
-        <id>https://baronhez.github.io/how-to-install-and-activate-windows-10-and-windows-11-completely-for-free-the-easiest-way/</id>
-            <category term="Windows"/>
-
-        <updated>2022-08-31T05:47:11+02:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/5/wallhaven-x8ye3z.jpg" alt="" />
-                    
-    <figure class="post__image post__image--wide">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/5/windows-AigsWJmvoEo-unsplash-2-2xl-2.jpg" sizes="100vw" srcset="https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-xs.jpg 300w ,https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-sm.jpg 480w ,https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-md.jpg 768w ,https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-lg.jpg 1024w ,https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-xl.jpg 1360w ,https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-2xl.jpg 1600w"  height="1067" width="1600" alt="" />
-      
-    </figure>
-
-    <h2 id="trust-me-it-is-completely-easy-following-this-guide">
-      Trust me, it is completely easy following this guide.
-    </h2>
-
-  <p>
-    Hello! If you want to configure a computer to have Windows 10 activated for free (all of this works also for Windows 11 because Microsoft devs repeated the licensing system and like 90% of the internal functionality) then you will have to follow some simple steps.
-  </p>
-
-  <p>
-    <b>Step 1:</b> You must get an ISO of w10 or w11 from anywhere.
-<br>You can get it from <a href="https://www.microsoft.com/en-us/software-download" target="_blank" class="" rel="nofollow noopener">official sites</a> or from <a href="https://linuxct.space/Windows/" target="_blank" class="" rel="nofollow noopener">mirrors</a>:
-  </p>
-
-  <p>
-    
-  </p>
-
-  <p>
-    
-  </p>
-
-  <p>
-    <b>W11 ISO
-</b><br><u>Microsoft official:
-</u><br><a href="https://www.microsoft.com/en-us/software-download/windows11" class="" target="_blank" rel="nofollow noopener">https://www.microsoft.com/en-us/software-download/windows11
-<br></a><u>Mirror:
-</u><br><a href="https://linuxct.space/Windows/" class="" target="_blank" rel="nofollow noopener">https://linuxct.space/Windows/</a>
-  </p>
-
-  <p>
-    <b>W10 ISO:
-</b><br><u>Microsoft official</u>:
-<br><a href="https://www.microsoft.com/en-us/software-download/windows10" class="" target="_blank">https://www.microsoft.com/en-us/software-download/windows10
-<br></a><u>Pirated Windows</u>, in case you want to choose a specific version:
-<br><a href="https://tb.rg-adguard.net/public.php" target="_blank" class="" rel="nofollow noopener">https://tb.rg-adguard.net/public.php</a>
-  </p>
-
-  <p class="msg msg--highlight">
-    <em><b>Attention:</b></em>
-<br>As such, if you feel like it, you can download an ISO previously debloated by others and then you can go straight to the heart of the matter.<br><a href="https://ameliorated.info/documentation.html" target="_blank" class="" rel="nofollow noopener">https://ameliorated.info/documentation.html</a>
-  </p>
-
-  <p>
-    Ok, and now?
-  </p>
-
-  <p>
-    <font color="#f2f2f5"><b>Step 2:&nbsp;</b></font>Flash the ISO on a pendrive with at least 8 gigabytes of space (it's a lot, I know, but it's a big ISO).
-<br>You have several options to do it, but if you already have another PC running Windows, I recommend you Rufus:
-  </p>
-
-  <p>
-    Here is a quick tutorial:
-  </p>
-
-  <p>
-    <a href="https://www.youtube.com/watch?v=Wt0Q-DBejIw" target="_blank" class="" data-link-popup-id="1661386907157">https://www.youtube.com/watch?v=Wt0Q-DBejIw</a>
-  </p>
-
-  <p>
-    Here you can download the program:
-  </p>
-
-  <p>
-    <a href="https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe" target="_blank" class="" rel="nofollow noopener">https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe</a>
-  </p>
-
-  <p>
-    If you have a Linux PC, I recommend you Ventoy:
-  </p>
-
-  <p>
-    <a href="https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/" target="_blank" class="" rel="nofollow noopener">https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/</a>
-  </p>
-
-  <p>
-    Or&nbsp;SUSE imagewriter:&nbsp;<a href="https://software.opensuse.org/package/imagewriter" target="_blank" class="" rel="nofollow noopener">https://software.opensuse.org/package/imagewriter</a>
-  </p>
-
-  <p>
-    <b>Step 3:</b> Insert the flashed usb into the machine where you want to install windows and once the installation environment starts, we can freely hit next until we&nbsp;get to the part that asks for an activation code.
-<br>We have two options:
-<br>We put one of these:
-<br><a href="https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093" target="_blank" class="" rel="nofollow noopener">https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093
-<br></a>Or we click the "I do not have an activation code" to continue with the installation.
-  </p>
-
-  <p>
-    Well, assuming you haven't put in one of the activation codes I've put above, let's do a little trick to activate Windows.
-  </p>
-
-  <p>
-    <b>Step 4:</b>&nbsp;You should be, by the end of the installation, in front of a empty windows desktop. Now we have to activate windows.
-  </p>
-
-  <p class="msg msg--highlight">
-    If you want documentation for this step, go to <a href="https://massgrave.dev/" target="_blank" class="" rel="nofollow noopener">https://massgrave.dev/</a>
-  </p>
-
-  <p>
-    Let's enter this webpage:<br><a href="https://github.com/massgravel/Microsoft-Activation-Scripts/releases" target="_blank" class="" rel="nofollow noopener">https://github.com/massgravel/Microsoft-Activation-Scripts/releases</a>
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/5/1-2.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/5/responsive/1-2-xs.PNG 300w ,https://baronhez.github.io/media/posts/5/responsive/1-2-sm.PNG 480w ,https://baronhez.github.io/media/posts/5/responsive/1-2-md.PNG 768w ,https://baronhez.github.io/media/posts/5/responsive/1-2-lg.PNG 1024w ,https://baronhez.github.io/media/posts/5/responsive/1-2-xl.PNG 1360w ,https://baronhez.github.io/media/posts/5/responsive/1-2-2xl.PNG 1600w"  height="196" width="895" alt="Pick the latest release of the program, in my case was the 1.6 version." />
-      <figcaption>Pick the latest release of the program, in my case was the 1.6 version. Download the .7z file.</figcaption>
-    </figure>
-
-  <p>
-    Now, we have to unzip this file. But we do not have any zip program yet. Let's jump there to another webpage in order to download useful programs. This webpage is <a href="https://ninite.com/" target="_blank" class="" rel="nofollow noopener">Ninite</a>. This webpage allows us to install multiple program just by executing one single exe file. Once you have marked the programs that you want to install, click the button "Get your ninite". Then, run the exe file you just downloaded.
-  </p>
-
-  <p>
-    Ok, now that you have installed 7zip (I recommend that one, it's the best for me), unzip the file we previously downloaded. For me was <i>MAS_1.6_Password_1234.7z. </i>The password is 1234 (obviously).
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/5/1-3.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/5/responsive/1-3-xs.PNG 300w ,https://baronhez.github.io/media/posts/5/responsive/1-3-sm.PNG 480w ,https://baronhez.github.io/media/posts/5/responsive/1-3-md.PNG 768w ,https://baronhez.github.io/media/posts/5/responsive/1-3-lg.PNG 1024w ,https://baronhez.github.io/media/posts/5/responsive/1-3-xl.PNG 1360w ,https://baronhez.github.io/media/posts/5/responsive/1-3-2xl.PNG 1600w"  height="48" width="356" alt="Now, enter the "All in one" version." />
-      <figcaption>Now, enter the "All in one" version.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/5/1-4.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/5/responsive/1-4-xs.PNG 300w ,https://baronhez.github.io/media/posts/5/responsive/1-4-sm.PNG 480w ,https://baronhez.github.io/media/posts/5/responsive/1-4-md.PNG 768w ,https://baronhez.github.io/media/posts/5/responsive/1-4-lg.PNG 1024w ,https://baronhez.github.io/media/posts/5/responsive/1-4-xl.PNG 1360w ,https://baronhez.github.io/media/posts/5/responsive/1-4-2xl.PNG 1600w"  height="29" width="354" alt="Execute this file with admin privileges. Right click and then "Run as administrator"." />
-      <figcaption>Execute this file with admin privileges. Right click and then "Run as administrator".</figcaption>
-    </figure>
-
-  <p>
-    <i>&nbsp;</i>
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/5/1-5.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/5/responsive/1-5-xs.PNG 300w ,https://baronhez.github.io/media/posts/5/responsive/1-5-sm.PNG 480w ,https://baronhez.github.io/media/posts/5/responsive/1-5-md.PNG 768w ,https://baronhez.github.io/media/posts/5/responsive/1-5-lg.PNG 1024w ,https://baronhez.github.io/media/posts/5/responsive/1-5-xl.PNG 1360w ,https://baronhez.github.io/media/posts/5/responsive/1-5-2xl.PNG 1600w"  height="471" width="598" alt="If you want to activate only Windows, enter "1" using the keyboard. If you have installed Office in your computer, and you want to activate it, take into account that the activation only last 180 days. However, the windows activation is permanent using the first option." />
-      <figcaption>If you want to activate only Windows, enter "1" using the keyboard. If you have installed Office in your computer, and you want to activate it, take into account that the activation only last 180 days. However, the windows activation is permanent using the first option.</figcaption>
-    </figure>
-
-  <p>
-    Let the script run until all it's done. Then, check if windows have been activated.
-  </p>
-
-  <p>
-    To check activation status in Windows 10, select the Start button, and then select Settings &gt; Update &amp; Security and then select Activation .  Your activation status will be listed next to Activation.
-  </p>
-
-  <p class="msg msg--highlight">
-    Attention: An alternative to all of this is to use
-<br><a href="https://github.com/kkkgo/KMS_VL_ALL" class="" target="_blank" rel="nofollow noopener">https://github.com/kkkgo/KMS_VL_ALL</a>
-  </p>
-
-  <p>
-    Ok, by now you should have a windows 10 or 11 installed and activated in your computer :)
-  </p>
-
-                ]]>
-            </summary>
-        <content type="html">
-            <![CDATA[
-                    <img src="https://baronhez.github.io/media/posts/5/wallhaven-x8ye3z.jpg" alt="" />
-                
-    <figure class="post__image post__image--wide">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/5/windows-AigsWJmvoEo-unsplash-2-2xl-2.jpg" sizes="100vw" srcset="https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-xs.jpg 300w ,https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-sm.jpg 480w ,https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-md.jpg 768w ,https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-lg.jpg 1024w ,https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-xl.jpg 1360w ,https://baronhez.github.io/media/posts/5/responsive/windows-AigsWJmvoEo-unsplash-2-2xl-2-2xl.jpg 1600w"  height="1067" width="1600" alt="" />
-      
-    </figure>
-
-    <h2 id="trust-me-it-is-completely-easy-following-this-guide">
-      Trust me, it is completely easy following this guide.
-    </h2>
-
-  <p>
-    Hello! If you want to configure a computer to have Windows 10 activated for free (all of this works also for Windows 11 because Microsoft devs repeated the licensing system and like 90% of the internal functionality) then you will have to follow some simple steps.
-  </p>
-
-  <p>
-    <b>Step 1:</b> You must get an ISO of w10 or w11 from anywhere.
-<br>You can get it from <a href="https://www.microsoft.com/en-us/software-download" target="_blank" class="" rel="nofollow noopener">official sites</a> or from <a href="https://linuxct.space/Windows/" target="_blank" class="" rel="nofollow noopener">mirrors</a>:
-  </p>
-
-  <p>
-    
-  </p>
-
-  <p>
-    
-  </p>
-
-  <p>
-    <b>W11 ISO
-</b><br><u>Microsoft official:
-</u><br><a href="https://www.microsoft.com/en-us/software-download/windows11" class="" target="_blank" rel="nofollow noopener">https://www.microsoft.com/en-us/software-download/windows11
-<br></a><u>Mirror:
-</u><br><a href="https://linuxct.space/Windows/" class="" target="_blank" rel="nofollow noopener">https://linuxct.space/Windows/</a>
-  </p>
-
-  <p>
-    <b>W10 ISO:
-</b><br><u>Microsoft official</u>:
-<br><a href="https://www.microsoft.com/en-us/software-download/windows10" class="" target="_blank">https://www.microsoft.com/en-us/software-download/windows10
-<br></a><u>Pirated Windows</u>, in case you want to choose a specific version:
-<br><a href="https://tb.rg-adguard.net/public.php" target="_blank" class="" rel="nofollow noopener">https://tb.rg-adguard.net/public.php</a>
-  </p>
-
-  <p class="msg msg--highlight">
-    <em><b>Attention:</b></em>
-<br>As such, if you feel like it, you can download an ISO previously debloated by others and then you can go straight to the heart of the matter.<br><a href="https://ameliorated.info/documentation.html" target="_blank" class="" rel="nofollow noopener">https://ameliorated.info/documentation.html</a>
-  </p>
-
-  <p>
-    Ok, and now?
-  </p>
-
-  <p>
-    <font color="#f2f2f5"><b>Step 2:&nbsp;</b></font>Flash the ISO on a pendrive with at least 8 gigabytes of space (it's a lot, I know, but it's a big ISO).
-<br>You have several options to do it, but if you already have another PC running Windows, I recommend you Rufus:
-  </p>
-
-  <p>
-    Here is a quick tutorial:
-  </p>
-
-  <p>
-    <a href="https://www.youtube.com/watch?v=Wt0Q-DBejIw" target="_blank" class="" data-link-popup-id="1661386907157">https://www.youtube.com/watch?v=Wt0Q-DBejIw</a>
-  </p>
-
-  <p>
-    Here you can download the program:
-  </p>
-
-  <p>
-    <a href="https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe" target="_blank" class="" rel="nofollow noopener">https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe</a>
-  </p>
-
-  <p>
-    If you have a Linux PC, I recommend you Ventoy:
-  </p>
-
-  <p>
-    <a href="https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/" target="_blank" class="" rel="nofollow noopener">https://linuxkamarada.com/en/2020/07/29/ventoy-create-a-multiboot-usb-drive-by-simply-copying-iso-images-to-it/</a>
-  </p>
-
-  <p>
-    Or&nbsp;SUSE imagewriter:&nbsp;<a href="https://software.opensuse.org/package/imagewriter" target="_blank" class="" rel="nofollow noopener">https://software.opensuse.org/package/imagewriter</a>
-  </p>
-
-  <p>
-    <b>Step 3:</b> Insert the flashed usb into the machine where you want to install windows and once the installation environment starts, we can freely hit next until we&nbsp;get to the part that asks for an activation code.
-<br>We have two options:
-<br>We put one of these:
-<br><a href="https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093" target="_blank" class="" rel="nofollow noopener">https://gist.github.com/Azhe403/d261f2aadccfc2fb20e00414342a3093
-<br></a>Or we click the "I do not have an activation code" to continue with the installation.
-  </p>
-
-  <p>
-    Well, assuming you haven't put in one of the activation codes I've put above, let's do a little trick to activate Windows.
-  </p>
-
-  <p>
-    <b>Step 4:</b>&nbsp;You should be, by the end of the installation, in front of a empty windows desktop. Now we have to activate windows.
-  </p>
-
-  <p class="msg msg--highlight">
-    If you want documentation for this step, go to <a href="https://massgrave.dev/" target="_blank" class="" rel="nofollow noopener">https://massgrave.dev/</a>
-  </p>
-
-  <p>
-    Let's enter this webpage:<br><a href="https://github.com/massgravel/Microsoft-Activation-Scripts/releases" target="_blank" class="" rel="nofollow noopener">https://github.com/massgravel/Microsoft-Activation-Scripts/releases</a>
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/5/1-2.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/5/responsive/1-2-xs.PNG 300w ,https://baronhez.github.io/media/posts/5/responsive/1-2-sm.PNG 480w ,https://baronhez.github.io/media/posts/5/responsive/1-2-md.PNG 768w ,https://baronhez.github.io/media/posts/5/responsive/1-2-lg.PNG 1024w ,https://baronhez.github.io/media/posts/5/responsive/1-2-xl.PNG 1360w ,https://baronhez.github.io/media/posts/5/responsive/1-2-2xl.PNG 1600w"  height="196" width="895" alt="Pick the latest release of the program, in my case was the 1.6 version." />
-      <figcaption>Pick the latest release of the program, in my case was the 1.6 version. Download the .7z file.</figcaption>
-    </figure>
-
-  <p>
-    Now, we have to unzip this file. But we do not have any zip program yet. Let's jump there to another webpage in order to download useful programs. This webpage is <a href="https://ninite.com/" target="_blank" class="" rel="nofollow noopener">Ninite</a>. This webpage allows us to install multiple program just by executing one single exe file. Once you have marked the programs that you want to install, click the button "Get your ninite". Then, run the exe file you just downloaded.
-  </p>
-
-  <p>
-    Ok, now that you have installed 7zip (I recommend that one, it's the best for me), unzip the file we previously downloaded. For me was <i>MAS_1.6_Password_1234.7z. </i>The password is 1234 (obviously).
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/5/1-3.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/5/responsive/1-3-xs.PNG 300w ,https://baronhez.github.io/media/posts/5/responsive/1-3-sm.PNG 480w ,https://baronhez.github.io/media/posts/5/responsive/1-3-md.PNG 768w ,https://baronhez.github.io/media/posts/5/responsive/1-3-lg.PNG 1024w ,https://baronhez.github.io/media/posts/5/responsive/1-3-xl.PNG 1360w ,https://baronhez.github.io/media/posts/5/responsive/1-3-2xl.PNG 1600w"  height="48" width="356" alt="Now, enter the "All in one" version." />
-      <figcaption>Now, enter the "All in one" version.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/5/1-4.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/5/responsive/1-4-xs.PNG 300w ,https://baronhez.github.io/media/posts/5/responsive/1-4-sm.PNG 480w ,https://baronhez.github.io/media/posts/5/responsive/1-4-md.PNG 768w ,https://baronhez.github.io/media/posts/5/responsive/1-4-lg.PNG 1024w ,https://baronhez.github.io/media/posts/5/responsive/1-4-xl.PNG 1360w ,https://baronhez.github.io/media/posts/5/responsive/1-4-2xl.PNG 1600w"  height="29" width="354" alt="Execute this file with admin privileges. Right click and then "Run as administrator"." />
-      <figcaption>Execute this file with admin privileges. Right click and then "Run as administrator".</figcaption>
-    </figure>
-
-  <p>
-    <i>&nbsp;</i>
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/5/1-5.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/5/responsive/1-5-xs.PNG 300w ,https://baronhez.github.io/media/posts/5/responsive/1-5-sm.PNG 480w ,https://baronhez.github.io/media/posts/5/responsive/1-5-md.PNG 768w ,https://baronhez.github.io/media/posts/5/responsive/1-5-lg.PNG 1024w ,https://baronhez.github.io/media/posts/5/responsive/1-5-xl.PNG 1360w ,https://baronhez.github.io/media/posts/5/responsive/1-5-2xl.PNG 1600w"  height="471" width="598" alt="If you want to activate only Windows, enter "1" using the keyboard. If you have installed Office in your computer, and you want to activate it, take into account that the activation only last 180 days. However, the windows activation is permanent using the first option." />
-      <figcaption>If you want to activate only Windows, enter "1" using the keyboard. If you have installed Office in your computer, and you want to activate it, take into account that the activation only last 180 days. However, the windows activation is permanent using the first option.</figcaption>
-    </figure>
-
-  <p>
-    Let the script run until all it's done. Then, check if windows have been activated.
-  </p>
-
-  <p>
-    To check activation status in Windows 10, select the Start button, and then select Settings &gt; Update &amp; Security and then select Activation .  Your activation status will be listed next to Activation.
-  </p>
-
-  <p class="msg msg--highlight">
-    Attention: An alternative to all of this is to use
-<br><a href="https://github.com/kkkgo/KMS_VL_ALL" class="" target="_blank" rel="nofollow noopener">https://github.com/kkkgo/KMS_VL_ALL</a>
-  </p>
-
-  <p>
-    Ok, by now you should have a windows 10 or 11 installed and activated in your computer :)
-  </p>
-
-
-  <p>
-    <b>Extra optional steps:</b>&nbsp;
-  </p>
-
-  <ol>
-    <li>You should <u>update Windows</u> right now, even if the install is fresh.</li><li>Debloat Windows deleting telemetry and other stuff: Run this on Powershell:&nbsp;<b style="font-style: italic;">iwr -useb https://git.io/debloat|iex</b>.<b style="font-style: italic;">&nbsp;</b>Or this:&nbsp;<b>iex ((New-Object
-</b><br><b>System.Net.WebClient).DownloadString('https://git.io/JJ8R4'))</b>.</li><li>Disable startup programs. Enter <b>Windows Key+R</b>, write&nbsp;<b style="font-style: italic;">shell:startup</b>, hit enter<i>&nbsp;</i>and delete all the programs which start on startup.</li><li>Enter <b>Windows Key+R</b>, write&nbsp;<b>appwiz.cpl</b>, hit enter and uninstall all the&nbsp;unnecessary programs in your machine.<br></li>
-  </ol>
             ]]>
         </content>
     </entry>
