@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-09-03T22:28:37+02:00</updated>
+    <updated>2022-09-03T22:33:00+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -20,7 +20,7 @@
             <category term="Docker-compose"/>
             <category term="Docker"/>
 
-        <updated>2022-09-03T22:28:37+02:00</updated>
+        <updated>2022-09-03T22:33:00+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/18/dockerSec.jpeg" alt="" />
