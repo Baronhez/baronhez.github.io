@@ -3,12 +3,187 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-09-03T22:33:00+02:00</updated>
+    <updated>2022-09-12T11:08:12+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
     <id>https://baronhez.github.io</id>
 
+    <entry>
+        <title>How to create YAML files</title>
+        <author>
+            <name>Jonathan Ródenas López</name>
+        </author>
+        <link href="https://baronhez.github.io/how-to-create-yaml-files/"/>
+        <id>https://baronhez.github.io/how-to-create-yaml-files/</id>
+
+        <updated>2022-09-12T11:08:12+02:00</updated>
+            <summary>
+                <![CDATA[
+                    I'm not&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                
+  <p>
+    I'm not going to explain what YAML is, nor its uses, if you want to learn how to create one, I'm pretty sure you already have that information. So let's get straight to the heart of the matter.
+  </p>
+
+  <p>
+    Let's start with basic syntax:
+  </p>
+<pre class="line-numbers  language-yaml"><code># Remember "Key: Value". This key and value pair is called a map.
+
+# String variables
+vegetable: "Lettuce"
+fruit: "apple"
+animal: 'dog'
+
+# String in multiple lines
+dutch: | 
+ I have a plan, Arthur,
+ and this one is a good one.
+# Write a single line in multiple lines
+Multiline-message: &gt;
+ this will 
+ all be 
+ in one single line.
+# Same as
+message: !!str this will all be in one single line
+#Numbers
+number: 5473
+marks: 98.76
+# Boolean
+booleanValue: !!bool No # n, N, false, False, FALSE
+# Same for true -&gt; yes, y, Y
+
+# Specify the type
+zero: !!int 0
+positiveNum: !!int 45
+negativeNum: !!int -45
+binaryNum: !!int 0b11001
+octalNum: !!int 06574
+hexa: !!int 0x45
+commaValue: !!int +540_000 # 540,000
+exponential numbers: 6.023E56
+---
+# Floating point numbers
+marks: !!float 56.89
+infinite: !!float .inf
+not a num: .nan
+
+# Null
+surname: !!null Null # or null NULL ~
+~: this is a null key
+
+# Dates and time
+date: !!timestamp 2002-12-14
+random time: 2001-12-15T02:59:43.10 +4:00
+no time zone: 2001-12-15T02:59:43.10</code></pre>
+
+  <p>
+    Now, the good stuff, sequence and maps:
+  </p>
+<pre class="line-numbers  language-yaml"><code> cities: !!seq
+ - new york
+ - madrid
+# Same as
+cities: [new york, madrid]
+# If some of the keys of the seq will be empty, it is a sparse sequence
+sparse seq:
+ - hey
+ - how
+ - 
+ - Null
+ - sup
+# Example of a nested sequence
+- 
+ - mango
+ - apple
+ - banana
+-
+ - marks
+ - roll num
+ - date
+# nested mappings: a map within a map
+name: Michael De Santa
+role:
+  age: 45
+  job: bank robber
+  
+# Same as
+name: Michael De Santa
+role: { age: 45, job: bank robber}
+
+# Pairs: keys may have duplicate values
+# !!pairs
+
+pair example: !!pairs
+ - job: student
+ - job: teacher
+
+# same as
+pair example: !!pairs [job: student, job: teacher]
+# this will be an array of hashtables
+
+# !!set will allow you to have unique values
+names: !!set
+ ? Franklin
+ ? Michael
+ ? Trevor
+
+# Dictionary !!omap
+people: !!omap
+  - Kunal:
+     name: Franklin
+     age: 25
+     height: 1.83
+  - Rahul:
+     name: Trevor
+     age: 46
+     height: 1.86
+# I already cover yaml archor in my Docker-Compose guide, 
+# but I will be covering it here again
+likings: &likes
+  fav fruit: mango
+  dislikes: grapes
+
+person1:
+  name: Michael
+  &lt;&lt;: *likes
+
+person2:
+  name: Trevor
+  &lt;&lt;: *likes
+  dislikes: berries # This overrides the value of "dislikes" in the archor
+
+# This will look like
+person1:
+  name: Michael
+  fav fruit: mango
+  dislikes: grapes
+
+person2:
+  name: Trevor
+  fav fruit: mango
+  dislikes: berries
+</code></pre>
+
+  <p>
+    That's all. If you want something more complex... do it! This guide is supposed to be simple because it only focuses on syntax, like all "Learn this language" guides on the Internet.&nbsp;<br>
+  </p>
+
+    <h2 id="credits">
+      Credits
+    </h2>
+
+  <p>
+    <a href="https://www.youtube.com/watch?v=IA90BTozdow&amp;list=WL&amp;index=17&amp;t=3054s" target="_blank" rel="nofollow noopener">https://www.youtube.com/watch?v=IA90BTozdow&amp;list=WL&amp;index=17&amp;t=3054s</a>
+  </p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>How to secure Docker</title>
         <author>
@@ -1833,148 +2008,6 @@ sudo systemctl status fail2ban</code></pre>
 
   <p>
     I found all this tweaks and tricks in random sources from internet, but to sum it all, all of them can be found in two webpages, so the credit goes to the authors of <a href="https://disknotifier.com/blog/simple-ssh-security/" target="_blank" class="">https://disknotifier.com/blog/simple-ssh-security/</a> and <a href="https://blog.zsec.uk/locking-down-ssh-the-right-way/" target="_blank">https://blog.zsec.uk/locking-down-ssh-the-right-way</a>/.
-  </p>
-            ]]>
-        </content>
-    </entry>
-    <entry>
-        <title>Markdown Beginner Guide</title>
-        <author>
-            <name>Jonathan Ródenas López</name>
-        </author>
-        <link href="https://baronhez.github.io/markdown-beginner-guide/"/>
-        <id>https://baronhez.github.io/markdown-beginner-guide/</id>
-            <category term="Markdown"/>
-
-        <updated>2022-08-31T01:25:58+02:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/8/markdown-2.jpg" alt="" />
-                    I am&hellip;
-                ]]>
-            </summary>
-        <content type="html">
-            <![CDATA[
-                    <img src="https://baronhez.github.io/media/posts/8/markdown-2.jpg" alt="" />
-                
-    <h2 id="i-am-not-an-expert-but-this-is-more-than-enough-for-me">
-      I am not an expert, but this is more than enough for me
-    </h2>
-
-  <p>
-    Markdown is more complex than you think, is not only about headings and tables, you can also make complex graphs and even network representations (I'm not joking with this). Today I will share with you, fellow developer, my own beginner guide for Markdown.
-  </p>
-<pre class="line-numbers  language-html"><code># Heading H1
-
-## Heading H2
-
-### Heading H3
-
-#### Heading H4 
-
-##### Heading H5
-
-###### Heading H6
-
-This is normal text
-
-**This is bold text**
-
-_This is italic text_
-
-*This is also italic text*
-
-- This
-- is
-- an 
-- unordened
-- list    
-
-1. This
-2. is
-3. a
-4. list
-1. Ordered 
-   1. If you use
-   2. Tab
-      1. It is possible
-      2. to use
-      3. subsections
-         1. really cool
-         
-[This text has a link to www.google.com](www.google.com)
-
-[This text displays an image if you click on it](./path/to/image/example.jpg)
-
-![This alternative text displays an image if you click on it](./path/to/image/example.jpg)
-
-&gt;"This text is a quote"
-&gt;
-&gt;-Jonathan  
-
-~~Text through~~
-
-Table:
-
-| Name | Content | Price |
-|------|---------|-------|
-| Name | Content | Price |
-| Name | Content | Price |
-|------|---------|-------|
-|------|---------|-------|
-|------|---------|-------|
-| Name | Content | Price |
-| Name | Content | Price |
-| Name | Content | Price |
-| Name | Content | Price |
-| Name | Content | Price |
-|------|---------|-------|
-|------|---------|-------|
-
-To put some code, use inline code, like `print("Hello, you beaty thing")`
-
-But the best practices is to use code snippets, indicating the lenguage:
-
-````java
-int b = a + c;
-systemprintoutln(b);  
-````
-</code></pre>
-
-  <p>
-    Let's end this with some tricky stuff.
-  </p>
-
-  <p>
-    Take a look into <a href="https://mermaid-js.github.io/mermaid/#/" target="_blank">Mermaid</a>. It allows us to make diagrams and visualizations.
-  </p>
-<pre class="line-numbers  language-html"><code>```mermaid
-graph LR
-    subgraph Name 1
-    A(internet) --&gt; B[your server]
-    end
-    subgraph Name 2
-    B --&gt; D[whoami1]
-    E[ubuntu test] --&gt; D
-    end
-    subgraph Name 3
-    B --&gt; G[whoami 2]
-    end
-    E-..-&gt; G
-```  
-</code></pre>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/8/markdown.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/8/responsive/markdown-xs.PNG 300w ,https://baronhez.github.io/media/posts/8/responsive/markdown-sm.PNG 480w ,https://baronhez.github.io/media/posts/8/responsive/markdown-md.PNG 768w ,https://baronhez.github.io/media/posts/8/responsive/markdown-lg.PNG 1024w ,https://baronhez.github.io/media/posts/8/responsive/markdown-xl.PNG 1360w ,https://baronhez.github.io/media/posts/8/responsive/markdown-2xl.PNG 1600w"  height="392" width="871" alt="" />
-      <figcaption>This is the final graph. Compare the code snippet with the graph to know how to create this diagram.</figcaption>
-    </figure>
-
-  <p>
-    I recommend you to check mermaid and make more complex diagrams if you work with networks in a daily basis, because it is truly useful for this purpose.&nbsp;
-  </p>
-
-  <p>
-    Thanks for reading my quick guide of Markdown. It is short, but the best things in life are short, and I hate to spend 20 minutes reading the filling of some random article from a guide in the internet about how markdown help some developer to cope with the dead of his lost cousin. Guides should get straight to the point :)
   </p>
             ]]>
         </content>
