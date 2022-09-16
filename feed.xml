@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-09-16T17:36:49+02:00</updated>
+    <updated>2022-09-16T17:42:04+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -21,7 +21,7 @@
             <category term="Media"/>
             <category term="Docker"/>
 
-        <updated>2022-09-16T17:36:49+02:00</updated>
+        <updated>2022-09-16T17:42:04+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/19/server.png" alt="" />
@@ -76,7 +76,7 @@ sudo chmod +x /usr/local/bin/docker-compose</code></pre>
     </h2>
 
   <p>
-    The fastest way to set this up is to borrow my setup, trust me. Download this&nbsp;<a href="https://baronhez.github.io/media/files/jellyfin.7z" download>zipped folder</a>&nbsp;to your server.
+    The fastest way to set this up is to borrow my setup, trust me. Download this&nbsp;<a href="https://baronhez.github.io/media/files/jellyfin.7z" download class="" data-link-popup-id="1662262428607">zipped folder</a>&nbsp;to your server.
   </p>
 
     <h2 id="step-3-create-dockercompose-file">
@@ -84,12 +84,12 @@ sudo chmod +x /usr/local/bin/docker-compose</code></pre>
     </h2>
 
   <p>
-    Ok, inside the jellyfin folder (<a href="https://linux.die.net/man/1/7z" target="_blank" rel="nofollow noopener">unzip</a> it), create a <b>docker-compose.yml</b> file:
+    Ok, inside the jellyfin folder (<a href="https://linux.die.net/man/1/7z" target="_blank" rel="nofollow noopener">unzip</a> it), you will see a&nbsp;<b>docker-compose.yml</b> file. Edit the content with this command:
   </p>
-<pre class="line-numbers  language-bash"><code>touch docker-compose.yml</code></pre>
+<pre class="line-numbers  language-bash"><code>nano docker-compose.yml</code></pre>
 
   <p>
-    Add this content (You have to enter your time zone, PUID and PGID):
+    Edit this content (You have to enter your time zone, PUID and PGID):
   </p>
 <pre class="line-numbers  language-yaml"><code>version: "3.7"
 services:
