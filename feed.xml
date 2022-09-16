@@ -3,12 +3,579 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-09-12T11:08:12+02:00</updated>
+    <updated>2022-09-16T17:36:49+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
     <id>https://baronhez.github.io</id>
 
+    <entry>
+        <title>How to mount a torrent server.</title>
+        <author>
+            <name>Jonathan Ródenas López</name>
+        </author>
+        <link href="https://baronhez.github.io/how-to-build-a-docker-media-server/"/>
+        <id>https://baronhez.github.io/how-to-build-a-docker-media-server/</id>
+            <category term="Torrent"/>
+            <category term="Self-hosted"/>
+            <category term="Media"/>
+            <category term="Docker"/>
+
+        <updated>2022-09-16T17:36:49+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/19/server.png" alt="" />
+                    You want&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://baronhez.github.io/media/posts/19/server.png" alt="" />
+                
+  <p>
+    You want to deploy a self-hosted media server without the hassle of reading tons of documentation. Well, this is a straight-forward guide to deploy everything in just five minutes. Let's get into it!&nbsp;(I'm assuming you know the basics of how to manage Docker and a terminal shell).
+  </p>
+
+    <h2 id="step-1-install-docker-and-dockercompose">
+      Step #1: Install Docker and Docker-Compose.
+    </h2>
+
+  <p>
+    [MANUAL] First, install docker and docker-compose:
+  </p>
+<pre class="line-numbers  language-bash"><code>sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+sudo apt install docker-ce
+sudo usermod -aG docker &lt;username&gt;
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+</code></pre>
+
+  <p>
+    [FASTEST] Or run this command:
+  </p>
+<pre class="line-numbers  language-bash"><code>/bin/bash -c "$(curl -fsSL https://git.io/JDGfm)"</code></pre>
+
+  <p>
+    The content of the executed bash script is as follows:
+  </p>
+<pre class="line-numbers  language-bash"><code>sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get updatesudo apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-releasesudo rm -rf /usr/share/keyrings/docker-archive-keyring.gpgcurl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpgecho \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/nullsudo apt-get updatesudo apt-get install -y docker-ce docker-ce-cli containerd.iosudo usermod -a -G docker $USERsudo curl -L "https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-linux-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose</code></pre>
+
+    <h2 id="step-2-download-my-jellyfin-folder">
+      Step #2: Download my jellyfin folder.
+    </h2>
+
+  <p>
+    The fastest way to set this up is to borrow my setup, trust me. Download this&nbsp;<a href="https://baronhez.github.io/media/files/jellyfin.7z" download>zipped folder</a>&nbsp;to your server.
+  </p>
+
+    <h2 id="step-3-create-dockercompose-file">
+      Step #3: Create Docker-Compose file.
+    </h2>
+
+  <p>
+    Ok, inside the jellyfin folder (<a href="https://linux.die.net/man/1/7z" target="_blank" rel="nofollow noopener">unzip</a> it), create a <b>docker-compose.yml</b> file:
+  </p>
+<pre class="line-numbers  language-bash"><code>touch docker-compose.yml</code></pre>
+
+  <p>
+    Add this content (You have to enter your time zone, PUID and PGID):
+  </p>
+<pre class="line-numbers  language-yaml"><code>version: "3.7"
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment: &env
+      - PUID=&lt;Enter your USER_ID&gt;
+      - PGID=&lt;Enter your GROUP_ID&gt;
+      - TZ=&lt;Enter your time zone&gt;
+    volumes:
+      - ./config/jellyfin:/config
+      - ./library/series:/data/series
+      - ./library/movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    restart: &restartpolicy unless-stopped
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment: *env
+    volumes:
+      - ./config/arr/radarr/config:/config
+      - ./library/movies:/data/movies #optional
+      - ./downloads:/downloads #optional
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 7878:7878
+    restart: *restartpolicy
+  sonarr:
+    container_name: sonarr
+    image: cr.hotio.dev/hotio/sonarr:latest
+    restart: *restartpolicy
+    logging:
+      driver: json-file
+    network_mode: bridge
+    ports:
+      - 8989:8989
+    environment: *env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config/arr/sonarr/config:/config
+      - ./downloads:/downloads #optional
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=&lt;Enter your USER_ID&gt;
+      - PGID=&lt;Enter your GROUP_ID&gt;
+      - TZ=&lt;Enter your time zone&gt;
+      - WEBUI_PORT=9095
+    volumes:
+      - ./torrent/qbittorrent/config:/config
+      - ./downloads:/downloads
+    ports:
+      - 9095:9095
+      - 6881:6881
+      - 6881:6881/udp
+    restart: *restartpolicy
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment: *env
+    volumes:
+      - ./torrent/prowlarr/config:/config
+    ports:
+      - 9696:9696
+    restart: *restartpolicy</code></pre>
+
+    <h2 id="step-4-run-your-containers">
+      Step #4: Run your containers!
+    </h2>
+<pre class="line-numbers  language-bash"><code>sudo docker-compose up -d</code></pre>
+
+    <h2 id="step-5-lets-set-up-our-indexers">
+      Step #5: Let's set up our indexers.
+    </h2>
+
+  <p>
+    First of all, I want to clarify that it is not necessary to have a domain name. Knowing the IP of your server, and which ports you have to access to connect to the web interfaces, is more than enough.
+  </p>
+
+  <p>
+    Personally, I use ingressRoutes (using traefik as Ingress Controller) to connect to these web UIs thanks to subdomains. But I leave to you to decide how to do it, you can use Nginx reverse proxy, nginx manager, traefik reverse proxy in Docker....
+  </p>
+
+  <p>
+    Ok, first we have to connect to Prowlarr (use http:&lt;yourIP&gt;:9696, in case you don't want to use trusted certificates):
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-2.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-2-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-2-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-2-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-2-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-2-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-2-2xl.png 1600w"  height="921" width="944" alt="" />
+      <figcaption>This is the webUI of prowlarr. Let's add a New Indexer</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-3.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-3-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-3-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-3-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-3-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-3-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-3-2xl.png 1600w"  height="1191" width="1073" alt="" />
+      <figcaption>I use this one for anime movies. You can use anyone.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-4.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-4-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-4-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-4-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-4-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-4-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-4-2xl.png 1600w"  height="868" width="712" alt="" />
+      <figcaption>In this case, for this indexer the default values should be enough. Check the enable box.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-5.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-5-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-5-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-5-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-5-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-5-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-5-2xl.png 1600w"  height="710" width="713" alt="" />
+      <figcaption>I use this one too.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-6.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-6-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-6-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-6-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-6-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-6-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-6-2xl.png 1600w"  height="832" width="868" alt="" />
+      <figcaption>Usually, for NZB indexers you need an API.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-7.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-7-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-7-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-7-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-7-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-7-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-7-2xl.png 1600w"  height="938" width="957" alt="" />
+      <figcaption>Now, go to Settings -> Apps to add Applications</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-8.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-8-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-8-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-8-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-8-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-8-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-8-2xl.png 1600w"  height="527" width="1072" alt="" />
+      <figcaption>We have to select Radarr (movies) and Sonarr (series) for this guide. There are a few more as you can see (for instance, Lidarr is for music).</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-10.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-10-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-10-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-10-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-10-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-10-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-10-2xl.png 1600w"  height="767" width="716" alt="" />
+      <figcaption>You have to set your radar APIKey. As it is written, is generated by Raddar in Settings -> General. Click on "Test" after that.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-13.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-13-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-13-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-13-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-13-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-13-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-13-2xl.png 1600w"  height="766" width="714" alt="" />
+      <figcaption>The same goes for Sonarr. Input your Sonarr APIKey. Click on "Test" after that.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-14.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-14-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-14-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-14-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-14-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-14-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-14-2xl.png 1600w"  height="238" width="921" alt="" />
+      <figcaption>Your applications tab should look like this.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-15.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-15-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-15-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-15-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-15-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-15-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-15-2xl.png 1600w"  height="1163" width="1228" alt="" />
+      <figcaption>Wait a few minutes.  Then go to Settings -> Indexers inside Sonarr and Radarr and you should see something like this. </figcaption>
+    </figure>
+
+    <h2 id="step-6-set-up-your-torrent-client">
+      Step #6: Set up your torrent client.
+    </h2>
+
+  <p>
+    "But I want to use usenet instead of torrents". Ok, well, I will make a more complete guide taking usenet into account. But for now, let's stick with torrents.
+  </p>
+
+  <p>
+    In any case, <a href="https://morrismotel.com/servarr-pt3a-choosing-your-indexers/" target="_blank" rel="nofollow noopener">here</a> you have a "Pros and cons" list.
+  </p>
+
+  <p>
+    And <a href="https://trash-guides.info/Downloaders/qBittorrent/Basic-Setup/" target="_blank" rel="nofollow noopener">here</a> you have some additional documentation.
+  </p>
+
+  <p>
+    Ok, in order to connect to the qbittorrent webUI, we have to use port 9095 (you can change this in the <b>docker-compose.yml</b> file).
+  </p>
+
+  <p>
+    Connect to http://&lt;yourIP&gt;:9095, then enter the default username (admin) and the default password (adminadmin).
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-16.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-16-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-16-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-16-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-16-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-16-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-16-2xl.png 1600w"  height="751" width="836" alt="" />
+      <figcaption>Enter in Tools -> Options. Then, in the Connection tab, mark the same options as me. I'm not going to explain why this works, maybe in the next guide.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-17.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-17-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-17-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-17-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-17-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-17-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-17-2xl.png 1600w"  height="20" width="318" alt="" />
+      <figcaption>Mark this option in case your server is at home, but should be disabled in your router for several security reasons.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-18.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-18-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-18-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-18-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-18-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-18-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-18-2xl.png 1600w"  height="678" width="698" alt="" />
+      <figcaption>Now, in the BitTorrent tab, mark this.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-27.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-27-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-27-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-27-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-27-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-27-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-27-2xl.png 1600w"  height="669" width="691" alt="" />
+      <figcaption>Lastly, my Downloads tab.</figcaption>
+    </figure>
+
+    <h2 id="step-7-set-up-radarr-and-sonarr">
+      Step #7: Set up Radarr and Sonarr.
+    </h2>
+
+  <p>
+    Radarr and Sonarr are very similar. So the configuration we're going to do is the exact same for both. We're going to use&nbsp;Radarr  as the example but the configuration is the same for Sonarr as well. Let's get started.
+  </p>
+
+  <p>
+    Go to http://&lt;yourIP&gt;:7878, then go to Settings -&gt; Download Clients, click the add button:
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-20.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-20-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-20-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-20-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-20-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-20-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-20-2xl.png 1600w"  height="1117" width="1066" alt="" />
+      <figcaption>You should see something like this.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-21.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-21-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-21-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-21-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-21-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-21-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-21-2xl.png 1600w"  height="888" width="823" alt="" />
+      <figcaption>If you want to use usenet, select for instance NZBGet and fill the information.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-22.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-22-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-22-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-22-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-22-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-22-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-22-2xl.png 1600w"  height="1188" width="720" alt="" />
+      <figcaption>To configure bittorrent, use the login info to fill the gaps.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-23.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-23-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-23-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-23-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-23-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-23-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-23-2xl.png 1600w"  height="171" width="661" alt="" />
+      
+    </figure>
+
+  <p>
+    Repeat this process for Sonarr.
+  </p>
+
+    <h2 id="step-8-set-your-quality-profiles">
+      Step #8: Set your quality profiles.
+    </h2>
+
+  <p>
+    This step is important, as important as people have created <a href="https://github.com/recyclarr/recyclarr" target="_blank" rel="nofollow noopener">tools</a> to optimise this step, using <a href="https://github.com/recyclarr/recyclarr/wiki/Configuration-Reference" target="_blank" rel="nofollow noopener">special configurations</a>.
+  </p>
+
+  <p>
+    I leave <a href="https://trash-guides.info/Radarr/Radarr-Quality-Settings-File-Size/" target="_blank" rel="nofollow noopener">here</a> some good documentation.
+  </p>
+
+  <p>
+    Go to the Profiles tab, in Radarr and Sonarr:
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-24.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-24-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-24-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-24-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-24-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-24-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-24-2xl.png 1600w"  height="943" width="2560" alt="" />
+      
+    </figure>
+
+  <p>
+    I leave here my "Any" profile for both services:
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-25.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-25-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-25-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-25-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-25-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-25-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-25-2xl.png 1600w"  height="843" width="868" alt="" />
+      <figcaption>Sonar "Any" Profile</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-26.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-26-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-26-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-26-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-26-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-26-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-26-2xl.png 1600w"  height="831" width="809" alt="" />
+      <figcaption>Radarr "Any" Profile</figcaption>
+    </figure>
+
+  <p>
+    Now, let's get some series and movies. In Radarr or Sonarr, go to the home page, search for the movie or tv show you want to watch, and select it.&nbsp;You should see a screen like this one:
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-11.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-11-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-11-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-11-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-11-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-11-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-11-2xl.png 1600w"  height="431" width="813" alt="" />
+      <figcaption>Select your preferred quality profile, and click on "Add Movie".</figcaption>
+    </figure>
+
+  <p>
+    Then, click on the movie poster.
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-12.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-12-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-12-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-12-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-12-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-12-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-12-2xl.png 1600w"  height="1122" width="2329" alt="" />
+      <figcaption>Go to the search tab and select your preferred option based on size and format.</figcaption>
+    </figure>
+
+    <h2 id="step-9-set-up-your-favourite-media-server">
+      Step #9: Set up your favourite media Server.
+    </h2>
+
+  <p>
+    In this guide I will use&nbsp;<a href="https://github.com/jellyfin/jellyfin" target="_blank" rel="nofollow noopener">Jellyfin</a>, but feel free to use any other, like <a href="https://www.plex.tv/es/media-server-downloads/" target="_blank" rel="nofollow noopener">Plex</a>, <a href="https://github.com/jesec/flood" target="_blank" rel="nofollow noopener">qflood</a>... just change the <b>docker-compose.yml</b> to deploy your selected app.
+  </p>
+
+  <p>
+    For Jellyfin, go to http://&lt;yourIP&gt;:8096.
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-9.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-9-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-9-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-9-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-9-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-9-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-9-2xl.png 1600w"  height="726" width="2560" alt="" />
+      <figcaption>Login screen. Just enter your username and password when prompted.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-19.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-19-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-19-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-19-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-19-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-19-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-19-2xl.png 1600w"  height="418" width="2560" alt="" />
+      <figcaption>You should be seeing something similar to this.</figcaption>
+    </figure>
+
+  <p>
+    Ok, if you click on "Movies", there will be a list of your downloaded movies displayed.
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-28.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-28-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-28-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-28-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-28-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-28-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-28-2xl.png 1600w"  height="159" width="2560" alt="" />
+      <figcaption>You can even filter your movies and series depending of genres, make collections, connect to your smart tv to display there the movie you want to see...</figcaption>
+    </figure>
+
+  <p>
+    And that's all, folks! You have a torrent site running in your server with no hassle at all.
+  </p>
+
+  <p>
+    As soon as possible I will upload a more complex configuration, with bazarr for subtitles, and quality settings for both sonarr and radarr using recyclarr, also using jellyseer for managing user requests.
+  </p>
+
+  <p>
+    &nbsp;Enjoy the piracy!
+  </p>
+
+    <h2 id="recommendations">
+      Recommendations
+    </h2>
+
+  <p>
+    Set a bazarr service to get subtitles. I will make a guide about it as soon as possible.
+  </p>
+
+  <p>
+    Set a service to manage user request. I use Jellyseer for this purpose. I will make a guide about it too. Pinky promise.
+  </p>
+
+  <p>
+    Do not run a torrent site in a server you don't own, like an AWS instance. They can ban you for that.
+  </p>
+
+  <p>
+    If you want to tweak Jellyfin a bit, with themes and stuff, check this <a href="https://www.youtube.com/watch?v=DivZcyoY6bs" target="_blank" rel="nofollow noopener">video</a>.
+  </p>
+
+    <h2 id="extra-dockercompose">
+      Extra Docker-Compose
+    </h2>
+
+  <p>
+    If you prefer to use traefik as a reverse proxy and qflood as a media server, you can use this <b>docker-compose.yml</b>&nbsp;file&nbsp;instead the one already written in the jellyfin.7z compressed folder (credits to my friend Cristian for this file):
+  </p>
+<pre class="line-numbers  language-yaml"><code>version: '3'
+  services:
+    qflood:
+      image: cr.hotio.dev/hotio/qflood:release-4.3.9--4.7.0
+      environment:
+        - PUID=1000
+        - PGID=100
+        - UMASK=002
+        - TZ=Europe/Madrid
+        - FLOOD_AUTH=true
+      ports:
+        - "51413:51413"
+      volumes:
+        - '/your/pathstorage/data/qflood:/config'
+        - '/your/path:/data'
+        - '/storage/shared/bittorrent:/downloads'
+      labels:
+      - traefik.enable=true
+      - traefik.http.routers.flood.entryPoints=web-secure
+      - traefik.http.routers.flood.rule=Host(`yourdomain`)
+      - traefik.http.services.flood.loadbalancer.server.port=3000
+      - traefik.http.routers.flood.service=flood
+      - traefik.http.routers.qbittorrent.entryPoints=web-secure
+      - traefik.http.routers.qbittorrent.rule=Host(`yourdomain`)
+      - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
+      - traefik.http.routers.qbittorrent.service=qbittorrent
+      networks:
+        - rflood
+      restart: unless-stopped
+    prowlarr:
+      image: cr.hotio.dev/hotio/prowlarr:nightly
+      ports:
+        - "9696:9696"
+      environment:
+        - PUID=1000
+        - PGID=1000
+        - UMASK=002
+        - TZ=Europe/Madrid
+      volumes:
+        - /your/path:/config
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.prowlarr.entryPoints=web-secure
+        - traefik.http.routers.prowlarr.rule=Host(`yourdomain`)
+        - traefik.http.services.prowlarr.loadbalancer.server.port=9696
+      networks:
+        - rflood
+      restart: unless-stopped
+    sonarr:
+      image: cr.hotio.dev/hotio/sonarr
+      ports:
+      - "8989:8989"
+      environment:
+      - PUID=1000
+      - PGID=100
+      - UMASK=002
+      - TZ=Europe/Madrid
+      volumes:
+      - './config/arr/sonarr/config:/config'   
+      - '/storage/shared/bittorrent:/storage'
+      labels:
+      - traefik.enable=true
+      - traefik.http.routers.sonarr.entryPoints=web-secure
+      - traefik.http.routers.sonarr.rule=Host(`yourdomain`)
+      - traefik.http.services.sonarr.loadbalancer.server.port=8989
+      networks:
+      - rflood
+      restart: unless-stopped
+    radarr:
+      image: cr.hotio.dev/hotio/radarr
+      ports:
+      - "7878:7878"
+      environment:
+      - PUID=1000
+      - PGID=100
+      - UMASK=002
+      - TZ=Europe/Madrid
+      volumes:
+      - './config/arr/radarr/config:/config'
+      - '/storage/shared/bittorrent:/storage'
+      labels:
+      - traefik.enable=true
+      - traefik.http.routers.radarr.entryPoints=web-secure
+      - traefik.http.routers.radarr.rule=Host(`yourdomain`)
+      - traefik.http.services.radarr.loadbalancer.server.port=7878
+      networks:
+      - rflood
+      restart: unless-stopped
+    bazarr:
+      image: hotio/bazarr
+      ports:
+      - "6767:6767"
+      environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Madrid
+      volumes:
+      - ./config/arr/bazarr/config:/config
+      - /storage/shared/bittorrent/media:/storage/media
+      labels:
+      - traefik.enable=true
+      - traefik.http.routers.bazarr.entryPoints=web-secure
+      - traefik.http.routers.bazarr.rule=Host(`yourdomain`)
+      - traefik.http.services.bazarr.loadbalancer.server.port=6767      
+      networks:
+      - rflood      
+      restart: unless-stopped
+  networks:
+    rflood:
+      driver: bridge
+</code></pre>
+
+  <p>
+    As you can see, you have total freedom to choose where you want to store your data and configuration. Set a path wherever it says <b>"/your/path"</b>. Also, the bazarr service (for subtitles) is included.
+  </p>
+
+    <h2 id="credits">
+      Credits
+    </h2>
+
+  <p>
+    My friend Edu, for discover me Servarr.
+  </p>
+
+  <p>
+    <a href="https://wiki.servarr.com/" target="_blank" rel="nofollow noopener">https://wiki.servarr.com/</a>
+  </p>
+
+  <p>
+    <a href="https://trash-guides.info/" target="_blank" rel="nofollow noopener">TRaSH Guides</a>
+  </p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>How to create YAML files</title>
         <author>
@@ -1680,334 +2247,6 @@ assert response.body == "ok"</code></pre>
 
   <p>
     Credits to <a href="https://blog.zsec.uk/" target="_blank" rel="nofollow noopener">ZeroSec</a> for this info.
-  </p>
-            ]]>
-        </content>
-    </entry>
-    <entry>
-        <title>How to install and configure SSH to be secure</title>
-        <author>
-            <name>Jonathan Ródenas López</name>
-        </author>
-        <link href="https://baronhez.github.io/how-to-configure-ssh-to-be-secure/"/>
-        <id>https://baronhez.github.io/how-to-configure-ssh-to-be-secure/</id>
-            <category term="SSH"/>
-
-        <updated>2022-08-31T01:26:31+02:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/10/ssh-transformed11.jpeg" alt="Eh" />
-                    It should&hellip;
-                ]]>
-            </summary>
-        <content type="html">
-            <![CDATA[
-                    <img src="https://baronhez.github.io/media/posts/10/ssh-transformed11.jpeg" alt="Eh" />
-                
-    <h2 id="it-should-be-ready-in-just-two-minutes-as-simple-as-that">
-      It should be ready in just two minutes, as simple as that.
-    </h2>
-
-  <p>
-    I will show you how to configure SSH and make it more secure within a couple of minutes.
-  </p>
-
-    <h3 id="connect-to-your-server-using-keys">
-      Connect to your server using keys
-    </h3>
-
-  <p>
-    First, connect to your server using SSH. Oh, don't you have SSH in your server yet? Ok, then, run these commands in your server:
-  </p>
-<pre class="line-numbers  language-bash"><code>sudo apt-get install openssh-server
-sudo systemctl enable ssh
-sudo systemctl start ssh</code></pre>
-
-  <p>
-    Apt-get doesn't work? Ok, you're not using a debian based distro in your server, so you have to search how to install packages in your distro (it is a 1 minuto google search, I promise).
-  </p>
-
-  <p>
-    Ok, now that SSH is working in our server, connect to the server from another computer, just for testing. If it is working, now run this command in your server (is going to create the directory for the keys and change the permissions of that directory):
-  </p>
-<pre class="line-numbers  language-bash"><code>mkdir ~/.ssh && chmod 700 ~/.ssh</code></pre>
-
-  <p>
-    Now, we have to generate the keys in our computer.
-  </p>
-<pre class="line-numbers  language-bash"><code># For Windows:
-ssh-keygen -b 4096
-# The keys are stored in "%userprofile%\.ssh" as id_rsa and id_rsa.pub by default.
-#Now, transfer the public key to the server.
-scp $env:USERPROFILE/.ssh/id_rsa.pub Username@123.445.566.233:~/.ssh/authorized_keys    
-# Replace the Username and IP with your own Username and Server IP.
-# For Linux:
-ssh-keygen -b 4096
-# The keys are stored in "~/.ssh" as id_rsa and id_rsa.pub by default.
-# Now, transfer the public key to the server.
-ssh-copy-id Username@123.445.566.233
-# Replace the Username and IP with your own Username and Server IP.
-# For Mac:
-ssh-keygen -b 4096
-# The keys are stored in "~/.ssh" as id_rsa and id_rsa.pub by default.
-# Now, transfer the public key to the server.
-scp ~/.ssh/id_rsa.pub Username@123.445.566.233:~/.ssh/authorized_keys    
-# Replace the Username and IP with your own Username and Server IP.
-</code></pre>
-
-  <p>
-    Ok, if you connect now to your server through SSH, you will connect directly, without having to input a password. Now, let's continue with the next step.
-  </p>
-
-    <h3 id="disable-password-login">
-      Disable password login
-    </h3>
-
-  <p>
-    Edit the file&nbsp;<i>/etc/ssh/sshd_config </i>using some editor like Nano or Vim. First, search for the <b>KbdInteractiveAuthentication</b> line and change the value to no. This way is not possible to use a keyboard during&nbsp;authentication. Next thing we have to change is&nbsp; <b>PasswordAuthentication</b>. Again, the default value is yes, but we’ll be setting it to no.
-  </p>
-
-  <p class="msg msg--info">
-    Some people may say something like "Change the ssh port to another one", but a real hacker (most likely a bot) will scan your ports searching for it, so this act is stupid and annoying without any good reason.
-  </p>
-
-  <p class="msg msg--info">
-    You can also disable root login, but since your user will surely have sudo privileges... well, I leave up to you to decide if it is worth it (I have my root login disable).
-  </p>
-
-    <h3 id="remove-weak-prime-numbers">
-      Remove weak prime numbers
-    </h3>
-
-  <p>
-    The client and the server use these moduli to negotiate a secure key. Remove the small ones by runnings these commands:
-  </p>
-<pre class="line-numbers  language-bash"><code>cp /etc/ssh/moduli ~/copy_moduli 
-awk '$5 &gt;= 3071' /etc/ssh/moduli &gt; /etc/ssh/moduli.safe
-mv /etc/ssh/moduli.safe /etc/ssh/moduli    </code></pre>
-
-  <p>
-    The first command makes a security copy before changing the moduli in the home folder of your user. The second command looks for lines in /etc/ssh/moduli, which on the fifth line have a value bigger than 3071 and writes those in the moduli.safe file. Then, the third command replace the moduli using the moduli.safe file.
-  </p>
-
-    <h3 id="allow-strong-cyphers-only">
-      Allow strong cyphers only
-    </h3>
-
-  <p>
-    We are going to allow only the most secure cyphers. Create a new file <i>/etc/ssh/sshd_config.d/ssh_hardening.conf</i>. Then, add this content exactly as it is displayed:
-  </p>
-<pre class="line-numbers  language-bash"><code>KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256
-Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
-MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com
-HostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-256,rsa-sha2-512,rsa-sha2-256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com  </code></pre>
-
-    <h2 id="bonus">
-      Bonus
-    </h2>
-
-  <p>
-    With all I mention above should be more than enough, the following tips are optional... and will take you more than just a couple of minutes.
-  </p>
-
-    <h3 id="usenbspmulti-factor-authentication">
-      Use&nbsp;Multi Factor Authentication
-    </h3>
-
-  <p>
-    First, update your system:
-  </p>
-<pre class="line-numbers  language-bash"><code>sudo apt update
-sudo apt upgrade -y</code></pre>
-
-  <p>
-    Now, install the&nbsp;<i>libpam-google-authenticator</i> package.
-  </p>
-<pre class="line-numbers  language-bash"><code>sudo apt install libpam-google-authenticator
-</code></pre>
-
-  <p>
-    For MFA, if I'm not mistaken, you will have to enable again the <b>KbdInteractiveAuthentication</b> line in&nbsp;<i>/etc/ssh/sshd_config.</i>
-  </p>
-
-  <p>
-    Once the PAM app is installed you will need to use a helper app that comes with the PAM to generate a Time-Based One-Time Password (TOTP) key for the user you want to add a second factor to. This key is generated on a per user basis, and as a result is not system-wide.&nbsp;To do this simply run:
-  </p>
-<pre class="line-numbers  language-bash"><code>google-authenticator</code></pre>
-
-  <p>
-    Upon running the command, you’ll be asked a few questions. The first one asks if authentication tokens should be time-based. We want to select <b>y</b>:
-  </p>
-<pre class="line-numbers  language-bash"><code>Do you want authentication tokens to be time-based (y/n): y</code></pre>
-
-  <p>
-    Once we select yes, the app will generate a QR code that can be scanned within your authenticator app of choice.
-  </p>
-
-  <p>
-    This PAM allows for time-based or sequential-based tokens. Using sequential-based tokens mean the code starts at a certain point and then increments the code after every use. Using time-based tokens mean the code changes randomly after a certain time elapses (usually 60s). We’ll stick with time-based because that is what apps like Google Authenticator anticipate.
-  </p>
-
-  <p>
-    The remaining questions inform the PAM how to function. We’ll go through them one by one.
-  </p>
-<pre class="line-numbers  language-bash"><code>Do you want me to update your "/home/zephr/.google_authenticator" file? (y/n)  </code></pre>
-
-  <p>
-    This writes the key and options to the <b>~/.google_authenticator</b> file. If you select no, then the program will quit and nothing is saved which in turn results in the authenticator application not working. Therefore we want to select <b>yes </b>for this!&nbsp;
-  </p>
-<pre class="line-numbers  language-html"><code>By default, tokens are good for 30 seconds and in order to compensate for
-possible time-skew between the client and the server, we allow an extra
-token before and after the current time. If you experience problems with poor
-time synchronization, you can increase the window from its default
-size of 1:30min to about 4min. Do you want to do so (y/n) n</code></pre>
-
-  <p>
-    Selecting yes for this question enables up to 8 valid codes in a moving four minute window. By answering no, you limit it to 3 valid codes in a 90 second rolling window.
-  </p>
-
-  <p>
-    Unless you find issues with the 90 second window, answering no is the more secure choice.
-  </p>
-<pre class="line-numbers  language-html"><code>If the computer that you are logging into isn't hardened against brute-force
-login attempts, you can enable rate-limiting for the authentication module.
-By default, this limits attackers to no more than 3 login attempts every 30s.
-Do you want to enable rate-limiting (y/n) y</code></pre>
-
-  <p>
-    Rate limiting means a remote attacker can only attempt a certain number of guesses before being blocked. I recommend you to answer <b>yes</b>.
-  </p>
-
-  <p>
-    Once you finish this setup, if you want to back up your secret key, you can copy the <b>~/.google-authenticator</b> file to a trusted location.&nbsp;
-  </p>
-
-  <p>
-    Once we've been through the steps to configure google authenticator, the next step is to setup our SSH config to allow authenticator to function:
-  </p>
-<pre class="line-numbers  language-bash"><code>sudo nano /etc/pam.d/sshd</code></pre>
-
-  <p>
-    Add the following line to the bottom of the file:
-  </p>
-<pre class="line-numbers  language-bash"><code># Standard Un*x password updating.
-@include common-password
-auth required pam_google_authenticator.so nullok  </code></pre>
-
-  <p>
-    The <b>nullok</b> word at the end of the last line tells the PAM that this authentication method is optional. This allows users without a OATH-TOTP token to still log in using their SSH key. If you remove <b>nullok</b>&nbsp;from the line, this MFA would be mandatory.
-  </p>
-
-  <p>
-    Next, we’ll configure SSH to support this kind of authentication. Open the SSH configuration file for editing.
-  </p>
-<pre class="line-numbers  language-bash"><code>sudo nano /etc/ssh/sshd_config</code></pre>
-
-  <p>
-    &nbsp;We are going to make SSH aware of MFA by adding AuthenticationMethods and UsePAM:
-  </p>
-<pre class="line-numbers  language-bash"><code># To disable tunneled clear text passwords, change to no here!
-PasswordAuthentication no
-#PermitEmptyPasswords no
-
-# Change to yes to enable challenge-response passwords (beware issues with
-# some PAM modules and threads)
-
-
-#ChallengeResponseAuthentication yes
-KbdInteractiveAuthentication yes
-UsePAM yes
-AuthenticationMethods publickey,password publickey,keyboard-interactive</code></pre>
-
-  <p>
-    Save the config and restart the SSH service.
-  </p>
-<pre class="line-numbers  language-bash"><code>sudo systemctl reload sshd.service</code></pre>
-
-  <p>
-    Now, you have MFA for your SSH.
-  </p>
-
-    <h3 id="enable-firewall-and-make-use-ofnbspratelimiting">
-      Enable Firewall and make use of&nbsp;Rate-Limiting
-    </h3>
-
-  <p>
-    First, install Uncomplicated Firewall(UFW).
-  </p>
-<pre class="line-numbers  language-bash"><code>sudo apt install ufw
-</code></pre>
-
-  <p>
-    Now, set a rate limit:
-  </p>
-<pre class="line-numbers  language-bash"><code>## ufw limit ssh various usage ##
-ufw limit ssh comment 'Rate limit for openssh server'</code></pre>
-
-  <p>
-    When a limit rule is used, ufw will normally allow the connection but will deny connections if an IP address attempts to initiate six or more connections within thirty seconds.
-  </p>
-
-  <p>
-    You can also allow or disallow connections from specific IPs:
-  </p>
-<pre class="line-numbers  language-bash"><code>   sudo ufw allow from 1.2.3.4 to any port 22</code></pre>
-
-  <p>
-    The above example only allows connections from 1.2.3.4 to port 22.
-  </p>
-
-    <h3 id="set-up-fail2ban">
-      Set up Fail2Ban
-    </h3>
-
-  <p>
-    We can go a little further by setting up Fail2Ban.&nbsp;Fail2Ban essentially actively looks out for signs of potential password authentication abuses to filter out IP addresses and regularly update the system firewall to suspend these IP addresses for a certain period.
-  </p>
-
-  <p>
-    To install and setup Fail2Ban, run the following commands:
-  </p>
-<pre class="line-numbers  language-bash"><code>sudo apt install fail2ban
-sudo cp /etc/fail2ban/jail.{conf,local}
-sudo nano /etc/fail2ban/jail.local</code></pre>
-
-  <p>
-    To configure Fail2Ban, modify the following lines:
-  </p>
-<pre class="line-numbers  language-bash"><code>bantime = 1d</code></pre>
-
-  <p>
-    If you assign a negative value, the ban will be permanent.
-  </p>
-<pre class="line-numbers  language-bash"><code>findtime = 10m</code></pre>
-
-  <p>
-    <b>findtime</b>&nbsp;defines&nbsp;the time-duration allowed between consecutive login attempts. If the multiple login attempts were made within the time defined by findtime, a ban would be set on the IP.
-  </p>
-<pre class="line-numbers  language-bash"><code>maxretry = 5</code></pre>
-
-  <p>
-    <b>maxretry</b>&nbsp;defines&nbsp; the exact number of failed login attempts allowed within the findtime. If the number of failed-authorization attempts within the findtime exceeds the maxretry value, the IP would be banned from logging back in.
-  </p>
-
-  <p>
-    Fail2ban also allows you to grant immunity to IP addresses and IP ranges of your choice.
-  </p>
-<pre class="line-numbers  language-bash"><code>ignoreip = 127.0.0.1/8 ::1 222.222.222.222 192.168.55.0/24</code></pre>
-
-  <p>
-    Upon setting all the options you want, simply start the service then check the status:
-  </p>
-<pre class="line-numbers  language-bash"><code>sudo systemctl start fail2ban
-sudo systemctl status fail2ban</code></pre>
-
-    <h2 id="credits">
-      Credits
-    </h2>
-
-  <p>
-    I found all this tweaks and tricks in random sources from internet, but to sum it all, all of them can be found in two webpages, so the credit goes to the authors of <a href="https://disknotifier.com/blog/simple-ssh-security/" target="_blank" class="">https://disknotifier.com/blog/simple-ssh-security/</a> and <a href="https://blog.zsec.uk/locking-down-ssh-the-right-way/" target="_blank">https://blog.zsec.uk/locking-down-ssh-the-right-way</a>/.
   </p>
             ]]>
         </content>
