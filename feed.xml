@@ -3,14 +3,14 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-09-16T18:49:12+02:00</updated>
+    <updated>2022-09-16T19:07:08+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
     <id>https://baronhez.github.io</id>
 
     <entry>
-        <title>How to mount a torrent server.</title>
+        <title>How to mount a torrent server to watch movies and series for free</title>
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
@@ -19,9 +19,10 @@
             <category term="Torrent"/>
             <category term="Self-hosted"/>
             <category term="Media"/>
+            <category term="Docker-compose"/>
             <category term="Docker"/>
 
-        <updated>2022-09-16T18:49:12+02:00</updated>
+        <updated>2022-09-16T19:07:08+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/19/server.png" alt="" />
@@ -84,7 +85,7 @@ sudo chmod +x /usr/local/bin/docker-compose</code></pre>
     </h2>
 
   <p>
-    Ok, inside the congifuration folder (<a href="https://linux.die.net/man/1/7z" target="_blank" rel="nofollow noopener">unzip</a> it), you will see a&nbsp;<b>docker-compose.yml</b> file. Edit the content with this command:
+    Ok, inside the configuration folder (<a href="https://linux.die.net/man/1/7z" target="_blank" rel="nofollow noopener">unzip</a> it), you will see a&nbsp;<b>docker-compose.yml</b> file. Edit the content with this command:
   </p>
 <pre class="line-numbers  language-bash"><code>nano docker-compose.yml</code></pre>
 
@@ -180,7 +181,7 @@ services:
   </p>
 
   <p>
-    Ok, first we have to connect to Prowlarr (use http:&lt;yourIP&gt;:9696, in case you don't want to use trusted certificates):
+    Ok, first we have to connect to Prowlarr (use http:&lt;yourIP&gt;:9696, in case you don't want to use trusted certificates or domain names):
   </p>
 
     <figure class="post__image post__image--center">
