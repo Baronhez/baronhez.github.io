@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-09-17T17:01:06+02:00</updated>
+    <updated>2022-09-17T17:05:58+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -1165,7 +1165,7 @@ services:
         <link href="https://baronhez.github.io/how-to-create-yaml-files/"/>
         <id>https://baronhez.github.io/how-to-create-yaml-files/</id>
 
-        <updated>2022-09-17T16:55:49+02:00</updated>
+        <updated>2022-09-17T17:05:58+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/20/i.webp" alt="" />
@@ -1285,11 +1285,11 @@ names: !!set
 
 # Dictionary !!omap
 people: !!omap
-  - Kunal:
+  - person1:
      name: Franklin
      age: 25
      height: 1.83
-  - Rahul:
+  - person2:
      name: Trevor
      age: 46
      height: 1.86
