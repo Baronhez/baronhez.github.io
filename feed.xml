@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-09-17T15:00:26+02:00</updated>
+    <updated>2022-09-17T15:25:16+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -22,14 +22,16 @@
             <category term="Docker-compose"/>
             <category term="Docker"/>
 
-        <updated>2022-09-17T14:59:47+02:00</updated>
+        <updated>2022-09-17T15:25:16+02:00</updated>
             <summary>
                 <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/21/i-29.PNG" alt="" />
                     Lo pillo&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
+                    <img src="https://baronhez.github.io/media/posts/21/i-29.PNG" alt="" />
                 
   <p>
     Lo pillo quieres desplegar un servidor torrent para ver series y películas pirata sin la molestia de leer toneladas de documentación. Bueno, esta es una guía directa para desplegar todo en sólo cinco minutos. Pongámonos manos a la obra. (Estoy asumiendo que sabes lo más básico de cómo manejar Linux, Docker y una terminal).
