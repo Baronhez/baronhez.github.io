@@ -3,12 +3,581 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-09-16T19:07:08+02:00</updated>
+    <updated>2022-09-17T15:00:26+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
     <id>https://baronhez.github.io</id>
 
+    <entry>
+        <title>Cómo montar un servidor torrent para ver películas y series gratis (en español)</title>
+        <author>
+            <name>Jonathan Ródenas López</name>
+        </author>
+        <link href="https://baronhez.github.io/como-montar-un-servidor-torrent-para-ver-peliculas-y-series-gratis-en-espanol/"/>
+        <id>https://baronhez.github.io/como-montar-un-servidor-torrent-para-ver-peliculas-y-series-gratis-en-espanol/</id>
+            <category term="Torrent"/>
+            <category term="Self-hosted"/>
+            <category term="Media"/>
+            <category term="Docker-compose"/>
+            <category term="Docker"/>
+
+        <updated>2022-09-17T14:59:47+02:00</updated>
+            <summary>
+                <![CDATA[
+                    Lo pillo&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                
+  <p>
+    Lo pillo quieres desplegar un servidor torrent para ver series y películas pirata sin la molestia de leer toneladas de documentación. Bueno, esta es una guía directa para desplegar todo en sólo cinco minutos. Pongámonos manos a la obra. (Estoy asumiendo que sabes lo más básico de cómo manejar Linux, Docker y una terminal).
+  </p>
+
+    <h2 id="paso-1-instalar-docker-y-dockercompose">
+      Paso #1: Instalar Docker y Docker-Compose.
+    </h2>
+
+  <p>
+    [MANUAL] Primero, instala docker y docker-compose:
+  </p>
+<pre class="line-numbers  language-bash"><code>sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+sudo apt install docker-ce
+sudo usermod -aG docker &lt;username&gt;
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose</code></pre>
+
+  <p>
+    [FASTEST] O ejecuta este comando:
+  </p>
+<pre class="line-numbers  language-bash"><code>/bin/bash -c "$(curl -fsSL https://git.io/JDGfm)"</code></pre>
+
+  <p>
+    El contenido del script bash ejecutado es el siguiente:
+  </p>
+<pre class="line-numbers  language-bash"><code>sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get updatesudo apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-releasesudo rm -rf /usr/share/keyrings/docker-archive-keyring.gpgcurl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpgecho \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/nullsudo apt-get updatesudo apt-get install -y docker-ce docker-ce-cli containerd.iosudo usermod -a -G docker $USERsudo curl -L "https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-linux-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+</code></pre>
+
+    <h2 id="paso-2-descargar-mi-carpeta-de-configuracin">
+      Paso #2: Descargar mi carpeta de configuración.
+    </h2>
+
+  <p>
+    La forma más rápida de configurar esto es tomar prestada mi configuración, confía en mí. Descarga esta <a href="https://baronhez.github.io/media/files/jellyfin.7z" download>carpeta comprimida</a> en tu servidor.
+  </p>
+
+    <h2 id="paso-3-crear-el-archivo-dockercompose">
+      Paso #3: Crear el archivo Docker-Compose.
+    </h2>
+
+  <p>
+    Bien, dentro de la carpeta de configuración (<a href="https://linux.die.net/man/1/7z" target="_blank" rel="nofollow noopener">descomprímela</a>), verás un archivo docker-compose.yml. Edita el contenido con este comando:
+  </p>
+<pre class="line-numbers  language-yaml"><code>version: "3.7"
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment: &env
+      - PUID=&lt;Enter your USER_ID&gt;
+      - PGID=&lt;Enter your GROUP_ID&gt;
+      - TZ=&lt;Enter your time zone&gt;
+    volumes:
+      - ./config/jellyfin:/config
+      - ./library/series:/data/series
+      - ./library/movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    restart: &restartpolicy unless-stopped
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment: *env
+    volumes:
+      - ./config/arr/radarr/config:/config
+      - ./library/movies:/data/movies #optional
+      - ./downloads:/downloads #optional
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 7878:7878
+    restart: *restartpolicy
+  sonarr:
+    container_name: sonarr
+    image: cr.hotio.dev/hotio/sonarr:latest
+    restart: *restartpolicy
+    logging:
+      driver: json-file
+    network_mode: bridge
+    ports:
+      - 8989:8989
+    environment: *env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config/arr/sonarr/config:/config
+      - ./downloads:/downloads #optional
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=&lt;Enter your USER_ID&gt;
+      - PGID=&lt;Enter your GROUP_ID&gt;
+      - TZ=&lt;Enter your time zone&gt;
+      - WEBUI_PORT=9095
+    volumes:
+      - ./torrent/qbittorrent/config:/config
+      - ./downloads:/downloads
+    ports:
+      - 9095:9095
+      - 6881:6881
+      - 6881:6881/udp
+    restart: *restartpolicy
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment: *env
+    volumes:
+      - ./torrent/prowlarr/config:/config
+    ports:
+      - 9696:9696
+    restart: *restartpolicy</code></pre>
+
+    <h2 id="paso-4-ejecuta-tus-contenedores">
+      Paso #4: Ejecuta tus contenedores!
+    </h2>
+<pre class="line-numbers  language-bash"><code>sudo docker-compose up -d</code></pre>
+
+    <h2 id="paso-5-vamos-a-configurar-nuestros-indexadores">
+      Paso #5: Vamos a configurar nuestros indexadores.
+    </h2>
+
+  <p>
+    En primer lugar, quiero aclarar que no es necesario tener un nombre de dominio. Con saber la IP de tu servidor, y a qué puertos tienes que acceder para conectarte a las interfaces web, es más que suficiente.
+  </p>
+
+  <p>
+    Personalmente, uso ingressRoutes (usando traefik como Ingress Controller) para conectarme a estas interfaces web gracias a los subdominios. Pero os dejo que decidáis cómo hacerlo, podéis usar Nginx reverse proxy, nginx manager, traefik reverse proxy en Docker....
+  </p>
+
+  <p>
+    Ok, primero tenemos que conectarnos a Prowlarr (usa http://&lt;tuIP&gt;<tu ip="">:9696, en caso de que no quieras usar certificados de confianza o nombres de dominio):</tu>&nbsp;<br>
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-2xl.PNG 1600w"  height="921" width="944" alt="" />
+      <figcaption>Esta es la webUI de prowlarr. Vamos a añadir un nuevo indexador pulsando el botón azul.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-2.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-2-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-2-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-2-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-2-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-2-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-2-2xl.PNG 1600w"  height="1191" width="1073" alt="" />
+      <figcaption>Yo uso este para las películas de anime. Puedes usar cualquiera.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-4.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-4-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-4-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-4-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-4-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-4-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-4-2xl.PNG 1600w"  height="868" width="712" alt="" />
+      <figcaption>En este caso, para este indexador los valores por defecto deberían ser suficientes. Marca la casilla de Enable.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-5.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-5-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-5-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-5-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-5-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-5-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-5-2xl.PNG 1600w"  height="710" width="713" alt="" />
+      <figcaption>También uso este.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-6.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-6-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-6-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-6-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-6-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-6-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-6-2xl.PNG 1600w"  height="832" width="868" alt="" />
+      <figcaption>Para indexadores NZB, habitualmente vas a tener que user una API Key (suelen ser de pago).</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-7.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-7-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-7-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-7-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-7-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-7-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-7-2xl.PNG 1600w"  height="938" width="957" alt="" />
+      <figcaption>Ahora, ve a Settings -> Apps para añadir aplicaciones. Haz click en el botón de añadir aplicaciones de arriba.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-8.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-8-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-8-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-8-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-8-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-8-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-8-2xl.PNG 1600w"  height="527" width="1072" alt="" />
+      <figcaption>Tenemos que seleccionar Radarr (películas) y Sonarr (series) para esta guía. Hay algunas más como puedes ver (por ejemplo, Lidarr es para música).</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-11.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-11-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-11-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-11-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-11-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-11-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-11-2xl.PNG 1600w"  height="767" width="716" alt="" />
+      <figcaption>Tienes que poner tu API Key. Tal y como pone debajo, está en Radarr, en Settings -> General.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-10.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-10-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-10-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-10-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-10-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-10-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-10-2xl.PNG 1600w"  height="826" width="930" alt="" />
+      <figcaption>Esta es la API Key que tienes que utilizar. Lo mismo pasa con Sonarr, que tiene su propia API Key, también en Settings -> General.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-12.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-12-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-12-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-12-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-12-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-12-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-12-2xl.PNG 1600w"  height="766" width="714" alt="" />
+      <figcaption>Lo mismo va para Sonarr. Usa su API Key aquí y haz click en Test.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-13.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-13-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-13-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-13-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-13-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-13-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-13-2xl.PNG 1600w"  height="238" width="921" alt="" />
+      <figcaption>Tu pestaña de aplicaciones debería ser así.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-14.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-14-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-14-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-14-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-14-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-14-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-14-2xl.PNG 1600w"  height="1163" width="1228" alt="" />
+      <figcaption>Espera unos minutos. Luego, ve a Settings -> Indexers en Radarr y Sonarr y deberías ver algo así.</figcaption>
+    </figure>
+
+    <h2 id="paso-6-configura-tu-cliente-torrent">
+      Paso #6: Configura tu cliente torrent.
+    </h2>
+
+  <p>
+    "Pero quiero usar usenet en lugar de torrents". Vale, pues haré una guía más completa teniendo en cuenta usenet. Pero por ahora, sigamos con los torrents.
+  </p>
+
+  <p>
+    En cualquier caso, <a href="https://morrismotel.com/servarr-pt3a-choosing-your-indexers/" target="_blank" rel="nofollow noopener">aquí</a> tienes una lista de "Pros y contras".
+  </p>
+
+  <p>
+    Y <a href="https://trash-guides.info/Downloaders/qBittorrent/Basic-Setup/" target="_blank" rel="nofollow noopener">aquí</a> tienes algo de documentación adicional.
+  </p>
+
+  <p>
+    Bien, para conectarnos a la webUI de qbittorrent, tenemos que usar el puerto 9095 (puedes cambiarlo en el archivo <b>docker-compose.yml</b>).
+  </p>
+
+  <p>
+    Conéctate a http://&lt;tuIP&gt;<suip>:9095, luego introduzca el nombre de usuario por defecto (admin) y la contraseña por defecto (adminadmin).</suip>
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-15.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-15-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-15-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-15-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-15-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-15-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-15-2xl.PNG 1600w"  height="751" width="836" alt="" />
+      <figcaption>Entra en Tools -> Options. Luego, en la pestaña Connection, marca las mismas opciones que yo. No voy a explicar por qué funciona esto, tal vez en la próxima guía.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-16.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-16-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-16-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-16-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-16-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-16-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-16-2xl.PNG 1600w"  height="20" width="318" alt="" />
+      <figcaption>Marca esta opción si tu server está en tu red interna de casa. Esta opción debería, por razones de seguridad, mantenerse desabilitada.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-3.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-3-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-3-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-3-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-3-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-3-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-3-2xl.PNG 1600w"  height="678" width="698" alt="" />
+      <figcaption>Ahora, en la pestaña de BitTorrent marca estas opciones.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-9.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-9-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-9-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-9-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-9-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-9-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-9-2xl.PNG 1600w"  height="669" width="691" alt="" />
+      <figcaption>Ahora, esta es mi pestaña de downloads.</figcaption>
+    </figure>
+
+    <h2 id="paso-7-configura-radarr-y-sonarr">
+      Paso #7: Configura Radarr y Sonarr
+    </h2>
+
+  <p>
+    Radarr y Sonarr son muy similares. Así que la configuración que vamos a hacer es exactamente la misma para ambos. Vamos a usar Radarr como ejemplo pero la configuración es la misma para Sonarr también. Vamos a empezar.
+  </p>
+
+  <p>
+    Ve a http://&lt;tuIP&gt;<yourip>:7878, ve a Settings -&gt; Download Clients, haz click en el botón de añadir:</yourip>
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-17.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-17-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-17-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-17-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-17-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-17-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-17-2xl.PNG 1600w"  height="1117" width="1066" alt="" />
+      <figcaption>Deberías ver algo como esto.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-18.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-18-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-18-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-18-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-18-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-18-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-18-2xl.PNG 1600w"  height="888" width="823" alt="" />
+      <figcaption>Si quieres usar usenet, selecciona por ejemplo NZBGet y rellena la información.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-19.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-19-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-19-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-19-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-19-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-19-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-19-2xl.PNG 1600w"  height="1188" width="720" alt="" />
+      <figcaption>Para configurar QBitTorrent, usa la info del login de QBitTorrent.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-20.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-20-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-20-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-20-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-20-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-20-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-20-2xl.PNG 1600w"  height="171" width="661" alt="" />
+      
+    </figure>
+
+  <p>
+    Repite este proceso para Sonarr.
+  </p>
+
+    <h2 id="paso-8-configura-tus-perfiles-de-calidad">
+      Paso #8: Configura tus perfiles de calidad.
+    </h2>
+
+  <p>
+    Este paso es importante, tanto es así que hay gente que ha creado <a href="https://github.com/recyclarr/recyclarr" target="_blank" rel="nofollow noopener">herramientas</a> para optimizar este paso, usando <a href="https://github.com/recyclarr/recyclarr/wiki/Configuration-Reference" target="_blank" rel="nofollow noopener">configuraciones especiales</a>.
+  </p>
+
+  <p>
+    Dejo <a href="https://trash-guides.info/Radarr/Radarr-Quality-Settings-File-Size/" target="_blank" rel="nofollow noopener">aquí</a> algo de documentación.
+  </p>
+
+  <p>
+    Ve a la pestaña de Perfiles, tanto en Radarr como en Sonarr:
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-21.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-21-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-21-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-21-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-21-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-21-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-21-2xl.PNG 1600w"  height="589" width="1600" alt="" />
+      
+    </figure>
+
+  <p>
+    Dejo aquí mis perfiles "Any":
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-22.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-22-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-22-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-22-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-22-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-22-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-22-2xl.PNG 1600w"  height="843" width="868" alt="" />
+      <figcaption>Mi perfil "Any" de Sonarr</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-23.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-23-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-23-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-23-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-23-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-23-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-23-2xl.PNG 1600w"  height="831" width="809" alt="" />
+      <figcaption>Mi perfil "Any" de Radarr.</figcaption>
+    </figure>
+
+  <p>
+    Ahora, vamos a buscar algunas series y películas. En Radarr o Sonarr, ve a la página de inicio, busca la película o la serie que quieres ver y selecciónala. Deberías ver una pantalla como ésta:
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-24.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-24-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-24-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-24-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-24-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-24-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-24-2xl.PNG 1600w"  height="431" width="813" alt="" />
+      <figcaption>Selecciona tu perfil de calidad preferido y haz click en "Add Movie".</figcaption>
+    </figure>
+
+  <p>
+    Y una vez hagas esto, haz click en el poster de la película:
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-25.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-25-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-25-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-25-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-25-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-25-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-25-2xl.PNG 1600w"  height="771" width="1600" alt="" />
+      <figcaption>Ve entonces a la pestaña "Search" y selecciona la opción que prefieras descargar en función de la calidad, el formato y el tamaño.</figcaption>
+    </figure>
+
+    <h2 id="paso-9-configura-tu-media-server-favorito">
+      Paso #9: Configura tu Media Server favorito.
+    </h2>
+
+  <p>
+    En esta guía usaré <a href="https://github.com/jellyfin/jellyfin" target="_blank" rel="nofollow noopener">Jellyfin</a>, pero siéntete libre de usar cualquier otro, como <a href="https://www.plex.tv/es/media-server-downloads/" target="_blank" rel="nofollow noopener">Plex</a>, <a href="https://github.com/jesec/flood" target="_blank" rel="nofollow noopener">qflood</a>... simplemente cambia el <b>docker-compose.yml</b> para desplegar tu aplicación seleccionada.
+  </p>
+
+  <p>
+    Para Jellyfin, ve a http://&lt;tuIP&gt;:8096.
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-26.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-26-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-26-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-26-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-26-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-26-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-26-2xl.PNG 1600w"  height="454" width="1600" alt="" />
+      <figcaption>Esta es la Login Screen. Entra con tu username y password.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-27.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-27-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-27-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-27-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-27-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-27-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-27-2xl.PNG 1600w"  height="261" width="1600" alt="" />
+      <figcaption>Deberías entonces ver algo similar a esto.</figcaption>
+    </figure>
+
+  <p>
+    Ok, si haces click en "Movies", habrá una lista de películas descargadas.
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-28.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-28-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-28-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-28-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-28-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-28-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-28-2xl.PNG 1600w"  height="99" width="1600" alt="" />
+      <figcaption>Incluso puedes filtrar tus películas y series en función de los géneros, hacer colecciones, conectarte a tu smart tv para visualizar allí la película que quieras ver...</figcaption>
+    </figure>
+
+  <p>
+    ¡Y eso es todo, amigos! Ya tienes un sitio de torrents funcionando en tu servidor sin ninguna molestia.
+  </p>
+
+  <p>
+    En cuanto sea posible subiré una configuración más compleja, con bazarr para los subtítulos, y ajustes de calidad tanto para sonarr como para radarr usando recyclarr, usando también jellyseer para gestionar las peticiones de los usuarios.
+  </p>
+
+  <p>
+    Disfruta de la piratería!
+  </p>
+
+    <h2 id="recomendaciones">
+      Recomendaciones
+    </h2>
+
+  <p>
+    Configura un servicio de bazarr para obtener subtítulos. Haré una guía al respecto lo antes posible.
+  </p>
+
+  <p>
+    Establece un servicio para gestionar las solicitudes de los usuarios. Yo uso Jellyseer para este propósito. Haré una guía sobre esto también. Lo prometo.
+  </p>
+
+  <p>
+    No montes tu torrent server en un servidor que no es de su propiedad, como una instancia de AWS. Pueden bannearte por eso.
+  </p>
+
+  <p>
+    Si quieres retocar un poco Jellyfin, con temas y demás, mira este <a href="https://www.youtube.com/watch?v=DivZcyoY6bs" target="_blank" rel="nofollow noopener">vídeo</a>.
+  </p>
+
+    <h2 id="extra-dockercompose">
+      Extra Docker-Compose
+    </h2>
+
+  <p>
+    Si prefieres usar traefik como proxy inverso y qflood como Media Server, puedes usar este archivo <b>docker-compose.yml</b> en lugar del ya escrito en la carpeta comprimida jellyfin.7z (créditos a mi amigo Cristian por este archivo, lo he modificado para quitar cosas innecesarias):
+  </p>
+<pre class="line-numbers  language-yaml"><code>  version: '3'
+  services:
+    qflood:
+      image: cr.hotio.dev/hotio/qflood:release-4.3.9--4.7.0
+      environment:
+        - PUID=1000
+        - PGID=100
+        - UMASK=002
+        - TZ=Europe/Madrid
+        - FLOOD_AUTH=true
+      ports:
+        - "51413:51413"
+      volumes:
+        - '/your/pathstorage/data/qflood:/config'
+        - '/your/path:/data'
+        - '/storage/shared/bittorrent:/downloads'
+      labels:
+      - traefik.enable=true
+      - traefik.http.routers.flood.entryPoints=web-secure
+      - traefik.http.routers.flood.rule=Host(`yourdomain`)
+      - traefik.http.services.flood.loadbalancer.server.port=3000
+      - traefik.http.routers.flood.service=flood
+      - traefik.http.routers.qbittorrent.entryPoints=web-secure
+      - traefik.http.routers.qbittorrent.rule=Host(`yourdomain`)
+      - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
+      - traefik.http.routers.qbittorrent.service=qbittorrent
+      networks:
+        - rflood
+      restart: unless-stopped
+    prowlarr:
+      image: cr.hotio.dev/hotio/prowlarr:nightly
+      ports:  
+        - "9696:9696"
+      environment:
+        - PUID=1000
+        - PGID=1000
+        - UMASK=002
+        - TZ=Europe/Madrid
+      volumes:
+        - /your/path:/config
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.prowlarr.entryPoints=web-secure
+        - traefik.http.routers.prowlarr.rule=Host(`yourdomain`)
+        - traefik.http.services.prowlarr.loadbalancer.server.port=9696
+      networks:
+        - rflood
+      restart: unless-stopped
+    sonarr:
+      image: cr.hotio.dev/hotio/sonarr
+      ports:
+      - "8989:8989"
+      environment:
+      - PUID=1000
+      - PGID=100
+      - UMASK=002
+      - TZ=Europe/Madrid
+      volumes:
+      - './config/arr/sonarr/config:/config'   
+      - '/storage/shared/bittorrent:/storage'
+      labels:
+      - traefik.enable=true
+      - traefik.http.routers.sonarr.entryPoints=web-secure
+      - traefik.http.routers.sonarr.rule=Host(`yourdomain`)
+      - traefik.http.services.sonarr.loadbalancer.server.port=8989
+      networks:
+      - rflood
+      restart: unless-stopped
+    radarr:
+      image: cr.hotio.dev/hotio/radarr
+      ports:
+      - "7878:7878"
+      environment:
+      - PUID=1000
+      - PGID=100
+      - UMASK=002
+      - TZ=Europe/Madrid
+      volumes:
+      - './config/arr/radarr/config:/config'
+      - '/storage/shared/bittorrent:/storage'
+      labels:
+      - traefik.enable=true
+      - traefik.http.routers.radarr.entryPoints=web-secure
+      - traefik.http.routers.radarr.rule=Host(`yourdomain`)
+      - traefik.http.services.radarr.loadbalancer.server.port=7878
+      networks:
+      - rflood
+      restart: unless-stopped
+    bazarr:
+      image: hotio/bazarr
+      ports:
+      - "6767:6767"
+      environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Madrid
+      volumes:
+      - ./config/arr/bazarr/config:/config
+      - /storage/shared/bittorrent/media:/storage/media
+      labels:
+      - traefik.enable=true
+      - traefik.http.routers.bazarr.entryPoints=web-secure
+      - traefik.http.routers.bazarr.rule=Host(`yourdomain`)
+      - traefik.http.services.bazarr.loadbalancer.server.port=6767      
+      networks:
+      - rflood      
+      restart: unless-stopped
+  networks:
+    rflood:
+      driver: bridge</code></pre>
+
+  <p>
+    Como puedes ver, tienes total libertad para elegir dónde quieres almacenar tus datos y tu configuración. Establece una ruta donde diga "/tu/ruta". Además, se incluye el servicio bazarr (para los subtítulos).
+  </p>
+
+    <h2 id="crditos">
+      Créditos
+    </h2>
+
+  <p>
+    Gracias a mi amigo Edu, por descubrirme Servarr.
+  </p>
+
+  <p>
+    <a href="https://wiki.servarr.com/" target="_blank" rel="nofollow noopener">https://wiki.servarr.com/</a>
+  </p>
+
+  <p>
+    <a href="https://trash-guides.info/" target="_blank" rel="nofollow noopener">TRaSH Guides</a>
+  </p>
+
+  <p>
+    <a href="https://morrismotel.com/servarr-pt3b-prowlarr-sonarr-radarr/" target="_blank" rel="nofollow noopener">https://morrismotel.com/servarr-pt3b-prowlarr-sonarr-radarr/</a>
+  </p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>How to mount a torrent server to watch movies and series for free</title>
         <author>
@@ -22,7 +591,7 @@
             <category term="Docker-compose"/>
             <category term="Docker"/>
 
-        <updated>2022-09-16T19:07:08+02:00</updated>
+        <updated>2022-09-17T15:00:26+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/19/server.png" alt="" />
@@ -275,7 +844,7 @@ services:
 
     <figure class="post__image post__image--center">
       <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-17.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-17-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-17-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-17-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-17-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-17-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-17-2xl.png 1600w"  height="20" width="318" alt="" />
-      <figcaption>Mark this option in case your server is at home, but should be disabled in your router for several security reasons.</figcaption>
+      <figcaption>Mark this option in case your server is at home, but should be disabled for several security reasons.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
@@ -2118,145 +2687,6 @@ services:
 
   <p>
     Good luck, lads.
-  </p>
-            ]]>
-        </content>
-    </entry>
-    <entry>
-        <title>How to get notifications each time someone enters your server</title>
-        <author>
-            <name>Jonathan Ródenas López</name>
-        </author>
-        <link href="https://baronhez.github.io/how-to-get-notifications-each-time-someone-enters-your-server/"/>
-        <id>https://baronhez.github.io/how-to-get-notifications-each-time-someone-enters-your-server/</id>
-            <category term="Self-hosted"/>
-
-        <updated>2022-08-31T01:26:37+02:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/12/51-Messages-2.jpg" alt="" />
-                    Get a&hellip;
-                ]]>
-            </summary>
-        <content type="html">
-            <![CDATA[
-                    <img src="https://baronhez.github.io/media/posts/12/51-Messages-2.jpg" alt="" />
-                
-    <h1 id="get-a-notification-on-telegram-or-slack" class="align-center">
-      Get a notification on Telegram or Slack
-    </h1>
-
-    <h2 id="telegram-notificationnbsp">
-      Telegram notification&nbsp;
-    </h2>
-
-  <p>
-    Firstly, create a telegram bot. To create one, you need to contact the BotFather, which is essentially a bot used to create other bots.
-<br>
-<br>The command you need is /newbot which leads to the following steps to create your bot:
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/12/telegr.png" sizes="100vw" srcset="https://baronhez.github.io/media/posts/12/responsive/telegr-xs.png 300w ,https://baronhez.github.io/media/posts/12/responsive/telegr-sm.png 480w ,https://baronhez.github.io/media/posts/12/responsive/telegr-md.png 768w ,https://baronhez.github.io/media/posts/12/responsive/telegr-lg.png 1024w ,https://baronhez.github.io/media/posts/12/responsive/telegr-xl.png 1360w ,https://baronhez.github.io/media/posts/12/responsive/telegr-2xl.png 1600w"  height="858" width="860" alt="" />
-      <figcaption>Setting a bot is as simple as this.</figcaption>
-    </figure>
-
-  <p>
-    The next step is to setup a group where you want your alerts to go and add yourself, the bot you just created and <a href="https://t.me/myidbot" target="_blank" class="" rel="nofollow noopener">IDbot</a>.
-  </p>
-
-  <p>
-    IDBot will give you the CHATID. You can do this by sending "<i>/getgroupid"&nbsp;</i>into the group. It'll return the group ID for the channel, simply prepend a hyphen to the number and that's the chatID: <i>-123456789</i> as an example. Grab this, plus the HTTP API  key of your own bot, and add them to the following script:
-  </p>
-<pre class="line-numbers  language-bash"><code># Login Notifications
-CHATID=CHANGEME
-BOTKEY=CHANGEME
-
-# get hostname
-HOSTNM=$( hostname )
-
-# get external IP address
-IP=$( curl -s http://whatismyip.akamai.com/ )
-
-# find IP address of person last logged in
-LOGININFO=$( last -1 -i | head -n 1)
-
-# parse into nice format
-LOGININFO1=$( python3 -c "login='$LOGININFO'.split('   '); del login[1]; del login[1]; print(''.join([x.strip(' ') + '   \n' for x in login]));" )
-
-# send information to telegram notification bot
-curl -X POST -H 'Content-Type: application/json' -d "{\"chat_id\": \"$CHATID\", \"text\": \"Log in to: $HOSTNM\n$IP\nfrom: $LOGININFO1\", \"disable_notification\": false}" https://api.telegram.org/bot$BOTKEY/sendMessage --silent &gt; /dev/null</code></pre>
-
-  <p>
-    This can then either be bundled into a bash script and called from your profile or written straight into the profile:
-  </p>
-
-  <ul>
-    <li>If your shell is ZSH:&nbsp;</li>
-  </ul>
-<pre class="line-numbers  language-bash"><code>nano /etc/zsh/zprofile</code></pre>
-
-  <ul>
-    <li>If your shell is Bash:</li>
-  </ul>
-<pre class="line-numbers  language-bash"><code>  nano /etc/profile</code></pre>
-
-    <h2 id="slack-notification">
-      Slack notification
-    </h2>
-
-  <p>
-    You will need a Slack webhook. <a href="https://api.slack.com/messaging/webhooks" target="_blank" class="" rel="nofollow noopener">Here</a> is the documentation about creating one.
-  </p>
-
-  <p>
-    After getting a webhook, you should have a URL like this one:
-  </p>
-<div> https://hooks.slack.com/services/VALUE1/VALUE2</div>
-
-  <p>
-    To get a Slack notification I will use a python script.&nbsp;For this reason, you need to: install python, install the Slack SDK and write the script.
-  </p>
-<pre class="line-numbers  language-bash"><code>sudo apt update
-sudo apt install python3
-pip install slack_sdk    
-nano notification.py</code></pre>
-
-  <p>
-    The content of <b>notification.py</b> must be the following:
-  </p>
-<pre class="line-numbers  language-python"><code>from slack_sdk.webhook import WebhookClient
-import os
-
-url = " https://hooks.slack.com/services/VALUE1/VALUE2"
-webhook = WebhookClient(url)
-HOSTNM = os.popen('hostname').read()
-IP = os.popen('curl -s http://whatismyip.akamai.com/').read()
-LOGININFO=os.popen('last -1 -i | head -n 1 | cut -d " " -f 1').read()
-
-response = webhook.send(text='Log in to: {}\n from {}\n by\n User: {} \n'.format(HOSTNM,IP,LOGININFO))
-assert response.status_code == 200
-assert response.body == "ok"</code></pre>
-
-  <p>
-    Save the changes, then run the script just for testing purposes:
-  </p>
-<pre class="line-numbers  language-bash"><code>python3 /path/to/the/file/notification.py</code></pre>
-
-  <p>
-    Then, after checking that the script runs flawlessly, add the command at the end of your profile, the same way you would add the telegram bash script to your profile, depending of the shell you're using.
-  </p>
-
-  <p>
-    And that's it, now you should be receiving notifications on Telegram or Slack everytime someone enters your server.
-  </p>
-
-    <h3 id="credits">
-      Credits
-    </h3>
-
-  <p>
-    Credits to <a href="https://blog.zsec.uk/" target="_blank" rel="nofollow noopener">ZeroSec</a> for this info.
   </p>
             ]]>
         </content>
