@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-09-17T15:29:36+02:00</updated>
+    <updated>2022-09-17T17:01:06+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -1165,14 +1165,16 @@ services:
         <link href="https://baronhez.github.io/how-to-create-yaml-files/"/>
         <id>https://baronhez.github.io/how-to-create-yaml-files/</id>
 
-        <updated>2022-09-12T11:08:12+02:00</updated>
+        <updated>2022-09-17T16:55:49+02:00</updated>
             <summary>
                 <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/20/i.webp" alt="" />
                     I'm not&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
+                    <img src="https://baronhez.github.io/media/posts/20/i.webp" alt="" />
                 
   <p>
     I'm not going to explain what YAML is, nor its uses, if you want to learn how to create one, I'm pretty sure you already have that information. So let's get straight to the heart of the matter.
@@ -1587,14 +1589,16 @@ services:
         <id>https://baronhez.github.io/how-to-convert-different-files-online/</id>
             <category term="Interesting Webpages"/>
 
-        <updated>2022-09-03T00:04:14+02:00</updated>
+        <updated>2022-09-17T16:56:59+02:00</updated>
             <summary>
                 <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/17/i.jpg" alt="" />
                     A curate&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
+                    <img src="https://baronhez.github.io/media/posts/17/i.jpg" alt="" />
                 
     <h2 id="a-curate-selection-of-online-converters" class="align-center">
       A curate selection of online converters.
@@ -1682,14 +1686,16 @@ docker system prune -a -f  </code></pre>
         <id>https://baronhez.github.io/different-uses-for-docker/</id>
             <category term="Docker"/>
 
-        <updated>2022-08-31T04:20:30+02:00</updated>
+        <updated>2022-09-17T17:01:06+02:00</updated>
             <summary>
                 <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/15/i.jpg" alt="" />
                     A month&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
+                    <img src="https://baronhez.github.io/media/posts/15/i.jpg" alt="" />
                 
   <p>
     A month ago, I read a post in <a href="https://matt-rickard.com/non-obvious-docker-uses" target="_blank" rel="nofollow noopener">Matt Rickard blog</a>&nbsp;about Docker uses barely known among Docker users. So here I am, sharing that knowledge with you, wise reader.
