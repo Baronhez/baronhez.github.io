@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-09-18T03:29:50+02:00</updated>
+    <updated>2022-09-18T03:33:28+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -16,15 +16,18 @@
         </author>
         <link href="https://baronhez.github.io/useful-cmd-commands/"/>
         <id>https://baronhez.github.io/useful-cmd-commands/</id>
+            <category term="Windows"/>
 
-        <updated>2022-09-18T03:29:50+02:00</updated>
+        <updated>2022-09-18T03:33:28+02:00</updated>
             <summary>
                 <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/22/cmd-windows-1024x575.jpg.webp" alt="" />
                     From time&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
+                    <img src="https://baronhez.github.io/media/posts/22/cmd-windows-1024x575.jpg.webp" alt="" />
                 
   <p>
     From time to time, it is useful to know some CMD commands. Here are the ones I consider most useful.

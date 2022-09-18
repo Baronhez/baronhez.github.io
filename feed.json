@@ -15,13 +15,15 @@
             "title": "Useful CMD commands",
             "summary": "From time&hellip;",
             "content_html": "\n  <p>\n    From time to time, it is useful to know some CMD commands. Here are the ones I consider most useful.\n  </p>\n\n  <p>\n    <b>slmgr /upk</b>&nbsp;Deactivate W10\n<br><b>tracert</b>&nbsp;Displays the path followed by the packet.<br><b>cipher /W:C:</b>&nbsp;It writes to all free space marked on disk C. This way, if you have formatted C, there is no way to recover any data. It doesn't have to be C, it can be any disk. You can also encrypt the files.<br><b>fc</b> Compare files, just as diff does.<br><b>sfc /scannow</b>&nbsp;Check and repair system files.<br><b>DISM /Online /Cleanup-Image /RestoreHealth</b>&nbsp;It does a system restauration.<br><b>chkdsk</b> Check disk status.<br><b>taskkill /f /t /</b> <pid> Kill a task.<br><b>powercfg /energy</b> Show energy info.<br><b>powercfg /batteryreport</b> Show battery info.<br><b>netsh wlan show wlanreport</b> Check wifi status.<br><b>nslookup</b>&nbsp;Check DNS info of a domain name.&nbsp;<br></pid>\n  </p>",
+            "image": "https://baronhez.github.io/media/posts/22/cmd-windows-1024x575.jpg.webp",
             "author": {
                 "name": "Jonathan Ródenas López"
             },
             "tags": [
+                   "Windows"
             ],
             "date_published": "2022-09-18T03:29:50+02:00",
-            "date_modified": "2022-09-18T03:29:50+02:00"
+            "date_modified": "2022-09-18T03:33:28+02:00"
         },
         {
             "id": "https://baronhez.github.io/como-montar-un-servidor-torrent-para-ver-peliculas-y-series-gratis-en-espanol/",
