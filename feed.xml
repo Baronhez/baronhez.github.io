@@ -1202,7 +1202,7 @@ services:
     </h2>
 
   <p>
-    If you prefer to <a href="https://baronhez.github.io/b/" target="_blank">use traefik as a reverse proxy</a> and qflood as a media server, you can use this <b>docker-compose.yml</b>&nbsp;file&nbsp;instead the one already written in the jellyfin.7z compressed folder (credits to my friend Cristian for this file):
+    If you prefer to <a href="https://baronhez.github.io/self-hosting-guide/" target="_blank">use traefik as a reverse proxy</a> and qflood as a media server, you can use this <b>docker-compose.yml</b>&nbsp;file&nbsp;instead the one already written in the jellyfin.7z compressed folder (credits to my friend Cristian for this file):
   </p>
 <pre class="line-numbers  language-yaml"><code>version: '3'
   services:
@@ -1833,7 +1833,7 @@ services:
     </h2>
 
   <p>
-    The faster way of doing this is using the CLI. I explained how to do it in my <a href="https://baronhez.github.io/b/" target="_blank">Self-Hosting guide</a>, but I'm going to sum it up here.
+    The faster way of doing this is using the CLI. I explained how to do it in my <a href="https://baronhez.github.io/self-hosting-guide/" target="_blank">Self-Hosting guide</a>, but I'm going to sum it up here.
   </p>
 <pre class="line-numbers  language-bash"><code># We can delete all stoped container, every network not use by al least one container, all dangling images and all dangling build cache.
 docker system prune
