@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="https://baronhez.github.io/assets/css/style.css?v=e593e396d418be8ac87b451f827877c0">
         <script type="application/ld+json">{"@context":"http://schema.org","@type":"Organization","name":"blogHez","url":"https://baronhez.github.io/","sameAs":["https://twitter.com/Baronhez1","https://www.linkedin.com/in/jonathanrodenaslopez/"]}</script>
         
-        
+        <link rel="stylesheet" href="https://baronhez.github.io/media/plugins/docSearch/docsearch.min.css">
     </head>
     <body>
         <div class="site-container">
@@ -28,6 +28,21 @@
       <a class="logo" href="https://baronhez.github.io/">
             blogHez
       </a>
+         <div class="search">
+            <div class="search__overlay js-search-overlay">
+               <div class="search__overlay-inner">
+                  <div id="docsearch"></div> 
+                  <button class="search__close js-search-close" aria-label="Close">
+                     Close
+                  </button>
+               </div>
+            </div>
+            <button class="search__btn js-search-btn" aria-label="Search">
+               <svg role="presentation" focusable="false">
+                  <use xlink:href="https://baronhez.github.io/assets/svg/svg-map.svg#search"/>
+               </svg>
+            </button>
+         </div>
    </header>
    <main>
       <div class="hero">
@@ -297,5 +312,18 @@
 
 
 
+		   <script src="https://baronhez.github.io/media/plugins/docSearch/docsearch.min.js"></script>
+			<script type="text/javascript">
+			docsearch({
+				container: '#docsearch',
+				appId: 'Z3L7HF3NXL',
+				indexName: 'baronhez',
+				apiKey: 'a2bb1c3cbab14ad1bce47fca85b5601a',
+				debug: false
+			});
+			</script>
+
+			
+		
 </body>
 </html>
