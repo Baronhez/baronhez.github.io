@@ -3,12 +3,65 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2022-09-18T17:15:18+02:00</updated>
+    <updated>2022-10-12T23:08:42+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
     <id>https://baronhez.github.io</id>
 
+    <entry>
+        <title>My printer clogs after an hour</title>
+        <author>
+            <name>Jonathan Ródenas López</name>
+        </author>
+        <link href="https://baronhez.github.io/my-printer-clogs-after-an-hour/"/>
+        <id>https://baronhez.github.io/my-printer-clogs-after-an-hour/</id>
+
+        <updated>2022-10-12T23:08:42+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/25/2.jpg" alt="" />
+                    Congratulations, you&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://baronhez.github.io/media/posts/25/2.jpg" alt="" />
+                
+  <p>
+    Congratulations, you have the same problem I had a few weeks ago. Now, I bit wiser than then, I can tell you the reason.
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/25/bowden.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/25/responsive/bowden-xs.PNG 300w ,https://baronhez.github.io/media/posts/25/responsive/bowden-sm.PNG 480w ,https://baronhez.github.io/media/posts/25/responsive/bowden-md.PNG 768w ,https://baronhez.github.io/media/posts/25/responsive/bowden-lg.PNG 1024w ,https://baronhez.github.io/media/posts/25/responsive/bowden-xl.PNG 1360w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2xl.PNG 1600w"  height="374" width="178" alt="" />
+      <figcaption>This part is a Bowden throat. You put your teflon tube inside this part.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/25/bowden-2.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/25/responsive/bowden-2-xs.PNG 300w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2-sm.PNG 480w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2-md.PNG 768w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2-lg.PNG 1024w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2-xl.PNG 1360w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2-2xl.PNG 1600w"  height="159" width="224" alt="" />
+      <figcaption>There are different bowden parts, some of them with teflon inside. Those are the worst kind, I most likely you have one of those inside your 3DPrinter.</figcaption>
+    </figure>
+
+  <p>
+    Why, you may ask, well, between your Teflon tube and the Teflon part inside the Bowden throat there is a gap.
+  </p>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/25/1.jpg" sizes="100vw" srcset="https://baronhez.github.io/media/posts/25/responsive/1-xs.jpg 300w ,https://baronhez.github.io/media/posts/25/responsive/1-sm.jpg 480w ,https://baronhez.github.io/media/posts/25/responsive/1-md.jpg 768w ,https://baronhez.github.io/media/posts/25/responsive/1-lg.jpg 1024w ,https://baronhez.github.io/media/posts/25/responsive/1-xl.jpg 1360w ,https://baronhez.github.io/media/posts/25/responsive/1-2xl.jpg 1600w"  height="1280" width="720" alt="" />
+      <figcaption>The filament get stuck in that gap after an hour and half, more or less, forming a clog similar to this one.</figcaption>
+    </figure>
+
+    <figure class="post__image post__image--center">
+      <img loading="lazy" src="https://baronhez.github.io/media/posts/25/bowden-3.PNG" sizes="100vw" srcset="https://baronhez.github.io/media/posts/25/responsive/bowden-3-xs.PNG 300w ,https://baronhez.github.io/media/posts/25/responsive/bowden-3-sm.PNG 480w ,https://baronhez.github.io/media/posts/25/responsive/bowden-3-md.PNG 768w ,https://baronhez.github.io/media/posts/25/responsive/bowden-3-lg.PNG 1024w ,https://baronhez.github.io/media/posts/25/responsive/bowden-3-xl.PNG 1360w ,https://baronhez.github.io/media/posts/25/responsive/bowden-3-2xl.PNG 1600w"  height="389" width="101" alt="" />
+      <figcaption>Replace that Bowden throat with one without a Teflon part inside.  This simple change fix the problem :)</figcaption>
+    </figure>
+
+  <p>
+    Congratulations, you have fixed your 3D printer, which should now be able to print whatever you need.
+  </p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>How to use a Rubberducky</title>
         <author>
@@ -1859,113 +1912,6 @@ docker system prune -a -f  </code></pre>
 
   <p>
     <a href="https://wise.wtf/posts/docker-cleaning/" target="_blank">https://wise.wtf/posts/docker-cleaning/</a>
-  </p>
-            ]]>
-        </content>
-    </entry>
-    <entry>
-        <title>Different uses for Docker</title>
-        <author>
-            <name>Jonathan Ródenas López</name>
-        </author>
-        <link href="https://baronhez.github.io/different-uses-for-docker/"/>
-        <id>https://baronhez.github.io/different-uses-for-docker/</id>
-            <category term="Docker"/>
-
-        <updated>2022-09-17T17:01:06+02:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/15/i.jpg" alt="" />
-                    A month&hellip;
-                ]]>
-            </summary>
-        <content type="html">
-            <![CDATA[
-                    <img src="https://baronhez.github.io/media/posts/15/i.jpg" alt="" />
-                
-  <p>
-    A month ago, I read a post in <a href="https://matt-rickard.com/non-obvious-docker-uses" target="_blank" rel="nofollow noopener">Matt Rickard blog</a>&nbsp;about Docker uses barely known among Docker users. So here I am, sharing that knowledge with you, wise reader.
-  </p>
-
-    <h2 id="you-can-use-docker-as-a-compiler">
-      You can use Docker as a compiler.
-    </h2>
-
-  <p>
-    <a href="https://docs.docker.com/engine/reference/commandline/build/#custom-build-outputs" target="_blank" rel="nofollow noopener">Here</a> is the official documentation about this use case.&nbsp;
-  </p>
-
-  <p>
-    Instead of exporting the build artifacts as a Docker image, you can do it as files on the local filesystem, which can be helpful for producing local binaries, code generation, etc.
-  </p>
-
-  <p>
-    For example, we can use docker to export the artifact to a tar file:
-  </p>
-
-  <p>
-    
-  </p>
-<pre class="line-numbers  language-bash"><code>docker build --output type=local,dest=out .</code></pre>
-
-  <p>
-    Feel free to visit the documentation for further information.
-  </p>
-
-    <h2 id="you-can-use-docker-build-a-taskrunner-alternative-tonbspimakei">
-      You can use Docker build a task-runner alternative to&nbsp;<i>make.</i>
-    </h2>
-
-  <p>
-    Matt points in his post that, thanks to Docker Buildkit,&nbsp;you can write alternative frontends to build images, not only Dockerfiles. This functionality is described <a href="https://matt-rickard.com/building-a-new-dockerfile-frontend" target="_blank" rel="nofollow noopener">here</a>.
-  </p>
-
-    <h2 id="you-can-use-docker-registry-to-store-tarballs">
-      You can use Docker registry to store tarballs.
-    </h2>
-
-  <p>
-    Because docker registries only store tarballs and metadata, it is easy to set up a place to store configuration.
-  </p>
-
-    <h2 id="you-can-use-git-repositories-as-docker-images">
-      You can use git repositories as Docker images
-    </h2>
-
-  <p>
-    Matt points this possibility in this <a href="https://matt-rickard.com/docker-merge/" target="_blank" rel="nofollow noopener">post</a>. To sum it up, "Docker merge is a CLI utility that provides a proof-of-concept strategy to merge docker images".
-  </p>
-
-  <p>
-    So, you can use that tool to&nbsp;to hijack the "git merge" strategies to natively "merge" docker layers.
-  </p>
-
-    <h2 id="you-can-use-docker-a-crossplatform-compatibility-layer">
-      You can use Docker a cross-platform compatibility layer.
-    </h2>
-
-  <p>
-    The most obvious case for this is the use of Docker Desktop (if you are using this in your company, use Rancher instead).
-  </p>
-
-    <h2 id="you-can-use-docker-to-build-linux-kernels">
-      You can use Docker to build Linux kernels
-    </h2>
-
-  <p>
-    You can do it by using <a href="https://github.com/linuxkit/linuxkit" target="_blank" rel="nofollow noopener">LinuxKit</a>.
-  </p>
-
-  <p>
-    Those where the examples mentioned in the post, I hope you find them useful!
-  </p>
-
-    <h2 id="credits">
-      Credits
-    </h2>
-
-  <p>
-    <a href="https://matt-rickard.com/" target="_blank" rel="nofollow noopener">Matt Rickard</a>
   </p>
             ]]>
         </content>
