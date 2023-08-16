@@ -3,28 +3,31 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2023-08-16T01:55:09+02:00</updated>
+    <updated>2023-08-16T02:03:54+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
     <id>https://baronhez.github.io</id>
 
     <entry>
-        <title>How to install Revanced</title>
+        <title>How to install Youtube Revanced</title>
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
         <link href="https://baronhez.github.io/how-to-install-revanced/"/>
         <id>https://baronhez.github.io/how-to-install-revanced/</id>
+        <media:content url="https://baronhez.github.io/media/posts/26/youtube-revanced-2.jpg" medium="image" />
 
-        <updated>2023-08-16T01:55:09+02:00</updated>
+        <updated>2023-08-16T02:03:54+02:00</updated>
             <summary>
                 <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/26/youtube-revanced-2.jpg" alt="Youtube Revanced" />
                     This guide&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
+                    <p><img src="https://baronhez.github.io/media/posts/26/youtube-revanced-2.jpg" class="type:primaryImage" alt="Youtube Revanced" /></p>
                 
   <p>
     This guide is a quick review of the Reddit Post that describes the entire process. Check it out here:&nbsp;<a href="https://www.reddit.com/r/revancedapp/comments/xlcny9/revanced_manager_guide_for_dummies/" target="_blank" rel="nofollow noopener">https://www.reddit.com/r/revancedapp/comments/xlcny9/revanced_manager_guide_for_dummies/</a>
