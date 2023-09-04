@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2023-08-16T03:42:56+02:00</updated>
+    <updated>2023-09-04T02:19:39+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -576,7 +576,7 @@ docker node update --availability drain
             <category term="Docker-compose"/>
             <category term="Docker"/>
 
-        <updated>2023-02-10T15:01:58+01:00</updated>
+        <updated>2023-09-04T02:18:53+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/21/i-29.PNG" alt="" />
@@ -1632,7 +1632,7 @@ services:
     </h2>
 
   <p>
-    Si prefieres usar traefik como proxy inverso y qflood como Media Server, puedes usar este archivo <b>docker-compose.yml</b> en lugar del ya escrito en la carpeta comprimida jellyfin.7z (créditos a mi amigo Cristian por este archivo, lo he modificado para quitar cosas innecesarias):
+    Si prefieres usar traefik como proxy inverso y qflood como Media Server, puedes usar este archivo <b>docker-compose.yml</b> en lugar del ya escrito en la carpeta comprimida jellyfin.7z:
   </p>
 <pre class="line-numbers  language-yaml"><code>  version: '3'
   services:
@@ -1786,7 +1786,7 @@ services:
             <category term="Docker-compose"/>
             <category term="Docker"/>
 
-        <updated>2023-02-10T15:02:34+01:00</updated>
+        <updated>2023-09-04T02:19:39+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/19/server.png" alt="" />
@@ -2848,7 +2848,7 @@ services:
     </h2>
 
   <p>
-    If you prefer to <a href="https://baronhez.github.io/self-hosting-guide/" target="_blank">use traefik as a reverse proxy</a> and qflood as a media server, you can use this <b>docker-compose.yml</b>&nbsp;file&nbsp;instead the one already written in the jellyfin.7z compressed folder (credits to my friend Cristian for this file):
+    If you prefer to <a href="https://baronhez.github.io/self-hosting-guide/" target="_blank">use traefik as a reverse proxy</a> and qflood as a media server, you can use this <b>docker-compose.yml</b>&nbsp;file&nbsp;instead the one already written in the jellyfin.7z compressed folder:
   </p>
 <pre class="line-numbers  language-yaml"><code>version: '3'
   services:
@@ -2972,7 +2972,7 @@ services:
     </h2>
 
   <p>
-    My friend Edu, for discover me Servarr.
+    My friend Edu, for discovering me Servarr.
   </p>
 
   <p>
