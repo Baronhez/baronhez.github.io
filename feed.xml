@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2023-09-17T15:56:34+02:00</updated>
+    <updated>2023-09-17T16:00:58+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -563,1216 +563,6 @@ docker node update --availability drain
         </content>
     </entry>
     <entry>
-        <title>Cómo montar un servidor torrent para ver películas y series gratis (en español)</title>
-        <author>
-            <name>Jonathan Ródenas López</name>
-        </author>
-        <link href="https://baronhez.github.io/como-montar-un-servidor-torrent-para-ver-peliculas-y-series-gratis-en-espanol/"/>
-        <id>https://baronhez.github.io/como-montar-un-servidor-torrent-para-ver-peliculas-y-series-gratis-en-espanol/</id>
-        <media:content url="https://baronhez.github.io/media/posts/21/i-29.PNG" medium="image" />
-            <category term="Torrent"/>
-            <category term="Self-hosted"/>
-            <category term="Media"/>
-            <category term="Docker-compose"/>
-            <category term="Docker"/>
-
-        <updated>2023-09-04T02:18:53+02:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/21/i-29.PNG" alt="" />
-                    Lo pillo&hellip;
-                ]]>
-            </summary>
-        <content type="html">
-            <![CDATA[
-                    <p><img src="https://baronhez.github.io/media/posts/21/i-29.PNG" class="type:primaryImage" alt="" /></p>
-                
-  <p>
-    Lo pillo quieres desplegar un servidor torrent para ver series y películas pirata sin la molestia de leer toneladas de documentación. Bueno, esta es una guía directa para desplegar todo en sólo cinco minutos. Pongámonos manos a la obra. (Estoy asumiendo que sabes lo más básico de cómo manejar Linux, Docker y una terminal).
-  </p>
-
-    <h2 id="paso-1-instalar-docker-y-dockercompose">
-      Paso #1: Instalar Docker y Docker-Compose.
-    </h2>
-
-  <p>
-    [MANUAL] Primero, instala docker y docker-compose:
-  </p>
-<pre class="line-numbers  language-bash"><code>sudo apt update
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-sudo apt install docker-ce
-sudo usermod -aG docker &lt;username&gt;
-sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose</code></pre>
-
-  <p>
-    [AUTOMÁTICO] O ejecuta este comando:
-  </p>
-<pre class="line-numbers  language-bash"><code>curl -fsSL https://get.docker.com | sh
-</code></pre>
-
-  <p>
-    El contenido del script bash ejecutado, a fecha de 10/02/2023, es el siguiente:
-  </p>
-<pre class="line-numbers  language-bash"><code>#!/bin/sh
-set -e
-# Docker CE for Linux installation script
-#
-# See https://docs.docker.com/engine/install/ for the installation steps.
-#
-# This script is meant for quick & easy install via:
-#   $ curl -fsSL https://get.docker.com -o get-docker.sh
-#   $ sh get-docker.sh
-#
-# For test builds (ie. release candidates):
-#   $ curl -fsSL https://test.docker.com -o test-docker.sh
-#   $ sh test-docker.sh
-#
-# NOTE: Make sure to verify the contents of the script
-#       you downloaded matches the contents of install.sh
-#       located at https://github.com/docker/docker-install
-#       before executing.
-#
-# Git commit from https://github.com/docker/docker-install when
-# the script was uploaded (Should only be modified by upload job):
-SCRIPT_COMMIT_SHA="66474034547a96caa0a25be56051ff8b726a1b28"
-
-# strip "v" prefix if present
-VERSION="${VERSION#v}"
-
-# The channel to install from:
-#   * nightly
-#   * test
-#   * stable
-#   * edge (deprecated)
-DEFAULT_CHANNEL_VALUE="stable"
-if [ -z "$CHANNEL" ]; then
-	CHANNEL=$DEFAULT_CHANNEL_VALUE
-fi
-
-DEFAULT_DOWNLOAD_URL="https://download.docker.com"
-if [ -z "$DOWNLOAD_URL" ]; then
-	DOWNLOAD_URL=$DEFAULT_DOWNLOAD_URL
-fi
-
-DEFAULT_REPO_FILE="docker-ce.repo"
-if [ -z "$REPO_FILE" ]; then
-	REPO_FILE="$DEFAULT_REPO_FILE"
-fi
-
-mirror=''
-DRY_RUN=${DRY_RUN:-}
-while [ $# -gt 0 ]; do
-	case "$1" in
-		--mirror)
-			mirror="$2"
-			shift
-			;;
-		--dry-run)
-			DRY_RUN=1
-			;;
-		--*)
-			echo "Illegal option $1"
-			;;
-	esac
-	shift $(( $# &gt; 0 ? 1 : 0 ))
-done
-
-case "$mirror" in
-	Aliyun)
-		DOWNLOAD_URL="https://mirrors.aliyun.com/docker-ce"
-		;;
-	AzureChinaCloud)
-		DOWNLOAD_URL="https://mirror.azure.cn/docker-ce"
-		;;
-esac
-
-command_exists() {
-	command -v "$@" &gt; /dev/null 2&gt;&1
-}
-
-# version_gte checks if the version specified in $VERSION is at least
-# the given CalVer (YY.MM) version. returns 0 (success) if $VERSION is either
-# unset (=latest) or newer or equal than the specified version. Returns 1 (fail)
-# otherwise.
-#
-# examples:
-#
-# VERSION=20.10
-# version_gte 20.10 // 0 (success)
-# version_gte 19.03 // 0 (success)
-# version_gte 21.10 // 1 (fail)
-version_gte() {
-	if [ -z "$VERSION" ]; then
-			return 0
-	fi
-	eval calver_compare "$VERSION" "$1"
-}
-
-# calver_compare compares two CalVer (YY.MM) version strings. returns 0 (success)
-# if version A is newer or equal than version B, or 1 (fail) otherwise. Patch
-# releases and pre-release (-alpha/-beta) are not taken into account
-#
-# examples:
-#
-# calver_compare 20.10 19.03 // 0 (success)
-# calver_compare 20.10 20.10 // 0 (success)
-# calver_compare 19.03 20.10 // 1 (fail)
-calver_compare() (
-	set +x
-
-	yy_a="$(echo "$1" | cut -d'.' -f1)"
-	yy_b="$(echo "$2" | cut -d'.' -f1)"
-	if [ "$yy_a" -lt "$yy_b" ]; then
-		return 1
-	fi
-	if [ "$yy_a" -gt "$yy_b" ]; then
-		return 0
-	fi
-	mm_a="$(echo "$1" | cut -d'.' -f2)"
-	mm_b="$(echo "$2" | cut -d'.' -f2)"
-	if [ "${mm_a#0}" -lt "${mm_b#0}" ]; then
-		return 1
-	fi
-
-	return 0
-)
-
-is_dry_run() {
-	if [ -z "$DRY_RUN" ]; then
-		return 1
-	else
-		return 0
-	fi
-}
-
-is_wsl() {
-	case "$(uname -r)" in
-	*microsoft* ) true ;; # WSL 2
-	*Microsoft* ) true ;; # WSL 1
-	* ) false;;
-	esac
-}
-
-is_darwin() {
-	case "$(uname -s)" in
-	*darwin* ) true ;;
-	*Darwin* ) true ;;
-	* ) false;;
-	esac
-}
-
-deprecation_notice() {
-	distro=$1
-	distro_version=$2
-	echo
-	printf "\033[91;1mDEPRECATION WARNING\033[0m\n"
-	printf "    This Linux distribution (\033[1m%s %s\033[0m) reached end-of-life and is no longer supported by this script.\n" "$distro" "$distro_version"
-	echo   "    No updates or security fixes will be released for this distribution, and users are recommended"
-	echo   "    to upgrade to a currently maintained version of $distro."
-	echo
-	printf   "Press \033[1mCtrl+C\033[0m now to abort this script, or wait for the installation to continue."
-	echo
-	sleep 10
-}
-
-get_distribution() {
-	lsb_dist=""
-	# Every system that we officially support has /etc/os-release
-	if [ -r /etc/os-release ]; then
-		lsb_dist="$(. /etc/os-release && echo "$ID")"
-	fi
-	# Returning an empty string here should be alright since the
-	# case statements don't act unless you provide an actual value
-	echo "$lsb_dist"
-}
-
-echo_docker_as_nonroot() {
-	if is_dry_run; then
-		return
-	fi
-	if command_exists docker && [ -e /var/run/docker.sock ]; then
-		(
-			set -x
-			$sh_c 'docker version'
-		) || true
-	fi
-
-	# intentionally mixed spaces and tabs here -- tabs are stripped by "&lt;&lt;-EOF", spaces are kept in the output
-	echo
-	echo "================================================================================"
-	echo
-	if version_gte "20.10"; then
-		echo "To run Docker as a non-privileged user, consider setting up the"
-		echo "Docker daemon in rootless mode for your user:"
-		echo
-		echo "    dockerd-rootless-setuptool.sh install"
-		echo
-		echo "Visit https://docs.docker.com/go/rootless/ to learn about rootless mode."
-		echo
-	fi
-	echo
-	echo "To run the Docker daemon as a fully privileged service, but granting non-root"
-	echo "users access, refer to https://docs.docker.com/go/daemon-access/"
-	echo
-	echo "WARNING: Access to the remote API on a privileged Docker daemon is equivalent"
-	echo "         to root access on the host. Refer to the 'Docker daemon attack surface'"
-	echo "         documentation for details: https://docs.docker.com/go/attack-surface/"
-	echo
-	echo "================================================================================"
-	echo
-}
-
-# Check if this is a forked Linux distro
-check_forked() {
-
-	# Check for lsb_release command existence, it usually exists in forked distros
-	if command_exists lsb_release; then
-		# Check if the `-u` option is supported
-		set +e
-		lsb_release -a -u &gt; /dev/null 2&gt;&1
-		lsb_release_exit_code=$?
-		set -e
-
-		# Check if the command has exited successfully, it means we're in a forked distro
-		if [ "$lsb_release_exit_code" = "0" ]; then
-			# Print info about current distro
-			cat &lt;&lt;-EOF
-			You're using '$lsb_dist' version '$dist_version'.
-			EOF
-
-			# Get the upstream release info
-			lsb_dist=$(lsb_release -a -u 2&gt;&1 | tr '[:upper:]' '[:lower:]' | grep -E 'id' | cut -d ':' -f 2 | tr -d '[:space:]')
-			dist_version=$(lsb_release -a -u 2&gt;&1 | tr '[:upper:]' '[:lower:]' | grep -E 'codename' | cut -d ':' -f 2 | tr -d '[:space:]')
-
-			# Print info about upstream distro
-			cat &lt;&lt;-EOF
-			Upstream release is '$lsb_dist' version '$dist_version'.
-			EOF
-		else
-			if [ -r /etc/debian_version ] && [ "$lsb_dist" != "ubuntu" ] && [ "$lsb_dist" != "raspbian" ]; then
-				if [ "$lsb_dist" = "osmc" ]; then
-					# OSMC runs Raspbian
-					lsb_dist=raspbian
-				else
-					# We're Debian and don't even know it!
-					lsb_dist=debian
-				fi
-				dist_version="$(sed 's/\/.*//' /etc/debian_version | sed 's/\..*//')"
-				case "$dist_version" in
-					11)
-						dist_version="bullseye"
-					;;
-					10)
-						dist_version="buster"
-					;;
-					9)
-						dist_version="stretch"
-					;;
-					8)
-						dist_version="jessie"
-					;;
-				esac
-			fi
-		fi
-	fi
-}
-
-do_install() {
-	echo "# Executing docker install script, commit: $SCRIPT_COMMIT_SHA"
-
-	if command_exists docker; then
-		cat &gt;&2 &lt;&lt;-'EOF'
-			Warning: the "docker" command appears to already exist on this system.
-
-			If you already have Docker installed, this script can cause trouble, which is
-			why we're displaying this warning and provide the opportunity to cancel the
-			installation.
-
-			If you installed the current Docker package using this script and are using it
-			again to update Docker, you can safely ignore this message.
-
-			You may press Ctrl+C now to abort this script.
-		EOF
-		( set -x; sleep 20 )
-	fi
-
-	user="$(id -un 2&gt;/dev/null || true)"
-
-	sh_c='sh -c'
-	if [ "$user" != 'root' ]; then
-		if command_exists sudo; then
-			sh_c='sudo -E sh -c'
-		elif command_exists su; then
-			sh_c='su -c'
-		else
-			cat &gt;&2 &lt;&lt;-'EOF'
-			Error: this installer needs the ability to run commands as root.
-			We are unable to find either "sudo" or "su" available to make this happen.
-			EOF
-			exit 1
-		fi
-	fi
-
-	if is_dry_run; then
-		sh_c="echo"
-	fi
-
-	# perform some very rudimentary platform detection
-	lsb_dist=$( get_distribution )
-	lsb_dist="$(echo "$lsb_dist" | tr '[:upper:]' '[:lower:]')"
-
-	if is_wsl; then
-		echo
-		echo "WSL DETECTED: We recommend using Docker Desktop for Windows."
-		echo "Please get Docker Desktop from https://www.docker.com/products/docker-desktop"
-		echo
-		cat &gt;&2 &lt;&lt;-'EOF'
-
-			You may press Ctrl+C now to abort this script.
-		EOF
-		( set -x; sleep 20 )
-	fi
-
-	case "$lsb_dist" in
-
-		ubuntu)
-			if command_exists lsb_release; then
-				dist_version="$(lsb_release --codename | cut -f2)"
-			fi
-			if [ -z "$dist_version" ] && [ -r /etc/lsb-release ]; then
-				dist_version="$(. /etc/lsb-release && echo "$DISTRIB_CODENAME")"
-			fi
-		;;
-
-		debian|raspbian)
-			dist_version="$(sed 's/\/.*//' /etc/debian_version | sed 's/\..*//')"
-			case "$dist_version" in
-				11)
-					dist_version="bullseye"
-				;;
-				10)
-					dist_version="buster"
-				;;
-				9)
-					dist_version="stretch"
-				;;
-				8)
-					dist_version="jessie"
-				;;
-			esac
-		;;
-
-		centos|rhel|sles)
-			if [ -z "$dist_version" ] && [ -r /etc/os-release ]; then
-				dist_version="$(. /etc/os-release && echo "$VERSION_ID")"
-			fi
-		;;
-
-		*)
-			if command_exists lsb_release; then
-				dist_version="$(lsb_release --release | cut -f2)"
-			fi
-			if [ -z "$dist_version" ] && [ -r /etc/os-release ]; then
-				dist_version="$(. /etc/os-release && echo "$VERSION_ID")"
-			fi
-		;;
-
-	esac
-
-	# Check if this is a forked Linux distro
-	check_forked
-
-	# Print deprecation warnings for distro versions that recently reached EOL,
-	# but may still be commonly used (especially LTS versions).
-	case "$lsb_dist.$dist_version" in
-		debian.stretch|debian.jessie)
-			deprecation_notice "$lsb_dist" "$dist_version"
-			;;
-		raspbian.stretch|raspbian.jessie)
-			deprecation_notice "$lsb_dist" "$dist_version"
-			;;
-		ubuntu.xenial|ubuntu.trusty)
-			deprecation_notice "$lsb_dist" "$dist_version"
-			;;
-		fedora.*)
-			if [ "$dist_version" -lt 33 ]; then
-				deprecation_notice "$lsb_dist" "$dist_version"
-			fi
-			;;
-	esac
-
-	# Run setup for each distro accordingly
-	case "$lsb_dist" in
-		ubuntu|debian|raspbian)
-			pre_reqs="apt-transport-https ca-certificates curl"
-			if ! command -v gpg &gt; /dev/null; then
-				pre_reqs="$pre_reqs gnupg"
-			fi
-			apt_repo="deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] $DOWNLOAD_URL/linux/$lsb_dist $dist_version $CHANNEL"
-			(
-				if ! is_dry_run; then
-					set -x
-				fi
-				$sh_c 'apt-get update -qq &gt;/dev/null'
-				$sh_c "DEBIAN_FRONTEND=noninteractive apt-get install -y -qq $pre_reqs &gt;/dev/null"
-				$sh_c 'mkdir -p /etc/apt/keyrings && chmod -R 0755 /etc/apt/keyrings'
-				$sh_c "curl -fsSL \"$DOWNLOAD_URL/linux/$lsb_dist/gpg\" | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg"
-				$sh_c "chmod a+r /etc/apt/keyrings/docker.gpg"
-				$sh_c "echo \"$apt_repo\" &gt; /etc/apt/sources.list.d/docker.list"
-				$sh_c 'apt-get update -qq &gt;/dev/null'
-			)
-			pkg_version=""
-			if [ -n "$VERSION" ]; then
-				if is_dry_run; then
-					echo "# WARNING: VERSION pinning is not supported in DRY_RUN"
-				else
-					# Will work for incomplete versions IE (17.12), but may not actually grab the "latest" if in the test channel
-					pkg_pattern="$(echo "$VERSION" | sed "s/-ce-/~ce~.*/g" | sed "s/-/.*/g")"
-					search_command="apt-cache madison 'docker-ce' | grep '$pkg_pattern' | head -1 | awk '{\$1=\$1};1' | cut -d' ' -f 3"
-					pkg_version="$($sh_c "$search_command")"
-					echo "INFO: Searching repository for VERSION '$VERSION'"
-					echo "INFO: $search_command"
-					if [ -z "$pkg_version" ]; then
-						echo
-						echo "ERROR: '$VERSION' not found amongst apt-cache madison results"
-						echo
-						exit 1
-					fi
-					if version_gte "18.09"; then
-							search_command="apt-cache madison 'docker-ce-cli' | grep '$pkg_pattern' | head -1 | awk '{\$1=\$1};1' | cut -d' ' -f 3"
-							echo "INFO: $search_command"
-							cli_pkg_version="=$($sh_c "$search_command")"
-					fi
-					pkg_version="=$pkg_version"
-				fi
-			fi
-			(
-				pkgs="docker-ce${pkg_version%=}"
-				if version_gte "18.09"; then
-						# older versions didn't ship the cli and containerd as separate packages
-						pkgs="$pkgs docker-ce-cli${cli_pkg_version%=} containerd.io"
-				fi
-				if version_gte "20.10" && [ "$(uname -m)" = "x86_64" ]; then
-						# also install the latest version of the "docker scan" cli-plugin (only supported on x86 currently)
-						pkgs="$pkgs docker-scan-plugin"
-				fi
-				if version_gte "20.10"; then
-						pkgs="$pkgs docker-compose-plugin docker-ce-rootless-extras$pkg_version"
-				fi
-				if version_gte "23.0"; then
-						pkgs="$pkgs docker-buildx-plugin"
-				fi
-				if ! is_dry_run; then
-					set -x
-				fi
-				$sh_c "DEBIAN_FRONTEND=noninteractive apt-get install -y -qq $pkgs &gt;/dev/null"
-			)
-			echo_docker_as_nonroot
-			exit 0
-			;;
-		centos|fedora|rhel)
-			if [ "$(uname -m)" != "s390x" ] && [ "$lsb_dist" = "rhel" ]; then
-				echo "Packages for RHEL are currently only available for s390x."
-				exit 1
-			fi
-			if [ "$lsb_dist" = "fedora" ]; then
-				pkg_manager="dnf"
-				config_manager="dnf config-manager"
-				enable_channel_flag="--set-enabled"
-				disable_channel_flag="--set-disabled"
-				pre_reqs="dnf-plugins-core"
-				pkg_suffix="fc$dist_version"
-			else
-				pkg_manager="yum"
-				config_manager="yum-config-manager"
-				enable_channel_flag="--enable"
-				disable_channel_flag="--disable"
-				pre_reqs="yum-utils"
-				pkg_suffix="el"
-			fi
-			repo_file_url="$DOWNLOAD_URL/linux/$lsb_dist/$REPO_FILE"
-			(
-				if ! is_dry_run; then
-					set -x
-				fi
-				$sh_c "$pkg_manager install -y -q $pre_reqs"
-				$sh_c "$config_manager --add-repo $repo_file_url"
-
-				if [ "$CHANNEL" != "stable" ]; then
-					$sh_c "$config_manager $disable_channel_flag docker-ce-*"
-					$sh_c "$config_manager $enable_channel_flag docker-ce-$CHANNEL"
-				fi
-				$sh_c "$pkg_manager makecache"
-			)
-			pkg_version=""
-			if [ -n "$VERSION" ]; then
-				if is_dry_run; then
-					echo "# WARNING: VERSION pinning is not supported in DRY_RUN"
-				else
-					pkg_pattern="$(echo "$VERSION" | sed "s/-ce-/\\\\.ce.*/g" | sed "s/-/.*/g").*$pkg_suffix"
-					search_command="$pkg_manager list --showduplicates 'docker-ce' | grep '$pkg_pattern' | tail -1 | awk '{print \$2}'"
-					pkg_version="$($sh_c "$search_command")"
-					echo "INFO: Searching repository for VERSION '$VERSION'"
-					echo "INFO: $search_command"
-					if [ -z "$pkg_version" ]; then
-						echo
-						echo "ERROR: '$VERSION' not found amongst $pkg_manager list results"
-						echo
-						exit 1
-					fi
-					if version_gte "18.09"; then
-						# older versions don't support a cli package
-						search_command="$pkg_manager list --showduplicates 'docker-ce-cli' | grep '$pkg_pattern' | tail -1 | awk '{print \$2}'"
-						cli_pkg_version="$($sh_c "$search_command" | cut -d':' -f 2)"
-					fi
-					# Cut out the epoch and prefix with a '-'
-					pkg_version="-$(echo "$pkg_version" | cut -d':' -f 2)"
-				fi
-			fi
-			(
-				pkgs="docker-ce$pkg_version"
-				if version_gte "18.09"; then
-					# older versions didn't ship the cli and containerd as separate packages
-					if [ -n "$cli_pkg_version" ]; then
-						pkgs="$pkgs docker-ce-cli-$cli_pkg_version containerd.io"
-					else
-						pkgs="$pkgs docker-ce-cli containerd.io"
-					fi
-				fi
-				if version_gte "20.10" && [ "$(uname -m)" = "x86_64" ]; then
-						# also install the latest version of the "docker scan" cli-plugin (only supported on x86 currently)
-						pkgs="$pkgs docker-scan-plugin"
-				fi
-				if version_gte "20.10"; then
-					pkgs="$pkgs docker-compose-plugin docker-ce-rootless-extras$pkg_version"
-				fi
-				if version_gte "23.0"; then
-						pkgs="$pkgs docker-buildx-plugin"
-				fi
-				if ! is_dry_run; then
-					set -x
-				fi
-				$sh_c "$pkg_manager install -y -q $pkgs"
-			)
-			echo_docker_as_nonroot
-			exit 0
-			;;
-		sles)
-			if [ "$(uname -m)" != "s390x" ]; then
-				echo "Packages for SLES are currently only available for s390x"
-				exit 1
-			fi
-			if [ "$dist_version" = "15.3" ]; then
-				sles_version="SLE_15_SP3"
-			else
-				sles_minor_version="${dist_version##*.}"
-				sles_version="15.$sles_minor_version"
-			fi
-			opensuse_repo="https://download.opensuse.org/repositories/security:SELinux/$sles_version/security:SELinux.repo"
-			repo_file_url="$DOWNLOAD_URL/linux/$lsb_dist/$REPO_FILE"
-			pre_reqs="ca-certificates curl libseccomp2 awk"
-			(
-				if ! is_dry_run; then
-					set -x
-				fi
-				$sh_c "zypper install -y $pre_reqs"
-				$sh_c "zypper addrepo $repo_file_url"
-				if ! is_dry_run; then
-						cat &gt;&2 &lt;&lt;-'EOF'
-						WARNING!!
-						openSUSE repository (https://download.opensuse.org/repositories/security:SELinux) will be enabled now.
-						Do you wish to continue?
-						You may press Ctrl+C now to abort this script.
-						EOF
-						( set -x; sleep 30 )
-				fi
-				$sh_c "zypper addrepo $opensuse_repo"
-				$sh_c "zypper --gpg-auto-import-keys refresh"
-				$sh_c "zypper lr -d"
-			)
-			pkg_version=""
-			if [ -n "$VERSION" ]; then
-				if is_dry_run; then
-					echo "# WARNING: VERSION pinning is not supported in DRY_RUN"
-				else
-					pkg_pattern="$(echo "$VERSION" | sed "s/-ce-/\\\\.ce.*/g" | sed "s/-/.*/g")"
-					search_command="zypper search -s --match-exact 'docker-ce' | grep '$pkg_pattern' | tail -1 | awk '{print \$6}'"
-					pkg_version="$($sh_c "$search_command")"
-					echo "INFO: Searching repository for VERSION '$VERSION'"
-					echo "INFO: $search_command"
-					if [ -z "$pkg_version" ]; then
-						echo
-						echo "ERROR: '$VERSION' not found amongst zypper list results"
-						echo
-						exit 1
-					fi
-					search_command="zypper search -s --match-exact 'docker-ce-cli' | grep '$pkg_pattern' | tail -1 | awk '{print \$6}'"
-					# It's okay for cli_pkg_version to be blank, since older versions don't support a cli package
-					cli_pkg_version="$($sh_c "$search_command")"
-					pkg_version="-$pkg_version"
-				fi
-			fi
-			(
-				pkgs="docker-ce$pkg_version"
-				if version_gte "18.09"; then
-					if [ -n "$cli_pkg_version" ]; then
-						# older versions didn't ship the cli and containerd as separate packages
-						pkgs="$pkgs docker-ce-cli-$cli_pkg_version containerd.io"
-					else
-						pkgs="$pkgs docker-ce-cli containerd.io"
-					fi
-				fi
-				if version_gte "20.10"; then
-					pkgs="$pkgs docker-compose-plugin docker-ce-rootless-extras$pkg_version"
-				fi
-				if version_gte "23.0"; then
-						pkgs="$pkgs docker-buildx-plugin"
-				fi
-				if ! is_dry_run; then
-					set -x
-				fi
-				$sh_c "zypper -q install -y $pkgs"
-			)
-			echo_docker_as_nonroot
-			exit 0
-			;;
-		*)
-			if [ -z "$lsb_dist" ]; then
-				if is_darwin; then
-					echo
-					echo "ERROR: Unsupported operating system 'macOS'"
-					echo "Please get Docker Desktop from https://www.docker.com/products/docker-desktop"
-					echo
-					exit 1
-				fi
-			fi
-			echo
-			echo "ERROR: Unsupported distribution '$lsb_dist'"
-			echo
-			exit 1
-			;;
-	esac
-	exit 1
-}
-
-# wrapped up in a function so that we have some protection against only getting
-# half the file during "curl | sh"
-do_install
-
-</code></pre>
-
-    <h2 id="paso-2-descargar-mi-carpeta-de-configuracin">
-      Paso #2: Descargar mi carpeta de configuración.
-    </h2>
-
-  <p>
-    La forma más rápida de configurar esto es tomar prestada mi configuración, confía en mí. Descarga esta <a href="https://baronhez.github.io/media/files/jellyfin.7z" download>carpeta comprimida</a> en tu servidor.
-  </p>
-
-    <h2 id="paso-3-crear-el-archivo-dockercompose">
-      Paso #3: Crear el archivo Docker-Compose.
-    </h2>
-
-  <p>
-    Bien, dentro de la carpeta de configuración (<a href="https://linux.die.net/man/1/7z" target="_blank" rel="nofollow noopener">descomprímela</a>), verás un archivo docker-compose.yml. Debe de tener este contenido:
-  </p>
-<pre class="line-numbers  language-yaml"><code>version: "3.7"
-services:
-  jellyfin:
-    image: lscr.io/linuxserver/jellyfin:latest
-    container_name: jellyfin
-    environment: &env
-      - PUID=&lt;Enter your USER_ID&gt;
-      - PGID=&lt;Enter your GROUP_ID&gt;
-      - TZ=&lt;Enter your time zone&gt;
-    volumes:
-      - ./config/jellyfin:/config
-      - ./library/series:/data/series
-      - ./library/movies:/data/movies
-    ports:
-      - 8096:8096
-      - 8920:8920 #optional
-      - 7359:7359/udp #optional
-      - 1900:1900/udp #optional
-    restart: &restartpolicy unless-stopped
-  radarr:
-    image: lscr.io/linuxserver/radarr:latest
-    container_name: radarr
-    environment: *env
-    volumes:
-      - ./config/arr/radarr/config:/config
-      - ./library/movies:/data/movies #optional
-      - ./downloads:/downloads #optional
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - 7878:7878
-    restart: *restartpolicy
-  sonarr:
-    container_name: sonarr
-    image: cr.hotio.dev/hotio/sonarr:latest
-    restart: *restartpolicy
-    logging:
-      driver: json-file
-    network_mode: bridge
-    ports:
-      - 8989:8989
-    environment: *env
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ./config/arr/sonarr/config:/config
-      - ./downloads:/downloads #optional
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
-    environment:
-      - PUID=&lt;Enter your USER_ID&gt;
-      - PGID=&lt;Enter your GROUP_ID&gt;
-      - TZ=&lt;Enter your time zone&gt;
-      - WEBUI_PORT=9095
-    volumes:
-      - ./torrent/qbittorrent/config:/config
-      - ./downloads:/downloads
-    ports:
-      - 9095:9095
-      - 6881:6881
-      - 6881:6881/udp
-    restart: *restartpolicy
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr:develop
-    container_name: prowlarr
-    environment: *env
-    volumes:
-      - ./torrent/prowlarr/config:/config
-    ports:
-      - 9696:9696
-    restart: *restartpolicy</code></pre>
-
-    <h2 id="paso-4-ejecuta-tus-contenedores">
-      Paso #4: Ejecuta tus contenedores!
-    </h2>
-<pre class="line-numbers  language-bash"><code>sudo docker-compose up -d</code></pre>
-
-    <h2 id="paso-5-vamos-a-configurar-nuestros-indexadores">
-      Paso #5: Vamos a configurar nuestros indexadores.
-    </h2>
-
-  <p>
-    En primer lugar, quiero aclarar que no es necesario tener un nombre de dominio. Con saber la IP de tu servidor, y a qué puertos tienes que acceder para conectarte a las interfaces web, es más que suficiente.
-  </p>
-
-  <p>
-    Personalmente, uso ingressRoutes (usando traefik como Ingress Controller) para conectarme a estas interfaces web gracias a los subdominios. Pero dejo a vuestra elección cómo hacerlo, podéis usar Nginx reverse proxy, nginx manager, traefik reverse proxy en Docker....
-  </p>
-
-  <p>
-    Ok, primero tenemos que conectarnos a Prowlarr (usa http://&lt;tuIP&gt;<tu ip="">:9696, en caso de que no quieras usar certificados de confianza o nombres de dominio):</tu>&nbsp;<br>
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i.PNG" height="921" width="944" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-2xl.PNG 1600w">
-      <figcaption>Esta es la webUI de prowlarr. Vamos a añadir un nuevo indexador pulsando el botón azul.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-2.PNG" height="1191" width="1073" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-2-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-2-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-2-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-2-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-2-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-2-2xl.PNG 1600w">
-      <figcaption>Yo uso este para las películas de anime. Puedes usar cualquiera.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-4.PNG" height="868" width="712" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-4-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-4-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-4-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-4-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-4-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-4-2xl.PNG 1600w">
-      <figcaption>En este caso, para este indexador los valores por defecto deberían ser suficientes. Marca la casilla de Enable.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-5.PNG" height="710" width="713" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-5-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-5-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-5-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-5-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-5-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-5-2xl.PNG 1600w">
-      <figcaption>También uso este.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-6.PNG" height="832" width="868" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-6-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-6-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-6-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-6-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-6-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-6-2xl.PNG 1600w">
-      <figcaption>Para indexadores NZB, habitualmente vas a tener que user una API Key (suelen ser de pago).</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-7.PNG" height="938" width="957" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-7-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-7-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-7-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-7-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-7-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-7-2xl.PNG 1600w">
-      <figcaption>Ahora, ve a Settings -> Apps para añadir aplicaciones. Haz click en el botón de añadir aplicaciones de arriba.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-8.PNG" height="527" width="1072" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-8-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-8-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-8-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-8-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-8-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-8-2xl.PNG 1600w">
-      <figcaption>Tenemos que seleccionar Radarr (películas) y Sonarr (series) para esta guía. Hay algunas más como puedes ver (por ejemplo, Lidarr es para música).</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-11.PNG" height="767" width="716" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-11-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-11-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-11-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-11-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-11-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-11-2xl.PNG 1600w">
-      <figcaption>Tienes que poner tu API Key. Tal y como pone debajo, está en Radarr, en Settings -> General.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-10.PNG" height="826" width="930" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-10-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-10-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-10-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-10-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-10-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-10-2xl.PNG 1600w">
-      <figcaption>Esta es la API Key que tienes que utilizar. Lo mismo pasa con Sonarr, que tiene su propia API Key, también en Settings -> General.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-12.PNG" height="766" width="714" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-12-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-12-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-12-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-12-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-12-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-12-2xl.PNG 1600w">
-      <figcaption>Lo mismo va para Sonarr. Usa su API Key aquí y haz click en Test.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-13.PNG" height="238" width="921" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-13-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-13-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-13-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-13-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-13-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-13-2xl.PNG 1600w">
-      <figcaption>Tu pestaña de aplicaciones debería ser así.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-14.PNG" height="1163" width="1228" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-14-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-14-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-14-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-14-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-14-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-14-2xl.PNG 1600w">
-      <figcaption>Espera unos minutos. Luego, ve a Settings -> Indexers en Radarr y Sonarr y deberías ver algo así.</figcaption>
-    </figure>
-
-    <h2 id="paso-6-configura-tu-cliente-torrent">
-      Paso #6: Configura tu cliente torrent.
-    </h2>
-
-  <p>
-    "Pero quiero usar usenet en lugar de torrents". Vale, pues haré una guía más completa teniendo en cuenta usenet. Pero por ahora, sigamos con los torrents.
-  </p>
-
-  <p>
-    En cualquier caso, <a href="https://morrismotel.com/servarr-pt3a-choosing-your-indexers/" target="_blank" rel="nofollow noopener">aquí</a> tienes una lista de "Pros y contras".
-  </p>
-
-  <p>
-    Y <a href="https://trash-guides.info/Downloaders/qBittorrent/Basic-Setup/" target="_blank" rel="nofollow noopener">aquí</a> tienes algo de documentación adicional.
-  </p>
-
-  <p>
-    Bien, para conectarnos a la webUI de qbittorrent, tenemos que usar el puerto 9095 (puedes cambiarlo en el archivo <b>docker-compose.yml</b>).
-  </p>
-
-  <p>
-    Conéctate a http://&lt;tuIP&gt;<suip>:9095, luego introduzca el nombre de usuario por defecto (admin) y la contraseña por defecto (adminadmin).</suip>
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-15.PNG" height="751" width="836" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-15-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-15-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-15-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-15-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-15-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-15-2xl.PNG 1600w">
-      <figcaption>Entra en Tools -> Options. Luego, en la pestaña Connection, marca las mismas opciones que yo. No voy a explicar por qué funciona esto, tal vez en la próxima guía.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-16.PNG" height="20" width="318" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-16-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-16-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-16-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-16-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-16-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-16-2xl.PNG 1600w">
-      <figcaption>Marca esta opción si tu server está en tu red interna de casa. Esta opción debería, por razones de seguridad, mantenerse desabilitada.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-3.PNG" height="678" width="698" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-3-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-3-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-3-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-3-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-3-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-3-2xl.PNG 1600w">
-      <figcaption>Ahora, en la pestaña de BitTorrent marca estas opciones.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-9.PNG" height="669" width="691" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-9-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-9-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-9-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-9-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-9-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-9-2xl.PNG 1600w">
-      <figcaption>Ahora, esta es mi pestaña de downloads.</figcaption>
-    </figure>
-
-    <h2 id="paso-7-configura-radarr-y-sonarr">
-      Paso #7: Configura Radarr y Sonarr
-    </h2>
-
-  <p>
-    Radarr y Sonarr son muy similares. Así que la configuración que vamos a hacer es exactamente la misma para ambos. Vamos a usar Radarr como ejemplo pero la configuración es la misma para Sonarr también. Vamos a empezar.
-  </p>
-
-  <p>
-    Ve a http://&lt;tuIP&gt;<yourip>:7878, ve a Settings -&gt; Download Clients, haz click en el botón de añadir:</yourip>
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-17.PNG" height="1117" width="1066" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-17-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-17-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-17-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-17-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-17-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-17-2xl.PNG 1600w">
-      <figcaption>Deberías ver algo como esto.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-18.PNG" height="888" width="823" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-18-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-18-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-18-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-18-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-18-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-18-2xl.PNG 1600w">
-      <figcaption>Si quieres usar usenet, selecciona por ejemplo NZBGet y rellena la información.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-19.PNG" height="1188" width="720" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-19-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-19-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-19-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-19-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-19-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-19-2xl.PNG 1600w">
-      <figcaption>Para configurar QBitTorrent, usa la info del login de QBitTorrent.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-20.PNG" height="171" width="661" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-20-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-20-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-20-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-20-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-20-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-20-2xl.PNG 1600w">
-      
-    </figure>
-
-  <p>
-    Repite este proceso para Sonarr.
-  </p>
-
-    <h2 id="paso-8-configura-tus-perfiles-de-calidad">
-      Paso #8: Configura tus perfiles de calidad.
-    </h2>
-
-  <p>
-    Este paso es importante, tanto es así que hay gente que ha creado <a href="https://github.com/recyclarr/recyclarr" target="_blank" rel="nofollow noopener">herramientas</a> para optimizar este paso, usando <a href="https://github.com/recyclarr/recyclarr/wiki/Configuration-Reference" target="_blank" rel="nofollow noopener">configuraciones especiales</a>.
-  </p>
-
-  <p>
-    Dejo <a href="https://trash-guides.info/Radarr/Radarr-Quality-Settings-File-Size/" target="_blank" rel="nofollow noopener">aquí</a> algo de documentación.
-  </p>
-
-  <p>
-    Ve a la pestaña de Perfiles, tanto en Radarr como en Sonarr:
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-21.PNG" height="589" width="1600" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-21-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-21-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-21-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-21-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-21-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-21-2xl.PNG 1600w">
-      
-    </figure>
-
-  <p>
-    Dejo aquí mis perfiles "Any":
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-22.PNG" height="843" width="868" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-22-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-22-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-22-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-22-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-22-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-22-2xl.PNG 1600w">
-      <figcaption>Mi perfil "Any" de Sonarr</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-23.PNG" height="831" width="809" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-23-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-23-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-23-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-23-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-23-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-23-2xl.PNG 1600w">
-      <figcaption>Mi perfil "Any" de Radarr.</figcaption>
-    </figure>
-
-  <p>
-    Ahora, vamos a buscar algunas series y películas. En Radarr o Sonarr, ve a la página de inicio, busca la película o la serie que quieres ver y selecciónala. Deberías ver una pantalla como ésta:
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-24.PNG" height="431" width="813" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-24-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-24-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-24-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-24-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-24-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-24-2xl.PNG 1600w">
-      <figcaption>Selecciona tu perfil de calidad preferido y haz click en "Add Movie".</figcaption>
-    </figure>
-
-  <p>
-    Y una vez hagas esto, haz click en el poster de la película:
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-25.PNG" height="771" width="1600" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-25-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-25-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-25-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-25-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-25-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-25-2xl.PNG 1600w">
-      <figcaption>Ve entonces a la pestaña "Search" y selecciona la opción que prefieras descargar en función de la calidad, el formato y el tamaño.</figcaption>
-    </figure>
-
-    <h2 id="paso-9-configura-tu-media-server-favorito">
-      Paso #9: Configura tu Media Server favorito.
-    </h2>
-
-  <p>
-    En esta guía usaré <a href="https://github.com/jellyfin/jellyfin" target="_blank" rel="nofollow noopener">Jellyfin</a>, pero siéntete libre de usar cualquier otro, como <a href="https://www.plex.tv/es/media-server-downloads/" target="_blank" rel="nofollow noopener">Plex</a>, <a href="https://github.com/jesec/flood" target="_blank" rel="nofollow noopener">qflood</a>... simplemente cambia el <b>docker-compose.yml</b> para desplegar tu aplicación seleccionada.
-  </p>
-
-  <p>
-    Para Jellyfin, ve a http://&lt;tuIP&gt;:8096.
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-26.PNG" height="454" width="1600" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-26-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-26-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-26-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-26-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-26-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-26-2xl.PNG 1600w">
-      <figcaption>Esta es la Login Screen. Entra con tu username y password.</figcaption>
-    </figure>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-27.PNG" height="261" width="1600" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-27-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-27-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-27-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-27-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-27-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-27-2xl.PNG 1600w">
-      <figcaption>Deberías entonces ver algo similar a esto.</figcaption>
-    </figure>
-
-  <p>
-    Ok, si haces click en "Movies", habrá una lista de películas descargadas.
-  </p>
-
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/21/i-28.PNG" height="99" width="1600" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/21/responsive/i-28-xs.PNG 300w ,https://baronhez.github.io/media/posts/21/responsive/i-28-sm.PNG 480w ,https://baronhez.github.io/media/posts/21/responsive/i-28-md.PNG 768w ,https://baronhez.github.io/media/posts/21/responsive/i-28-lg.PNG 1024w ,https://baronhez.github.io/media/posts/21/responsive/i-28-xl.PNG 1360w ,https://baronhez.github.io/media/posts/21/responsive/i-28-2xl.PNG 1600w">
-      <figcaption>Incluso puedes filtrar tus películas y series en función de los géneros, hacer colecciones, conectarte a tu smart tv para visualizar allí la película que quieras ver...</figcaption>
-    </figure>
-
-  <p>
-    ¡Y eso es todo, amigos! Ya tienes un sitio de torrents funcionando en tu servidor sin ninguna molestia.
-  </p>
-
-  <p>
-    En cuanto sea posible subiré una configuración más compleja, con bazarr para los subtítulos, y ajustes de calidad tanto para sonarr como para radarr usando recyclarr, usando también jellyseer para gestionar las peticiones de los usuarios.
-  </p>
-
-  <p>
-    Disfruta de la piratería!
-  </p>
-
-    <h2 id="recomendaciones">
-      Recomendaciones
-    </h2>
-
-  <p>
-    Configura un servicio de bazarr para obtener subtítulos. Haré una guía al respecto lo antes posible.
-  </p>
-
-  <p>
-    Establece un servicio para gestionar las solicitudes de los usuarios. Yo uso Jellyseer para este propósito. Haré una guía sobre esto también. Lo prometo.
-  </p>
-
-  <p>
-    No montes tu torrent server en un servidor que no es de su propiedad, como una instancia de AWS. Pueden bannearte por eso.
-  </p>
-
-  <p>
-    Si quieres retocar un poco Jellyfin, con temas y demás, mira este <a href="https://www.youtube.com/watch?v=DivZcyoY6bs" target="_blank" rel="nofollow noopener">vídeo</a>.
-  </p>
-
-    <h2 id="extra-dockercompose">
-      Extra Docker-Compose
-    </h2>
-
-  <p>
-    Si prefieres usar traefik como proxy inverso y qflood como Media Server, puedes usar este archivo <b>docker-compose.yml</b> en lugar del ya escrito en la carpeta comprimida jellyfin.7z:
-  </p>
-<pre class="line-numbers  language-yaml"><code>  version: '3'
-  services:
-    qflood:
-      image: cr.hotio.dev/hotio/qflood:release-4.3.9--4.7.0
-      environment:
-        - PUID=1000
-        - PGID=100
-        - UMASK=002
-        - TZ=Europe/Madrid
-        - FLOOD_AUTH=true
-      ports:
-        - "51413:51413"
-      volumes:
-        - '/your/pathstorage/data/qflood:/config'
-        - '/your/path:/data'
-        - '/storage/shared/bittorrent:/downloads'
-      labels:
-      - traefik.enable=true
-      - traefik.http.routers.flood.entryPoints=web-secure
-      - traefik.http.routers.flood.rule=Host(`yourdomain`)
-      - traefik.http.services.flood.loadbalancer.server.port=3000
-      - traefik.http.routers.flood.service=flood
-      - traefik.http.routers.qbittorrent.entryPoints=web-secure
-      - traefik.http.routers.qbittorrent.rule=Host(`yourdomain`)
-      - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
-      - traefik.http.routers.qbittorrent.service=qbittorrent
-      networks:
-        - rflood
-      restart: unless-stopped
-    prowlarr:
-      image: cr.hotio.dev/hotio/prowlarr:nightly
-      ports:  
-        - "9696:9696"
-      environment:
-        - PUID=1000
-        - PGID=1000
-        - UMASK=002
-        - TZ=Europe/Madrid
-      volumes:
-        - /your/path:/config
-      labels:
-        - traefik.enable=true
-        - traefik.http.routers.prowlarr.entryPoints=web-secure
-        - traefik.http.routers.prowlarr.rule=Host(`yourdomain`)
-        - traefik.http.services.prowlarr.loadbalancer.server.port=9696
-      networks:
-        - rflood
-      restart: unless-stopped
-    sonarr:
-      image: cr.hotio.dev/hotio/sonarr
-      ports:
-      - "8989:8989"
-      environment:
-      - PUID=1000
-      - PGID=100
-      - UMASK=002
-      - TZ=Europe/Madrid
-      volumes:
-      - './config/arr/sonarr/config:/config'   
-      - '/storage/shared/bittorrent:/storage'
-      labels:
-      - traefik.enable=true
-      - traefik.http.routers.sonarr.entryPoints=web-secure
-      - traefik.http.routers.sonarr.rule=Host(`yourdomain`)
-      - traefik.http.services.sonarr.loadbalancer.server.port=8989
-      networks:
-      - rflood
-      restart: unless-stopped
-    radarr:
-      image: cr.hotio.dev/hotio/radarr
-      ports:
-      - "7878:7878"
-      environment:
-      - PUID=1000
-      - PGID=100
-      - UMASK=002
-      - TZ=Europe/Madrid
-      volumes:
-      - './config/arr/radarr/config:/config'
-      - '/storage/shared/bittorrent:/storage'
-      labels:
-      - traefik.enable=true
-      - traefik.http.routers.radarr.entryPoints=web-secure
-      - traefik.http.routers.radarr.rule=Host(`yourdomain`)
-      - traefik.http.services.radarr.loadbalancer.server.port=7878
-      networks:
-      - rflood
-      restart: unless-stopped
-    bazarr:
-      image: hotio/bazarr
-      ports:
-      - "6767:6767"
-      environment:
-      - PUID=1000
-      - PGID=1000
-      - UMASK=002
-      - TZ=Europe/Madrid
-      volumes:
-      - ./config/arr/bazarr/config:/config
-      - /storage/shared/bittorrent/media:/storage/media
-      labels:
-      - traefik.enable=true
-      - traefik.http.routers.bazarr.entryPoints=web-secure
-      - traefik.http.routers.bazarr.rule=Host(`yourdomain`)
-      - traefik.http.services.bazarr.loadbalancer.server.port=6767      
-      networks:
-      - rflood      
-      restart: unless-stopped
-  networks:
-    rflood:
-      driver: bridge</code></pre>
-
-  <p>
-    Como puedes ver, tienes total libertad para elegir dónde quieres almacenar tus datos y tu configuración. Establece una ruta donde diga "/tu/ruta". Además, se incluye el servicio bazarr (para los subtítulos).
-  </p>
-
-    <h2 id="crditos">
-      Créditos
-    </h2>
-
-  <p>
-    Gracias a mi amigo Edu, por descubrirme Servarr.
-  </p>
-
-  <p>
-    <a href="https://wiki.servarr.com/" target="_blank" rel="nofollow noopener">https://wiki.servarr.com/</a>
-  </p>
-
-  <p>
-    <a href="https://trash-guides.info/" target="_blank" rel="nofollow noopener">TRaSH Guides</a>
-  </p>
-
-  <p>
-    <a href="https://morrismotel.com/servarr-pt3b-prowlarr-sonarr-radarr/" target="_blank" rel="nofollow noopener">https://morrismotel.com/servarr-pt3b-prowlarr-sonarr-radarr/</a>
-  </p>
-            ]]>
-        </content>
-    </entry>
-    <entry>
         <title>How to mount a torrent server to watch movies and series for free</title>
         <author>
             <name>Jonathan Ródenas López</name>
@@ -1786,7 +576,7 @@ services:
             <category term="Docker-compose"/>
             <category term="Docker"/>
 
-        <updated>2023-09-17T15:56:34+02:00</updated>
+        <updated>2023-09-17T16:00:58+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/19/server.png" alt="" />
@@ -3144,6 +1934,80 @@ networks:
     As you can see, you have total freedom to choose where you want to store your data and configuration. Set a path wherever it says <b>"/your/path"</b>. Also, the bazarr service (for subtitles) is included.
   </p>
 
+  <p>
+    Oh, here is another possibility, if you want to expose your ports:
+  </p>
+<pre class="line-numbers  language-yaml"><code>version: "3.7"
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment: &env
+      - PUID=&lt;Enter your USER_ID&gt;
+      - PGID=&lt;Enter your GROUP_ID&gt;
+      - TZ=&lt;Enter your time zone&gt;
+    volumes:
+      - ./config/jellyfin:/config
+      - ./library/series:/data/series
+      - ./library/movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    restart: &restartpolicy unless-stopped
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment: *env
+    volumes:
+      - ./config/arr/radarr/config:/config
+      - ./library/movies:/data/movies #optional
+      - ./downloads:/downloads #optional
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 7878:7878
+    restart: *restartpolicy
+  sonarr:
+    container_name: sonarr
+    image: cr.hotio.dev/hotio/sonarr:latest
+    restart: *restartpolicy
+    logging:
+      driver: json-file
+    network_mode: bridge
+    ports:
+      - 8989:8989
+    environment: *env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config/arr/sonarr/config:/config
+      - ./downloads:/downloads #optional
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=&lt;Enter your USER_ID&gt;
+      - PGID=&lt;Enter your GROUP_ID&gt;
+      - TZ=&lt;Enter your time zone&gt;
+      - WEBUI_PORT=9095
+    volumes:
+      - ./torrent/qbittorrent/config:/config
+      - ./downloads:/downloads
+    ports:
+      - 9095:9095
+      - 6881:6881
+      - 6881:6881/udp
+    restart: *restartpolicy
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment: *env
+    volumes:
+      - ./torrent/prowlarr/config:/config
+    ports:
+      - 9696:9696
+    restart: *restartpolicy</code></pre>
+
     <h2 id="credits">
       Credits
     </h2>
@@ -3588,6 +2452,49 @@ services:
   <p>
     <a href="https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html" target="_blank" rel="nofollow noopener">https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html</a>
   </p>
+            ]]>
+        </content>
+    </entry>
+    <entry>
+        <title>How to convert different files online</title>
+        <author>
+            <name>Jonathan Ródenas López</name>
+        </author>
+        <link href="https://baronhez.github.io/how-to-convert-different-files-online/"/>
+        <id>https://baronhez.github.io/how-to-convert-different-files-online/</id>
+        <media:content url="https://baronhez.github.io/media/posts/17/i.jpg" medium="image" />
+            <category term="Interesting Webpages"/>
+
+        <updated>2022-09-17T16:56:59+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://baronhez.github.io/media/posts/17/i.jpg" alt="" />
+                    A curate&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <p><img src="https://baronhez.github.io/media/posts/17/i.jpg" class="type:primaryImage" alt="" /></p>
+                
+    <h2 id="a-curate-selection-of-online-converters" class="align-center">
+      A curate selection of online converters.
+    </h2>
+
+  <p>
+    Image to ascii converter: <a href="https://github.com/TheZoraiz/ascii-image-converter" target="_blank" rel="nofollow noopener">https://github.com/TheZoraiz/ascii-image-converter</a>
+  </p>
+
+  <p>
+    Video To Lottie Converter:&nbsp;<a href="https://isotropic.co/tool/video-to-lottie" target="_blank" rel="nofollow noopener">https://isotropic.co/tool/video-to-lottie</a>
+  </p>
+
+  <p>
+    Multi-file converters:
+  </p>
+
+  <ul>
+    <li><a href="https://www.aconvert.com/" target="_blank" rel="nofollow noopener">https://www.aconvert.com</a></li><li><a href="https://www.online-convert.com/es" target="_blank" rel="nofollow noopener">https://www.online-convert.com/es</a><br></li><li><a href="https://convertio.co/" target="_blank" rel="nofollow noopener">https://convertio.co/</a><br></li><li><a href="https://www.ilovepdf.com/" target="_blank" rel="nofollow noopener">https://www.ilovepdf.com/</a><br></li><li><a href="https://tinywow.com/" target="_blank" rel="nofollow noopener">https://tinywow.com/</a><br></li><li><a href="https://cloudconvert.com/" target="_blank">https://cloudconvert.com/</a><br></li><li><a href="https://www.onlineocr.net/" target="_blank" rel="nofollow noopener">https://www.onlineocr.net/</a><br></li>
+  </ul>
             ]]>
         </content>
     </entry>
