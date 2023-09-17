@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://baronhez.github.io/feed.xml" rel="self" />
     <link href="https://baronhez.github.io" />
-    <updated>2023-09-04T02:19:39+02:00</updated>
+    <updated>2023-09-17T15:56:34+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -1786,7 +1786,7 @@ services:
             <category term="Docker-compose"/>
             <category term="Docker"/>
 
-        <updated>2023-09-04T02:19:39+02:00</updated>
+        <updated>2023-09-17T15:56:34+02:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://baronhez.github.io/media/posts/19/server.png" alt="" />
@@ -2475,96 +2475,273 @@ do_install
 
 </code></pre>
 
-    <h2 id="step-2-download-my-configuration-folder">
-      Step #2: Download my configuration folder.
+    <h2 id="step-2-set-up-the-directory-tree">
+      Step #2: Set up the directory tree.
     </h2>
 
   <p>
-    The fastest way to set this up is to borrow my setup, trust me. Download this&nbsp;<a href="https://baronhez.github.io/media/files/jellyfin.7z" download class="" data-link-popup-id="1662262428607">zipped folder</a>&nbsp;to your server.
+    The fastest way to set this up is to follow the <a href="https://trash-guides.info/Hardlinks/How-to-setup-for/Docker/" target="_blank" rel="nofollow noopener" class="" data-link-popup-id="7676a141-7139-495d-8158-ce6d703191d5">Trash Guides recommendation</a>.
   </p>
 
-    <h2 id="step-3-create-dockercompose-file">
+  <p>
+    data
+<br>├── torrents
+<br>│   ├── books
+<br>│   ├── movies
+<br>│   ├── music
+<br>│   └── tv
+<br>├── usenet
+<br>│   ├── incomplete
+<br>│   └── complete
+<br>│        ├── books
+<br>│        ├── movies
+<br>│        ├── music
+<br>│        └── tv
+<br>└── media
+<br>     ├── books
+<br>     ├── movies
+<br>     ├── music
+<br>     └── tv&nbsp;<br>
+  </p>
+
+  <p>
+    I recommend you to not create the data directory in / (because permissions issues). We will assign different volumes to the containers depending on what the services need, just as <a href="https://trash-guides.info/Hardlinks/How-to-setup-for/Docker/" target="_blank" rel="nofollow noopener">Trash Guides</a> recommends.
+  </p>
+
+    <h2 id="step-3-create-docker-compose-file">
       Step #3: Create Docker-Compose file.
     </h2>
 
   <p>
-    Ok, inside the configuration folder (<a href="https://linux.die.net/man/1/7z" target="_blank" rel="nofollow noopener">unzip</a> it), you will see a&nbsp;<b>docker-compose.yml</b> file. Edit the content with this command:
+    Ok, now it's time to deploy our services with&nbsp;&nbsp;you will see a&nbsp;<b>docker-compose.yml</b> file. Edit the content with this command:
   </p>
 <pre class="line-numbers  language-bash"><code>nano docker-compose.yml</code></pre>
 
   <p>
-    Edit this content (You have to enter your time zone, PUID and PGID):
+    Edit this content (You have to enter your time zone, PUID and PGID. It is not necessary to modify the UMASK):
   </p>
-<pre class="line-numbers  language-yaml"><code>version: "3.7"
-services:
-  jellyfin:
-    image: lscr.io/linuxserver/jellyfin:latest
-    container_name: jellyfin
-    environment: &env
-      - PUID=&lt;Enter your USER_ID&gt;
-      - PGID=&lt;Enter your GROUP_ID&gt;
-      - TZ=&lt;Enter your time zone&gt;
-    volumes:
-      - ./config/jellyfin:/config
-      - ./library/series:/data/series
-      - ./library/movies:/data/movies
-    ports:
-      - 8096:8096
-      - 8920:8920 #optional
-      - 7359:7359/udp #optional
-      - 1900:1900/udp #optional
-    restart: &restartpolicy unless-stopped
-  radarr:
-    image: lscr.io/linuxserver/radarr:latest
-    container_name: radarr
-    environment: *env
-    volumes:
-      - ./config/arr/radarr/config:/config
-      - ./library/movies:/data/movies #optional
-      - ./downloads:/downloads #optional
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - 7878:7878
-    restart: *restartpolicy
-  sonarr:
-    container_name: sonarr
-    image: cr.hotio.dev/hotio/sonarr:latest
-    restart: *restartpolicy
-    logging:
-      driver: json-file
-    network_mode: bridge
-    ports:
-      - 8989:8989
-    environment: *env
+<pre class="line-numbers  language-yaml"><code>services:
+  bazarr:
+    image: ghcr.io/hotio/bazarr
+    container_name: bazarr
+    restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./config/arr/sonarr/config:/config
-      - ./downloads:/downloads #optional
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
+      - &lt;your-path-to-data&gt;/bazarr:/config
+      - &lt;your-path-to-data&gt;/data/media:/data/media
     environment:
-      - PUID=&lt;Enter your USER_ID&gt;
-      - PGID=&lt;Enter your GROUP_ID&gt;
-      - TZ=&lt;Enter your time zone&gt;
-      - WEBUI_PORT=9095
+      - TZ=Europe/Madrid
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bazarr.entrypoints=web-secure"
+      - "traefik.http.routers.bazarr.rule=Host(`bazarr.&lt;your-domain&gt;`)"
+      - "traefik.http.routers.bazarr.tls=true"
+      - "traefik.http.routers.bazarr.tls.certresolver=default"
+      - "traefik.http.services.bazarr.loadbalancer.server.port=6767"
+      - "traefik.http.routers.bazarr.middlewares=bazarr-auth"
+      - "traefik.http.middlewares.bazarr-auth.basicauth.users=&lt;your-user-and-password&gt;"
+      - "traefik.docker.network=traefik"
+    networks:
+      - traefik
+
+  jellyfin:
+    image: linuxserver/jellyfin:latest
+    container_name: jellyfin
+    restart: always
     volumes:
-      - ./torrent/qbittorrent/config:/config
-      - ./downloads:/downloads
-    ports:
-      - 9095:9095
-      - 6881:6881
-      - 6881:6881/udp
-    restart: *restartpolicy
+      - /etc/localtime:/etc/localtime:ro
+      - &lt;your-path-to-data&gt;/jellyfin:/config
+      - &lt;your-path-to-data&gt;/data/media:/data/media
+    environment:
+      - TZ=Europe/Madrid
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyfin.entrypoints=web-secure"
+      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.&lt;your-domain&gt;`)"
+      - "traefik.http.routers.jellyfin.tls=true"
+      - "traefik.http.routers.jellyfin.tls.certresolver=default"
+      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+      - "traefik.http.routers.jellyfin.middlewares=jellyfin-auth"
+      - "traefik.http.middlewares.jellyfin-auth.basicauth.users=&lt;your-user-and-password&gt;"
+      - "traefik.http.routers.jellyfin.middlewares=secHeader@file"
+      - "traefik.docker.network=traefik"
+    networks:
+      - traefik
+
+  jellyseerr:
+     image: fallenbagel/jellyseerr:latest
+     container_name: jellyseerr
+     environment:
+          - LOG_LEVEL=debug
+          - TZ=Europe/Madrid
+     ports:
+          - 5055:5055
+     volumes:
+          - &lt;your-path-to-data&gt;/jellyseerr:/app/config
+     restart: unless-stopped
+     labels:
+          - "traefik.enable=true"
+          - "traefik.http.routers.jellyseerr.entrypoints=web-secure"
+          - "traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.&lt;your-domain&gt;`)"
+          - "traefik.http.routers.jellyseerr.tls=true"
+          - "traefik.http.routers.jellyseerr.tls.certresolver=default"
+          - "traefik.http.services.jellyseerr.loadbalancer.server.port=5055"
+          - "traefik.http.routers.jellyseerr.middlewares=jellyseerr-auth"
+          - "traefik.http.middlewares.jellyseerr-auth.basicauth.users=&lt;your-user-and-password&gt;"
+          - "traefik.http.routers.jellyseerr.middlewares=secHeader@file"
+          - "traefik.docker.network=traefik"
+     networks:
+          - traefik
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:develop
+    image: ghcr.io/hotio/prowlarr
     container_name: prowlarr
-    environment: *env
+    restart: unless-stopped
     volumes:
-      - ./torrent/prowlarr/config:/config
+      - &lt;your-path-to-data&gt;/prowlarr:/config
+    environment:
+      - TZ=Europe/Madrid
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prowlarr.entrypoints=web-secure"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.&lt;your-domain&gt;`)"
+      - "traefik.http.routers.prowlarr.tls=true"
+      - "traefik.http.routers.prowlarr.tls.certresolver=default"
+      - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
+      - "traefik.http.routers.prowlarr.middlewares=prowlarr-auth"
+      - "traefik.http.middlewares.prowlarr-auth.basicauth.users=&lt;your-user-and-password&gt;"
+      - "traefik.http.routers.prowlarr.middlewares=secHeader@file"
+      - "traefik.docker.network=traefik"
+    networks:
+      - traefik
+
+  qbittorrent:
+    container_name: qbittorrent
+    image: ghcr.io/hotio/qbittorrent
     ports:
-      - 9696:9696
-    restart: *restartpolicy</code></pre>
+      - 8080:8080
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Madrid
+    volumes:
+      - &lt;your-path-to-data&gt;/qbittorrent:/config
+      - &lt;your-path-to-data&gt;/data/torrents:/data/torrents
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.qbittorrent.entrypoints=web-secure"
+      - "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.&lt;your-domain&gt;`)"
+      - "traefik.http.routers.qbittorrent.tls=true"
+      - "traefik.http.routers.qbittorrent.tls.certresolver=default"
+      - "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
+      - "traefik.http.routers.qbittorrent.middlewares=secHeader@file"
+      - "traefik.docker.network=traefik"
+    networks:
+      - traefik
+
+  radarr:
+    image: cr.hotio.dev/hotio/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    volumes:
+      - &lt;your-path-to-data&gt;/radarr:/config
+      - /etc/localtime:/etc/localtime:ro
+      - &lt;your-path-to-data&gt;/data:/data
+    environment:
+      - TZ=Europe/Madrid
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.entrypoints=web-secure"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.&lt;your-domain&gt;`)"
+      - "traefik.http.routers.radarr.tls=true"
+      - "traefik.http.routers.radarr.tls.certresolver=default"
+      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+      - "traefik.http.routers.radarr.middlewares=radarr-auth"
+      - "traefik.http.middlewares.radarr-auth.basicauth.users=&lt;your-user-and-password&gt;"
+      - "traefik.http.routers.radarr.middlewares=secHeader@file"
+      - "traefik.docker.network=traefik"
+    networks:
+      - traefik
+
+  readarr:
+    container_name: readarr
+    image: ghcr.io/hotio/readarr
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Madrid
+    volumes:
+      - &lt;your-path-to-data&gt;/readarr:/config
+      - /etc/localtime:/etc/localtime:ro
+      - &lt;your-path-to-data&gt;/data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.readarr.entrypoints=web-secure"
+      - "traefik.http.routers.readarr.rule=Host(`readarr.&lt;your-domain&gt;`)"
+      - "traefik.http.routers.readarr.tls=true"
+      - "traefik.http.routers.readarr.tls.certresolver=default"
+      - "traefik.http.services.readarr.loadbalancer.server.port=8787"
+      - "traefik.http.routers.readarr.middlewares=readarr-auth"
+      - "traefik.http.middlewares.readarr-auth.basicauth.users=&lt;your-user-and-password&gt;"
+      - "traefik.http.routers.readarr.middlewares=secHeader@file"
+      - "traefik.docker.network=traefik"
+    networks:
+      - traefik
+
+  sonarr:
+    image: cr.hotio.dev/hotio/sonarr:latest
+    container_name: sonarr
+    restart: always
+    volumes:
+      - &lt;your-path-to-data&gt;/sonarr:/config
+      - /etc/localtime:/etc/localtime:ro
+      - &lt;your-path-to-data&gt;/data:/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Madrid
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.entrypoints=web-secure"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.&lt;your-domain&gt;`)"
+      - "traefik.http.routers.sonarr.tls=true"
+      - "traefik.http.routers.sonarr.tls.certresolver=default"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+      - "traefik.http.routers.sonarr.middlewares=sonarr-auth"
+      - "traefik.http.middlewares.sonarr-auth.basicauth.users=&lt;your-user-and-password&gt;"
+      - "traefik.http.routers.sonarr.middlewares=secHeader@file"
+      - "traefik.docker.network=traefik"
+    networks:
+      - traefik
+
+networks:
+    traefik:
+        driver: bridge
+        name: traefik
+</code></pre>
+
+  <p class="msg msg--highlight">
+    If you want secure headers, go to<a href="https://baronhez.github.io/self-hosting-guide/" target="_blank" rel="nofollow noopener"> my post</a> about traefik configuration.<br>Otherwise, the line <i>"traefik.http.routers.&lt;service&gt;.middlewares=secHeader@file" </i>won't work.
+  </p>
+
+  <p class="msg msg--highlight">
+    To create a user+password pair, follow this guide and use&nbsp;<i>htpasswd</i>:&nbsp;<a href="https://doc.traefik.io/traefik/middlewares/http/basicauth/" target="_blank" rel="nofollow noopener">https://doc.traefik.io/traefik/middlewares/http/basicauth/</a><br>You can use htpasswd online:&nbsp;<a href="https://hostingcanada.org/htpasswd-generator/" target="_blank" rel="nofollow noopener">https://hostingcanada.org/htpasswd-generator/</a><br>
+  </p>
 
     <h2 id="step-4-run-your-containers">
       Step #4: Run your containers!
@@ -2576,11 +2753,11 @@ services:
     </h2>
 
   <p>
-    First of all, I want to clarify that it is not necessary to have a domain name. Knowing the IP of your server, and which ports you have to access to connect to the web interfaces, is more than enough.
+    First of all, I want to clarify that it is not necessary to have a domain name. Knowing the IP of your server, and which ports you have to access to connect to the web interfaces, is more than enough. However, you will have to expose those ports to the internet...
   </p>
 
   <p>
-    Personally, I use ingressRoutes (using traefik as Ingress Controller) to connect to these web UIs thanks to subdomains. But I leave to you to decide how to do it, you can use Nginx reverse proxy, nginx manager, traefik reverse proxy in Docker....
+    I leave to you to decide how to do it: you can use Nginx reverse proxy, Nginx manager, traefik reverse proxy in Docker, traefik as IngressController...
   </p>
 
   <p>
@@ -2848,7 +3025,7 @@ services:
     </h2>
 
   <p>
-    If you prefer to <a href="https://baronhez.github.io/self-hosting-guide/" target="_blank">use traefik as a reverse proxy</a> and qflood as a media server, you can use this <b>docker-compose.yml</b>&nbsp;file&nbsp;instead the one already written in the jellyfin.7z compressed folder:
+    If you prefer to <a href="https://baronhez.github.io/self-hosting-guide/" target="_blank">use traefik as a reverse proxy</a> and qflood as a media server, you can use this <b>docker-compose.yml</b>&nbsp;file&nbsp;instead the one already written above:
   </p>
 <pre class="line-numbers  language-yaml"><code>version: '3'
   services:
