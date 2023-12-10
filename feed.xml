@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
     <title>blogHez</title>
-    <link href="https://baronhez.github.io/feed.xml" rel="self" />
-    <link href="https://baronhez.github.io" />
+    <link href="https://blog.jonthan.xyz/feed.xml" rel="self" />
+    <link href="https://blog.jonthan.xyz" />
     <updated>2023-09-17T16:00:58+02:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
-    <id>https://baronhez.github.io</id>
+    <id>https://blog.jonthan.xyz</id>
 
     <entry>
         <title>My preferred firefox extensions</title>
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
-        <link href="https://baronhez.github.io/my-preferred-firefox-extensions/"/>
-        <id>https://baronhez.github.io/my-preferred-firefox-extensions/</id>
-        <media:content url="https://baronhez.github.io/media/posts/27/12.png" medium="image" />
+        <link href="https://blog.jonthan.xyz/my-preferred-firefox-extensions/"/>
+        <id>https://blog.jonthan.xyz/my-preferred-firefox-extensions/</id>
+        <media:content url="https://blog.jonthan.xyz/media/posts/27/12.png" medium="image" />
 
         <updated>2023-08-16T03:42:56+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/27/12.png" alt="Firefox" />
+                        <img src="https://blog.jonthan.xyz/media/posts/27/12.png" alt="Firefox" />
                     I use&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <p><img src="https://baronhez.github.io/media/posts/27/12.png" class="type:primaryImage" alt="Firefox" /></p>
+                    <p><img src="https://blog.jonthan.xyz/media/posts/27/12.png" class="type:primaryImage" alt="Firefox" /></p>
                 
   <p>
     I use a few extensions to improve my daily browsing experience.
@@ -42,7 +42,7 @@
   </ul>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/1.PNG" height="465" width="857" alt="600% Volume."  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/1-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/1-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/1-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/1-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/1-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/1-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/1.PNG" height="465" width="857" alt="600% Volume."  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/1-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-2xl.PNG 1600w">
       <figcaption>600% Volume. To boost the sound in our browser</figcaption>
     </figure>
 
@@ -51,7 +51,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/1-3.PNG" height="313" width="838" alt="ClearURLs"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/1-3-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/1-3-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/1-3-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/1-3-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/1-3-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/1-3-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/1-3.PNG" height="313" width="838" alt="ClearURLs"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/1-3-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-3-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-3-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-3-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-3-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-3-2xl.PNG 1600w">
       <figcaption>ClearURLs</figcaption>
     </figure>
 
@@ -60,7 +60,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/11.PNG" height="361" width="816" alt="Decentraleyes"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/11-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/11-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/11-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/11-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/11-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/11-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/11.PNG" height="361" width="816" alt="Decentraleyes"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/11-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/11-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/11-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/11-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/11-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/11-2xl.PNG 1600w">
       <figcaption>Decentraleyes</figcaption>
     </figure>
 
@@ -69,7 +69,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/10.PNG" height="387" width="818" alt="LanguageTool"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/10-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/10-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/10-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/10-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/10-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/10-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/10.PNG" height="387" width="818" alt="LanguageTool"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/10-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/10-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/10-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/10-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/10-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/10-2xl.PNG 1600w">
       <figcaption>LanguageTool. It is a free Grammarly!</figcaption>
     </figure>
 
@@ -78,7 +78,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/9.PNG" height="357" width="811" alt="Linkding"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/9-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/9-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/9-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/9-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/9-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/9-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/9.PNG" height="357" width="811" alt="Linkding"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/9-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/9-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/9-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/9-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/9-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/9-2xl.PNG 1600w">
       <figcaption>Linkding. It allows you to save bookmarks in this helpful bookmark tool. But you have to deploy your own linkding instance somewhere!</figcaption>
     </figure>
 
@@ -87,7 +87,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/8.PNG" height="390" width="817" alt="NopeCHA"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/8-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/8-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/8-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/8-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/8-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/8-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/8.PNG" height="390" width="817" alt="NopeCHA"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/8-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/8-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/8-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/8-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/8-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/8-2xl.PNG 1600w">
       <figcaption>NopeCHA</figcaption>
     </figure>
 
@@ -96,7 +96,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/7.PNG" height="293" width="808" alt="Privacy Badger"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/7-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/7-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/7-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/7-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/7-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/7-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/7.PNG" height="293" width="808" alt="Privacy Badger"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/7-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/7-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/7-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/7-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/7-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/7-2xl.PNG 1600w">
       <figcaption>Privacy Badger</figcaption>
     </figure>
 
@@ -105,7 +105,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/6.PNG" height="452" width="835" alt="SponsorBlock"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/6-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/6-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/6-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/6-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/6-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/6-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/6.PNG" height="452" width="835" alt="SponsorBlock"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/6-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/6-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/6-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/6-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/6-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/6-2xl.PNG 1600w">
       <figcaption>SponsorBlock</figcaption>
     </figure>
 
@@ -114,7 +114,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/5.PNG" height="478" width="826" alt="Surfingkeys"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/5-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/5-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/5-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/5-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/5-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/5-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/5.PNG" height="478" width="826" alt="Surfingkeys"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/5-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/5-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/5-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/5-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/5-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/5-2xl.PNG 1600w">
       <figcaption>Surfingkeys. The best extension to navigate using your keyboard!</figcaption>
     </figure>
 
@@ -123,7 +123,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/4.PNG" height="343" width="813" alt="Tranquility Reader"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/4-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/4-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/4-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/4-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/4-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/4-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/4.PNG" height="343" width="813" alt="Tranquility Reader"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/4-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/4-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/4-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/4-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/4-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/4-2xl.PNG 1600w">
       <figcaption>Tranquility Reader</figcaption>
     </figure>
 
@@ -132,7 +132,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/3.PNG" height="327" width="823" alt="uBlock Origin"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/3-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/3-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/3-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/3-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/3-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/3-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/3.PNG" height="327" width="823" alt="uBlock Origin"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/3-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/3-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/3-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/3-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/3-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/3-2xl.PNG 1600w">
       <figcaption>uBlock Origin</figcaption>
     </figure>
 
@@ -141,7 +141,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/2.PNG" height="1262" width="1656" alt="FastForward"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/2-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/2-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/2-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/2-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/2-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/2-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/2.PNG" height="1262" width="1656" alt="FastForward"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/2-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/2-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/2-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/2-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/2-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/2-2xl.PNG 1600w">
       <figcaption>FastForward. Bypass link shorteners. Useful to download pirate games through tons of links!</figcaption>
     </figure>
 
@@ -150,7 +150,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/27/1-4.PNG" height="414" width="827" alt="Youtube NonStop"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/27/responsive/1-4-xs.PNG 300w ,https://baronhez.github.io/media/posts/27/responsive/1-4-sm.PNG 480w ,https://baronhez.github.io/media/posts/27/responsive/1-4-md.PNG 768w ,https://baronhez.github.io/media/posts/27/responsive/1-4-lg.PNG 1024w ,https://baronhez.github.io/media/posts/27/responsive/1-4-xl.PNG 1360w ,https://baronhez.github.io/media/posts/27/responsive/1-4-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/27/1-4.PNG" height="414" width="827" alt="Youtube NonStop"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/27/responsive/1-4-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-4-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-4-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-4-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-4-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/27/responsive/1-4-2xl.PNG 1600w">
       <figcaption>Youtube NonStop</figcaption>
     </figure>
 
@@ -165,20 +165,20 @@
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
-        <link href="https://baronhez.github.io/how-to-install-revanced/"/>
-        <id>https://baronhez.github.io/how-to-install-revanced/</id>
-        <media:content url="https://baronhez.github.io/media/posts/26/youtube-revanced-2.jpg" medium="image" />
+        <link href="https://blog.jonthan.xyz/how-to-install-revanced/"/>
+        <id>https://blog.jonthan.xyz/how-to-install-revanced/</id>
+        <media:content url="https://blog.jonthan.xyz/media/posts/26/youtube-revanced-2.jpg" medium="image" />
 
         <updated>2023-08-16T02:03:54+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/26/youtube-revanced-2.jpg" alt="Youtube Revanced" />
+                        <img src="https://blog.jonthan.xyz/media/posts/26/youtube-revanced-2.jpg" alt="Youtube Revanced" />
                     This guide&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <p><img src="https://baronhez.github.io/media/posts/26/youtube-revanced-2.jpg" class="type:primaryImage" alt="Youtube Revanced" /></p>
+                    <p><img src="https://blog.jonthan.xyz/media/posts/26/youtube-revanced-2.jpg" class="type:primaryImage" alt="Youtube Revanced" /></p>
                 
   <p>
     This guide is a quick review of the Reddit Post that describes the entire process. Check it out here:&nbsp;<a href="https://www.reddit.com/r/revancedapp/comments/xlcny9/revanced_manager_guide_for_dummies/" target="_blank" rel="nofollow noopener">https://www.reddit.com/r/revancedapp/comments/xlcny9/revanced_manager_guide_for_dummies/</a>
@@ -197,7 +197,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1-2.PNG" height="990" width="895" alt="MICRO G APK"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-2-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-2-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-2-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-2-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-2-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-2-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1-2.PNG" height="990" width="895" alt="MICRO G APK"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-2-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-2-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-2-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-2-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-2-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-2-2xl.PNG 1600w">
       <figcaption>Click on the DOWNLOAD APK button</figcaption>
     </figure>
 
@@ -206,7 +206,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1.PNG" height="967" width="1245" alt="Revanced Manager APK"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1.PNG" height="967" width="1245" alt="Revanced Manager APK"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-2xl.PNG 1600w">
       <figcaption>Download the selected file</figcaption>
     </figure>
 
@@ -215,7 +215,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1-3.PNG" height="252" width="691" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-3-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-3-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-3-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-3-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-3-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-3-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1-3.PNG" height="252" width="691" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-3-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-3-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-3-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-3-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-3-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-3-2xl.PNG 1600w">
       <figcaption>You can find the download link here.</figcaption>
     </figure>
 
@@ -224,7 +224,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1-4.PNG" height="967" width="783" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-4-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-4-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-4-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-4-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-4-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-4-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1-4.PNG" height="967" width="783" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-4-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-4-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-4-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-4-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-4-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-4-2xl.PNG 1600w">
       <figcaption>After entering that page, you have to click on this button to download the APK</figcaption>
     </figure>
 
@@ -233,17 +233,17 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/photo_2023-08-16_01-31-40.jpg" height="1280" width="591" alt="First setting step "  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/photo_2023-08-16_01-31-40-xs.jpg 300w ,https://baronhez.github.io/media/posts/26/responsive/photo_2023-08-16_01-31-40-sm.jpg 480w ,https://baronhez.github.io/media/posts/26/responsive/photo_2023-08-16_01-31-40-md.jpg 768w ,https://baronhez.github.io/media/posts/26/responsive/photo_2023-08-16_01-31-40-lg.jpg 1024w ,https://baronhez.github.io/media/posts/26/responsive/photo_2023-08-16_01-31-40-xl.jpg 1360w ,https://baronhez.github.io/media/posts/26/responsive/photo_2023-08-16_01-31-40-2xl.jpg 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/photo_2023-08-16_01-31-40.jpg" height="1280" width="591" alt="First setting step "  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/photo_2023-08-16_01-31-40-xs.jpg 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/photo_2023-08-16_01-31-40-sm.jpg 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/photo_2023-08-16_01-31-40-md.jpg 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/photo_2023-08-16_01-31-40-lg.jpg 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/photo_2023-08-16_01-31-40-xl.jpg 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/photo_2023-08-16_01-31-40-2xl.jpg 1600w">
       <figcaption>Open the Revanced Manager App, go to "Settings" and tap on "Auto Update", "Experimental universal patches support" and "Experimental patches support"</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1-5.PNG" height="929" width="408" alt="First Patcher Step"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-5-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-5-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-5-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-5-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-5-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-5-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1-5.PNG" height="929" width="408" alt="First Patcher Step"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-5-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-5-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-5-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-5-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-5-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-5-2xl.PNG 1600w">
       <figcaption>Now, go to "Patcher" and tap on "Select an application"</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1-7.PNG" height="929" width="408" alt="Second patcher step"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-7-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-7-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-7-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-7-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-7-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-7-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1-7.PNG" height="929" width="408" alt="Second patcher step"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-7-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-7-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-7-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-7-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-7-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-7-2xl.PNG 1600w">
       <figcaption>Select "Storage" in the bottom right</figcaption>
     </figure>
 
@@ -252,7 +252,7 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1-8.PNG" height="929" width="408" alt="Third patcher step"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-8-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-8-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-8-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-8-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-8-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-8-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1-8.PNG" height="929" width="408" alt="Third patcher step"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-8-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-8-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-8-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-8-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-8-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-8-2xl.PNG 1600w">
       <figcaption>Select the YouTube APK you downloaded earlier</figcaption>
     </figure>
 
@@ -273,27 +273,27 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1-9.PNG" height="929" width="408" alt="Fourth patcher step"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-9-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-9-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-9-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-9-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-9-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-9-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1-9.PNG" height="929" width="408" alt="Fourth patcher step"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-9-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-9-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-9-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-9-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-9-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-9-2xl.PNG 1600w">
       <figcaption>Once we have selected our preferred pack, it should look similar to this.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1-10.PNG" height="929" width="408" alt="Tap "Done""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-10-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-10-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-10-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-10-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-10-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-10-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1-10.PNG" height="929" width="408" alt="Tap "Done""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-10-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-10-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-10-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-10-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-10-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-10-2xl.PNG 1600w">
       <figcaption>Tap "Done"</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1-11.PNG" height="929" width="408" alt="Tap "Patch""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-11-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-11-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-11-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-11-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-11-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-11-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1-11.PNG" height="929" width="408" alt="Tap "Patch""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-11-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-11-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-11-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-11-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-11-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-11-2xl.PNG 1600w">
       <figcaption>Tap "Patch"</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1-12.PNG" height="929" width="408" alt="Wait a while for YouTube ReVanced to build"  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-12-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-12-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-12-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-12-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-12-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-12-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1-12.PNG" height="929" width="408" alt="Wait a while for YouTube ReVanced to build"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-12-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-12-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-12-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-12-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-12-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-12-2xl.PNG 1600w">
       <figcaption>Wait a while for YouTube ReVanced to build</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/26/1-13.PNG" height="929" width="408" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/26/responsive/1-13-xs.PNG 300w ,https://baronhez.github.io/media/posts/26/responsive/1-13-sm.PNG 480w ,https://baronhez.github.io/media/posts/26/responsive/1-13-md.PNG 768w ,https://baronhez.github.io/media/posts/26/responsive/1-13-lg.PNG 1024w ,https://baronhez.github.io/media/posts/26/responsive/1-13-xl.PNG 1360w ,https://baronhez.github.io/media/posts/26/responsive/1-13-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1-13.PNG" height="929" width="408" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-13-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-13-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-13-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-13-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-13-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-13-2xl.PNG 1600w">
       <figcaption>Once it's done, tap install</figcaption>
     </figure>
 
@@ -323,32 +323,32 @@
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
-        <link href="https://baronhez.github.io/my-printer-clogs-after-an-hour/"/>
-        <id>https://baronhez.github.io/my-printer-clogs-after-an-hour/</id>
-        <media:content url="https://baronhez.github.io/media/posts/25/2.jpg" medium="image" />
+        <link href="https://blog.jonthan.xyz/my-printer-clogs-after-an-hour/"/>
+        <id>https://blog.jonthan.xyz/my-printer-clogs-after-an-hour/</id>
+        <media:content url="https://blog.jonthan.xyz/media/posts/25/2.jpg" medium="image" />
 
         <updated>2022-11-16T01:37:11+01:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/25/2.jpg" alt="" />
+                        <img src="https://blog.jonthan.xyz/media/posts/25/2.jpg" alt="" />
                     Congratulations, you&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <p><img src="https://baronhez.github.io/media/posts/25/2.jpg" class="type:primaryImage" alt="" /></p>
+                    <p><img src="https://blog.jonthan.xyz/media/posts/25/2.jpg" class="type:primaryImage" alt="" /></p>
                 
   <p>
     Congratulations, you have the same problem I had a few weeks ago. Now, I bit wiser than then, I can tell you the reason.
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/25/bowden.PNG" height="374" width="178" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/25/responsive/bowden-xs.PNG 300w ,https://baronhez.github.io/media/posts/25/responsive/bowden-sm.PNG 480w ,https://baronhez.github.io/media/posts/25/responsive/bowden-md.PNG 768w ,https://baronhez.github.io/media/posts/25/responsive/bowden-lg.PNG 1024w ,https://baronhez.github.io/media/posts/25/responsive/bowden-xl.PNG 1360w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/25/bowden.PNG" height="374" width="178" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/25/responsive/bowden-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-2xl.PNG 1600w">
       <figcaption>This part is a Bowden throat. You put your teflon tube inside this part.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/25/bowden-2.PNG" height="159" width="224" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/25/responsive/bowden-2-xs.PNG 300w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2-sm.PNG 480w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2-md.PNG 768w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2-lg.PNG 1024w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2-xl.PNG 1360w ,https://baronhez.github.io/media/posts/25/responsive/bowden-2-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/25/bowden-2.PNG" height="159" width="224" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/25/responsive/bowden-2-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-2-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-2-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-2-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-2-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-2-2xl.PNG 1600w">
       <figcaption>There are different bowden throats, some of them with teflon inside. Those are the worst kind, and most likely you have one of those inside your 3DPrinter.</figcaption>
     </figure>
 
@@ -357,12 +357,12 @@
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/25/1.jpg" height="1280" width="720" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/25/responsive/1-xs.jpg 300w ,https://baronhez.github.io/media/posts/25/responsive/1-sm.jpg 480w ,https://baronhez.github.io/media/posts/25/responsive/1-md.jpg 768w ,https://baronhez.github.io/media/posts/25/responsive/1-lg.jpg 1024w ,https://baronhez.github.io/media/posts/25/responsive/1-xl.jpg 1360w ,https://baronhez.github.io/media/posts/25/responsive/1-2xl.jpg 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/25/1.jpg" height="1280" width="720" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/25/responsive/1-xs.jpg 300w ,https://blog.jonthan.xyz/media/posts/25/responsive/1-sm.jpg 480w ,https://blog.jonthan.xyz/media/posts/25/responsive/1-md.jpg 768w ,https://blog.jonthan.xyz/media/posts/25/responsive/1-lg.jpg 1024w ,https://blog.jonthan.xyz/media/posts/25/responsive/1-xl.jpg 1360w ,https://blog.jonthan.xyz/media/posts/25/responsive/1-2xl.jpg 1600w">
       <figcaption>The filament get stuck in that gap after an hour and half, more or less, forming a clog similar to this one.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/25/bowden-3.PNG" height="389" width="101" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/25/responsive/bowden-3-xs.PNG 300w ,https://baronhez.github.io/media/posts/25/responsive/bowden-3-sm.PNG 480w ,https://baronhez.github.io/media/posts/25/responsive/bowden-3-md.PNG 768w ,https://baronhez.github.io/media/posts/25/responsive/bowden-3-lg.PNG 1024w ,https://baronhez.github.io/media/posts/25/responsive/bowden-3-xl.PNG 1360w ,https://baronhez.github.io/media/posts/25/responsive/bowden-3-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/25/bowden-3.PNG" height="389" width="101" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/25/responsive/bowden-3-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-3-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-3-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-3-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-3-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/25/responsive/bowden-3-2xl.PNG 1600w">
       <figcaption>Replace that Bowden throat with one without a Teflon part inside.  This simple change fix the problem :)</figcaption>
     </figure>
 
@@ -377,21 +377,21 @@
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
-        <link href="https://baronhez.github.io/how-to-use-a-rubberducky/"/>
-        <id>https://baronhez.github.io/how-to-use-a-rubberducky/</id>
-        <media:content url="https://baronhez.github.io/media/posts/24/d.png" medium="image" />
+        <link href="https://blog.jonthan.xyz/how-to-use-a-rubberducky/"/>
+        <id>https://blog.jonthan.xyz/how-to-use-a-rubberducky/</id>
+        <media:content url="https://blog.jonthan.xyz/media/posts/24/d.png" medium="image" />
             <category term="RubberDucky"/>
 
         <updated>2022-11-16T01:37:26+01:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/24/d.png" alt="" />
+                        <img src="https://blog.jonthan.xyz/media/posts/24/d.png" alt="" />
                     There are&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <p><img src="https://baronhez.github.io/media/posts/24/d.png" class="type:primaryImage" alt="" /></p>
+                    <p><img src="https://blog.jonthan.xyz/media/posts/24/d.png" class="type:primaryImage" alt="" /></p>
                 
   <p>
     There are a bunch of possible uses for this little device. From a little bit of trolling or a complete Windows installation, to stole data or infect a computer with a ransomware.
@@ -474,21 +474,21 @@ Script Commands:
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
-        <link href="https://baronhez.github.io/docker-swarm-commands/"/>
-        <id>https://baronhez.github.io/docker-swarm-commands/</id>
-        <media:content url="https://baronhez.github.io/media/posts/23/d.png" medium="image" />
+        <link href="https://blog.jonthan.xyz/docker-swarm-commands/"/>
+        <id>https://blog.jonthan.xyz/docker-swarm-commands/</id>
+        <media:content url="https://blog.jonthan.xyz/media/posts/23/d.png" medium="image" />
             <category term="Docker"/>
 
         <updated>2022-09-18T03:56:00+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/23/d.png" alt="" />
+                        <img src="https://blog.jonthan.xyz/media/posts/23/d.png" alt="" />
                     # Creates&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <p><img src="https://baronhez.github.io/media/posts/23/d.png" class="type:primaryImage" alt="" /></p>
+                    <p><img src="https://blog.jonthan.xyz/media/posts/23/d.png" class="type:primaryImage" alt="" /></p>
                 <pre class="line-numbers  language-bash"><code># Creates a cluster manager on the current machine.
 # Generates a token that we must execute in a worker machine to join it to the cluster.
 docker swarm init 
@@ -534,21 +534,21 @@ docker node update --availability drain
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
-        <link href="https://baronhez.github.io/useful-cmd-commands/"/>
-        <id>https://baronhez.github.io/useful-cmd-commands/</id>
-        <media:content url="https://baronhez.github.io/media/posts/22/cmd-windows-1024x575.jpg.webp" medium="image" />
+        <link href="https://blog.jonthan.xyz/useful-cmd-commands/"/>
+        <id>https://blog.jonthan.xyz/useful-cmd-commands/</id>
+        <media:content url="https://blog.jonthan.xyz/media/posts/22/cmd-windows-1024x575.jpg.webp" medium="image" />
             <category term="Windows"/>
 
         <updated>2023-04-09T23:30:43+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/22/cmd-windows-1024x575.jpg.webp" alt="" />
+                        <img src="https://blog.jonthan.xyz/media/posts/22/cmd-windows-1024x575.jpg.webp" alt="" />
                     From time&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <p><img src="https://baronhez.github.io/media/posts/22/cmd-windows-1024x575.jpg.webp" class="type:primaryImage" alt="" /></p>
+                    <p><img src="https://blog.jonthan.xyz/media/posts/22/cmd-windows-1024x575.jpg.webp" class="type:primaryImage" alt="" /></p>
                 
   <p>
     From time to time, it is useful to know some CMD commands. Here are the ones I consider most useful.<br><pid><b>slmgr /upk</b> Deactivate w10<br><b>tracert </b>Path followed by a package<br><b>tracert -d</b> Same, but does not resolve domain names<br><b>cipher /W:C:</b> Overwrites the disk, also can encrypt files.<br><b>fc </b>Compare files<br><b>sfc /scannow</b> Checks the Windows 10 system files.<br><b>DISM /Online /Cleanup /CheckHealth</b> Checks the system.<br><b>DISM /Online /Cleanup /ScanHealth</b> Scans the system<br><b>DISM /Online /Cleanup-Image /RestoreHealth</b> Performs a system restore<br><b>chkdsk </b>Checks the disk status<br><b>chkdsk /r /t</b> Fixes disk errors<br><b>tasklist</b> Lists tasks<br><b>taskkill /f /t /</b> <pid> Kill a task<br><b>powercfg /energy</b> Displays power information<br><b>powercfg /batteryreport</b> Show battery information<br><b>netsh wlan show wlanreport</b> Displays wifi status<br><b>netsh interface show</b> interface Displays the network interface<br><b>netsh interface ip show address | findstr "IP Address"</b> Displays the IP of each interface<br><b>netsh wlan show profile </b>Show the list of wifi networks<br><b>netsh wlan show profile wifinetwork key=clear |
@@ -567,9 +567,9 @@ docker node update --availability drain
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
-        <link href="https://baronhez.github.io/how-to-build-a-docker-media-server/"/>
-        <id>https://baronhez.github.io/how-to-build-a-docker-media-server/</id>
-        <media:content url="https://baronhez.github.io/media/posts/19/server.png" medium="image" />
+        <link href="https://blog.jonthan.xyz/how-to-build-a-docker-media-server/"/>
+        <id>https://blog.jonthan.xyz/how-to-build-a-docker-media-server/</id>
+        <media:content url="https://blog.jonthan.xyz/media/posts/19/server.png" medium="image" />
             <category term="Torrent"/>
             <category term="Self-hosted"/>
             <category term="Media"/>
@@ -579,13 +579,13 @@ docker node update --availability drain
         <updated>2023-09-17T16:00:58+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/19/server.png" alt="" />
+                        <img src="https://blog.jonthan.xyz/media/posts/19/server.png" alt="" />
                     You want&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <p><img src="https://baronhez.github.io/media/posts/19/server.png" class="type:primaryImage" alt="" /></p>
+                    <p><img src="https://blog.jonthan.xyz/media/posts/19/server.png" class="type:primaryImage" alt="" /></p>
                 
   <p>
     You want to deploy a self-hosted media server without the hassle of reading tons of documentation. Well, this is a straight-forward guide to deploy everything in just five minutes. Let's get into it!&nbsp;(I'm assuming you know the basics of how to manage Docker and a terminal shell).
@@ -1526,7 +1526,7 @@ networks:
 </code></pre>
 
   <p class="msg msg--highlight">
-    If you want secure headers, go to<a href="https://baronhez.github.io/self-hosting-guide/" target="_blank" rel="nofollow noopener"> my post</a> about traefik configuration.<br>Otherwise, the line <i>"traefik.http.routers.&lt;service&gt;.middlewares=secHeader@file" </i>won't work.
+    If you want secure headers, go to<a href="https://blog.jonthan.xyz/self-hosting-guide/" target="_blank" rel="nofollow noopener"> my post</a> about traefik configuration.<br>Otherwise, the line <i>"traefik.http.routers.&lt;service&gt;.middlewares=secHeader@file" </i>won't work.
   </p>
 
   <p class="msg msg--highlight">
@@ -1555,62 +1555,62 @@ networks:
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-2.png" height="921" width="944" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-2-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-2-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-2-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-2-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-2-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-2-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-2.png" height="921" width="944" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-2-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-2-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-2-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-2-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-2-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-2-2xl.png 1600w">
       <figcaption>This is the webUI of prowlarr. Let's add a New Indexer</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-3.png" height="1191" width="1073" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-3-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-3-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-3-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-3-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-3-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-3-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-3.png" height="1191" width="1073" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-3-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-3-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-3-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-3-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-3-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-3-2xl.png 1600w">
       <figcaption>I use this one for anime movies. You can use anyone.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-4.png" height="868" width="712" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-4-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-4-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-4-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-4-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-4-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-4-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-4.png" height="868" width="712" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-4-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-4-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-4-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-4-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-4-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-4-2xl.png 1600w">
       <figcaption>In this case, for this indexer the default values should be enough. Check the enable box.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-5.png" height="710" width="713" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-5-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-5-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-5-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-5-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-5-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-5-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-5.png" height="710" width="713" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-5-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-5-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-5-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-5-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-5-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-5-2xl.png 1600w">
       <figcaption>I use this one too.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-6.png" height="832" width="868" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-6-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-6-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-6-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-6-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-6-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-6-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-6.png" height="832" width="868" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-6-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-6-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-6-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-6-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-6-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-6-2xl.png 1600w">
       <figcaption>Usually, for NZB indexers you need an API Key.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-7.png" height="938" width="957" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-7-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-7-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-7-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-7-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-7-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-7-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-7.png" height="938" width="957" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-7-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-7-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-7-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-7-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-7-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-7-2xl.png 1600w">
       <figcaption>Now, go to Settings -> Apps to add Applications</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-8.png" height="527" width="1072" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-8-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-8-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-8-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-8-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-8-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-8-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-8.png" height="527" width="1072" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-8-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-8-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-8-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-8-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-8-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-8-2xl.png 1600w">
       <figcaption>We have to select Radarr (movies) and Sonarr (series) for this guide. There are a few more as you can see (for instance, Lidarr is for music).</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-10.png" height="767" width="716" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-10-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-10-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-10-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-10-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-10-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-10-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-10.png" height="767" width="716" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-10-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-10-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-10-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-10-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-10-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-10-2xl.png 1600w">
       <figcaption>You have to set your radar API Key. As it is written, is generated by Radarr in Settings -> General. Click on "Test" after that.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/i.PNG" height="826" width="930" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/i-xs.PNG 300w ,https://baronhez.github.io/media/posts/19/responsive/i-sm.PNG 480w ,https://baronhez.github.io/media/posts/19/responsive/i-md.PNG 768w ,https://baronhez.github.io/media/posts/19/responsive/i-lg.PNG 1024w ,https://baronhez.github.io/media/posts/19/responsive/i-xl.PNG 1360w ,https://baronhez.github.io/media/posts/19/responsive/i-2xl.PNG 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/i.PNG" height="826" width="930" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/i-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/i-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/i-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/i-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/i-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/i-2xl.PNG 1600w">
       <figcaption>That's the API Key you have to use. Same goes for Sonarr and its API Key.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-13.png" height="766" width="714" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-13-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-13-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-13-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-13-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-13-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-13-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-13.png" height="766" width="714" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-13-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-13-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-13-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-13-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-13-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-13-2xl.png 1600w">
       <figcaption>The same goes for Sonarr. Input your Sonarr API Key. Click on "Test" after that.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-14.png" height="238" width="921" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-14-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-14-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-14-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-14-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-14-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-14-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-14.png" height="238" width="921" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-14-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-14-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-14-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-14-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-14-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-14-2xl.png 1600w">
       <figcaption>Your applications tab should look like this.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-15.png" height="1163" width="1228" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-15-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-15-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-15-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-15-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-15-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-15-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-15.png" height="1163" width="1228" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-15-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-15-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-15-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-15-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-15-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-15-2xl.png 1600w">
       <figcaption>Wait a few minutes.  Then go to Settings -> Indexers inside Sonarr and Radarr and you should see something like this. </figcaption>
     </figure>
 
@@ -1639,22 +1639,22 @@ networks:
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-16.png" height="751" width="836" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-16-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-16-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-16-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-16-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-16-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-16-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-16.png" height="751" width="836" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-16-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-16-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-16-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-16-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-16-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-16-2xl.png 1600w">
       <figcaption>Enter in Tools -> Options. Then, in the Connection tab, mark the same options as me. I'm not going to explain why this works, maybe in the next guide.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-17.png" height="20" width="318" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-17-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-17-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-17-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-17-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-17-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-17-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-17.png" height="20" width="318" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-17-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-17-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-17-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-17-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-17-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-17-2xl.png 1600w">
       <figcaption>Mark this option in case your server is at home, but should be disabled for several security reasons.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-18.png" height="678" width="698" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-18-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-18-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-18-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-18-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-18-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-18-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-18.png" height="678" width="698" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-18-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-18-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-18-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-18-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-18-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-18-2xl.png 1600w">
       <figcaption>Now, in the BitTorrent tab, mark this.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-27.png" height="669" width="691" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-27-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-27-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-27-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-27-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-27-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-27-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-27.png" height="669" width="691" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-27-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-27-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-27-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-27-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-27-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-27-2xl.png 1600w">
       <figcaption>Lastly, my Downloads tab.</figcaption>
     </figure>
 
@@ -1671,22 +1671,22 @@ networks:
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-20.png" height="1117" width="1066" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-20-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-20-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-20-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-20-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-20-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-20-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-20.png" height="1117" width="1066" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-20-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-20-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-20-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-20-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-20-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-20-2xl.png 1600w">
       <figcaption>You should see something like this.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-21.png" height="888" width="823" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-21-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-21-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-21-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-21-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-21-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-21-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-21.png" height="888" width="823" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-21-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-21-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-21-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-21-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-21-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-21-2xl.png 1600w">
       <figcaption>If you want to use usenet, select for instance NZBGet and fill the information.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-22.png" height="1188" width="720" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-22-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-22-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-22-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-22-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-22-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-22-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-22.png" height="1188" width="720" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-22-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-22-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-22-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-22-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-22-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-22-2xl.png 1600w">
       <figcaption>To configure bittorrent, use the login info to fill the gaps.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-23.png" height="171" width="661" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-23-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-23-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-23-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-23-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-23-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-23-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-23.png" height="171" width="661" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-23-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-23-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-23-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-23-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-23-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-23-2xl.png 1600w">
       
     </figure>
 
@@ -1711,7 +1711,7 @@ networks:
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-24.png" height="943" width="2560" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-24-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-24-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-24-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-24-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-24-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-24-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-24.png" height="943" width="2560" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-24-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-24-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-24-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-24-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-24-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-24-2xl.png 1600w">
       
     </figure>
 
@@ -1720,12 +1720,12 @@ networks:
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-25.png" height="843" width="868" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-25-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-25-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-25-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-25-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-25-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-25-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-25.png" height="843" width="868" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-25-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-25-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-25-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-25-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-25-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-25-2xl.png 1600w">
       <figcaption>Sonar "Any" Profile</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-26.png" height="831" width="809" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-26-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-26-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-26-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-26-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-26-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-26-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-26.png" height="831" width="809" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-26-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-26-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-26-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-26-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-26-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-26-2xl.png 1600w">
       <figcaption>Radarr "Any" Profile</figcaption>
     </figure>
 
@@ -1734,7 +1734,7 @@ networks:
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-11.png" height="431" width="813" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-11-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-11-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-11-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-11-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-11-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-11-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-11.png" height="431" width="813" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-11-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-11-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-11-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-11-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-11-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-11-2xl.png 1600w">
       <figcaption>Select your preferred quality profile, and click on "Add Movie".</figcaption>
     </figure>
 
@@ -1743,7 +1743,7 @@ networks:
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-12.png" height="1122" width="2329" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-12-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-12-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-12-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-12-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-12-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-12-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-12.png" height="1122" width="2329" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-12-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-12-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-12-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-12-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-12-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-12-2xl.png 1600w">
       <figcaption>Go to the search tab and select your preferred option based on size and format.</figcaption>
     </figure>
 
@@ -1760,12 +1760,12 @@ networks:
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-9.png" height="726" width="2560" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-9-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-9-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-9-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-9-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-9-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-9-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-9.png" height="726" width="2560" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-9-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-9-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-9-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-9-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-9-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-9-2xl.png 1600w">
       <figcaption>Login screen. Just enter your username and password when prompted.</figcaption>
     </figure>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-19.png" height="418" width="2560" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-19-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-19-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-19-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-19-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-19-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-19-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-19.png" height="418" width="2560" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-19-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-19-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-19-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-19-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-19-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-19-2xl.png 1600w">
       <figcaption>You should be seeing something similar to this.</figcaption>
     </figure>
 
@@ -1774,7 +1774,7 @@ networks:
   </p>
 
     <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://baronhez.github.io/media/posts/19/server-28.png" height="159" width="2560" alt=""  sizes="100vw" srcset="https://baronhez.github.io/media/posts/19/responsive/server-28-xs.png 300w ,https://baronhez.github.io/media/posts/19/responsive/server-28-sm.png 480w ,https://baronhez.github.io/media/posts/19/responsive/server-28-md.png 768w ,https://baronhez.github.io/media/posts/19/responsive/server-28-lg.png 1024w ,https://baronhez.github.io/media/posts/19/responsive/server-28-xl.png 1360w ,https://baronhez.github.io/media/posts/19/responsive/server-28-2xl.png 1600w">
+      <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/19/server-28.png" height="159" width="2560" alt=""  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/19/responsive/server-28-xs.png 300w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-28-sm.png 480w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-28-md.png 768w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-28-lg.png 1024w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-28-xl.png 1360w ,https://blog.jonthan.xyz/media/posts/19/responsive/server-28-2xl.png 1600w">
       <figcaption>You can even filter your movies and series depending of genres, make collections, connect to your smart tv to display there the movie you want to see...</figcaption>
     </figure>
 
@@ -1815,7 +1815,7 @@ networks:
     </h2>
 
   <p>
-    If you prefer to <a href="https://baronhez.github.io/self-hosting-guide/" target="_blank">use traefik as a reverse proxy</a> and qflood as a media server, you can use this <b>docker-compose.yml</b>&nbsp;file&nbsp;instead the one already written above:
+    If you prefer to <a href="https://blog.jonthan.xyz/self-hosting-guide/" target="_blank">use traefik as a reverse proxy</a> and qflood as a media server, you can use this <b>docker-compose.yml</b>&nbsp;file&nbsp;instead the one already written above:
   </p>
 <pre class="line-numbers  language-yaml"><code>version: '3'
   services:
@@ -2035,20 +2035,20 @@ services:
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
-        <link href="https://baronhez.github.io/how-to-create-yaml-files/"/>
-        <id>https://baronhez.github.io/how-to-create-yaml-files/</id>
-        <media:content url="https://baronhez.github.io/media/posts/20/i.webp" medium="image" />
+        <link href="https://blog.jonthan.xyz/how-to-create-yaml-files/"/>
+        <id>https://blog.jonthan.xyz/how-to-create-yaml-files/</id>
+        <media:content url="https://blog.jonthan.xyz/media/posts/20/i.webp" medium="image" />
 
         <updated>2022-09-17T17:05:58+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/20/i.webp" alt="" />
+                        <img src="https://blog.jonthan.xyz/media/posts/20/i.webp" alt="" />
                     I'm not&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <p><img src="https://baronhez.github.io/media/posts/20/i.webp" class="type:primaryImage" alt="" /></p>
+                    <p><img src="https://blog.jonthan.xyz/media/posts/20/i.webp" class="type:primaryImage" alt="" /></p>
                 
   <p>
     I'm not going to explain what YAML is, nor its uses, if you want to learn how to create one, I'm pretty sure you already have that information. So let's get straight to the heart of the matter.
@@ -2213,9 +2213,9 @@ person2:
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
-        <link href="https://baronhez.github.io/how-to-secure-docker/"/>
-        <id>https://baronhez.github.io/how-to-secure-docker/</id>
-        <media:content url="https://baronhez.github.io/media/posts/18/dockerSec.jpeg" medium="image" />
+        <link href="https://blog.jonthan.xyz/how-to-secure-docker/"/>
+        <id>https://blog.jonthan.xyz/how-to-secure-docker/</id>
+        <media:content url="https://blog.jonthan.xyz/media/posts/18/dockerSec.jpeg" medium="image" />
             <category term="Security"/>
             <category term="Docker-compose"/>
             <category term="Docker"/>
@@ -2223,13 +2223,13 @@ person2:
         <updated>2022-09-03T22:33:00+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/18/dockerSec.jpeg" alt="" />
+                        <img src="https://blog.jonthan.xyz/media/posts/18/dockerSec.jpeg" alt="" />
                     Some tips&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <p><img src="https://baronhez.github.io/media/posts/18/dockerSec.jpeg" class="type:primaryImage" alt="" /></p>
+                    <p><img src="https://blog.jonthan.xyz/media/posts/18/dockerSec.jpeg" class="type:primaryImage" alt="" /></p>
                 
     <h2 id="some-tips-to-have-a-more-secure-experience-while-using-docker">
       Some tips to have a more secure experience while using Docker
@@ -2460,21 +2460,21 @@ services:
         <author>
             <name>Jonathan Ródenas López</name>
         </author>
-        <link href="https://baronhez.github.io/how-to-convert-different-files-online/"/>
-        <id>https://baronhez.github.io/how-to-convert-different-files-online/</id>
-        <media:content url="https://baronhez.github.io/media/posts/17/i.jpg" medium="image" />
+        <link href="https://blog.jonthan.xyz/how-to-convert-different-files-online/"/>
+        <id>https://blog.jonthan.xyz/how-to-convert-different-files-online/</id>
+        <media:content url="https://blog.jonthan.xyz/media/posts/17/i.jpg" medium="image" />
             <category term="Interesting Webpages"/>
 
         <updated>2022-09-17T16:56:59+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://baronhez.github.io/media/posts/17/i.jpg" alt="" />
+                        <img src="https://blog.jonthan.xyz/media/posts/17/i.jpg" alt="" />
                     A curate&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <p><img src="https://baronhez.github.io/media/posts/17/i.jpg" class="type:primaryImage" alt="" /></p>
+                    <p><img src="https://blog.jonthan.xyz/media/posts/17/i.jpg" class="type:primaryImage" alt="" /></p>
                 
     <h2 id="a-curate-selection-of-online-converters" class="align-center">
       A curate selection of online converters.
