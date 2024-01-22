@@ -3,7 +3,7 @@
     <title>blogHez</title>
     <link href="https://blog.jonthan.xyz/feed.xml" rel="self" />
     <link href="https://blog.jonthan.xyz" />
-    <updated>2023-09-17T16:00:58+02:00</updated>
+    <updated>2024-01-22T15:46:50+01:00</updated>
     <author>
         <name>Jonathan Ródenas López</name>
     </author>
@@ -169,7 +169,7 @@
         <id>https://blog.jonthan.xyz/how-to-install-revanced/</id>
         <media:content url="https://blog.jonthan.xyz/media/posts/26/youtube-revanced-2.jpg" medium="image" />
 
-        <updated>2023-08-16T02:03:54+02:00</updated>
+        <updated>2024-01-22T15:46:50+01:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://blog.jonthan.xyz/media/posts/26/youtube-revanced-2.jpg" alt="Youtube Revanced" />
@@ -202,12 +202,12 @@
     </figure>
 
   <p>
-    Now, we have to download and install the Revanced Manager APK, to patch the youtube app APK with the features we want to add. You can find the APK here:&nbsp;<a href="https://github.com/revanced/revanced-manager/releases/tag/v1.8.0" target="_blank" rel="nofollow noopener">https://github.com/revanced/revanced-manager/releases/tag/v1.8.0</a>
+    Now, we have to download and install the Revanced Manager APK, to patch the youtube app APK with the features we want to add. You can find the latest APK here:&nbsp;<a href="https://github.com/revanced/revanced-manager/releases/tag/v1.8.0" target="_blank" rel="nofollow noopener">https://github.com/revanced/revanced-manager/releases/</a>
   </p>
 
     <figure class="post__image post__image--center">
       <img loading="lazy" src="https://blog.jonthan.xyz/media/posts/26/1.PNG" height="967" width="1245" alt="Revanced Manager APK"  sizes="100vw" srcset="https://blog.jonthan.xyz/media/posts/26/responsive/1-xs.PNG 300w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-sm.PNG 480w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-md.PNG 768w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-lg.PNG 1024w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-xl.PNG 1360w ,https://blog.jonthan.xyz/media/posts/26/responsive/1-2xl.PNG 1600w">
-      <figcaption>Download the selected file</figcaption>
+      <figcaption>Download the selected file. In this case, it's the v1.8.0 version. Pick the latest one, the one at the top of the page!</figcaption>
     </figure>
 
   <p>
